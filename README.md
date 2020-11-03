@@ -36,9 +36,8 @@ Ana y Beatriz trabajan en la Universidad de Granada. Ana se encarga de enviar co
 
 > [HU] [Ana quiere hacer cambios temporales en la plantilla y en la lista justo antes de enviar el correo, para ajustarse mejor a las necesidades del momento.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/7)
 
-## Hitos e Issues
-
-1. Hito 1: [Crear y Exportar listas de correos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/milestone/1)
+## Issues
+1. [Crear y Exportar listas de correos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/milestone/1)
     - [Beatriz quiere crear/borrar una lista de correos, para introducir en ella los datos de los alumnos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/1)
       * Crear una nueva lista
       * Borrar lista
@@ -80,7 +79,7 @@ El orden de creación para el prototipo básico es el siguiente:
 3. Crear una plantilla
 4. Enviar un correo a la lista (de un solo alumno) usando la única plantilla disponible.
   
-Una vez el prototipo esté funcionando, se empezarán a completar uno a uno (empezando por el 1 hasta el 4), los diferentes hitos del proyecto.
+Una vez el prototipo esté funcionando, se empezarán a completar uno a uno (empezando por el 1 hasta el 4), los diferentes milestones del proyecto.
 
 ## Entidad
 
