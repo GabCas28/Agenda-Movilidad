@@ -1,6 +1,6 @@
 class ListaAlumnos:
   def __init__(self):
-    self.Alumnos = []
+    self.Alumnos = {}
     
   def addAlumno(alumno):
     pass
