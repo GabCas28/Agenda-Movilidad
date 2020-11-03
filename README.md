@@ -22,23 +22,23 @@ Se utilizará Django por su facilidad a la hora de generar una App Web completa,
 
 Ana y Beatriz trabajan en la Universidad de Granada. Ana se encarga de enviar correos a los alumnos para orientarles en sus trámites de intercambio. Beatriz se encarga de manejar las listas de los correos de los alumnos para que estén en orden.
 
-> [Beatriz quiere crear/borrar una lista de correos, para introducir en ella los datos de los alumnos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/1)
+> [HU] [Beatriz quiere crear/borrar una lista de correos, para introducir en ella los datos de los alumnos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/1)
 
-> [Beatriz quiere añadir/modificar/borrar un alumno concreto de una lista manualmente, para mantener los datos actualizados.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/2)
+> [HU] [Beatriz quiere añadir/modificar/borrar un alumno concreto de una lista manualmente, para mantener los datos actualizados.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/2)
 
-> [Beatriz quiere volcar una hoja de Excel con los datos de los alumnos en una lista de correos, para no tener que añadirlos uno a uno.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/5)
+> [HU] [Beatriz quiere volcar una hoja de Excel con los datos de los alumnos en una lista de correos, para no tener que añadirlos uno a uno.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/5)
 
-> [Beatriz quiere agrupar las listas de correos por categorías, para mantenerlas ordenadas.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/6)
+> [HU] [Beatriz quiere agrupar las listas de correos por categorías, para mantenerlas ordenadas.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/6)
 
-> [Ana quiere añadir/modificar/borrar una plantilla de correo, que utilizará para enviar correos a los alumnos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/3)
+> [HU] [Ana quiere añadir/modificar/borrar una plantilla de correo, que utilizará para enviar correos a los alumnos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/3)
 
-> [Ana quiere enviar un correo utilizando una plantilla, a una lista de correos, evitando así enviarlos uno a uno.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/4)
+> [HU] [Ana quiere enviar un correo utilizando una plantilla, a una lista de correos, evitando así enviarlos uno a uno.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/4)
 
-> [Ana quiere hacer cambios temporales en la plantilla y en la lista justo antes de enviar el correo, para ajustarse mejor a las necesidades del momento.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/7)
+> [HU] [Ana quiere hacer cambios temporales en la plantilla y en la lista justo antes de enviar el correo, para ajustarse mejor a las necesidades del momento.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/7)
 
 ## Hitos e Issues
 
-1. [Crear y Exportar listas de correos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/milestone/1)
+1. Hito 1: [Crear y Exportar listas de correos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/milestone/1)
     - [Beatriz quiere crear/borrar una lista de correos, para introducir en ella los datos de los alumnos.](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/issues/1)
       * Crear una nueva lista
       * Borrar lista
@@ -69,7 +69,9 @@ Ana y Beatriz trabajan en la Universidad de Granada. Ana se encarga de enviar co
   
 ## Planificación
 
-Para poder enviar correos lo más rápido posible, se intentará crear un prototipo lo más rápido posible, con las funcionalidades mas básicas del proyecto. Desde introducir los datos de un alumno hasta enviarle un correo utilizando una plantilla. Entonces se procederá a añadir todos los requisitos restantes.
+[Roadmap](https://github.com/GabCas28/Agenda-Alumnos-Intercambio/projects/1)
+
+Para poder enviar correos lo más rápido posible, se creará un prototipo inicial, con las funcionalidades mas básicas del proyecto. Desde introducir los datos de un alumno hasta enviarle un correo utilizando una plantilla. Entonces se procederá a añadir todos los requisitos restantes.
 
 El orden de creación para el prototipo básico es el siguiente:
 
@@ -86,7 +88,7 @@ Para comenzar el proyecto se crea la clase ListaAlumnos, que es el primer objeto
 
 * [ListaAlumnos](./src/ListaAlumnos.py)
 
-La clase Alumno se creará más adelante pues se requiere más información.
+La clase Alumno se creará más adelante pues requiere de más información.
 
 ## Licencia
 
