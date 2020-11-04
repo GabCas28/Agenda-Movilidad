@@ -81,6 +81,8 @@ El orden de creación para el prototipo básico es el siguiente:
   
 Una vez el prototipo esté funcionando, se empezarán a completar uno a uno (empezando por el 1 hasta el 4), los diferentes milestones del proyecto.
 
+![Diagrama de Gantt](./doc/Planning-Gantt.png)
+
 ## Entidad
 
 Para comenzar el proyecto se crea la clase ListaAlumnos, que es el primer objeto a crear dentro de la planificación propuesta:
