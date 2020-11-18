@@ -1,5 +1,5 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-# Agenda de alumnos de Intercambio
+# Agenda de alumnos de Movilidad
 El objetivo del proyecto es coordinar los correos de los alumnos de intercambio de la Universidad de Granada
 
 ## Problema a resolver
