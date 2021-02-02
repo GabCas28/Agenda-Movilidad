@@ -1,5 +1,5 @@
 {% extends 'header.html' %} {% block content %} {% for agenda in agendas %}
 <div class="agenda">
-    <h2><a href="{% url 'agenda_detail' slug=agenda.slug %}">{{agenda.title}}-{{agenda.year}}</a></h2>
+    <h2><a href="{% url 'agendas:detail' slug=agenda.slug %}">{{agenda.title}}-{{agenda.year}}</a></h2>
 </div>
 {% endfor %} {% endblock %}
