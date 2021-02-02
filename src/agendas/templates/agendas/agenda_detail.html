@@ -2,4 +2,25 @@
 <div class="agenda">
     <h2>{{agenda.title}}-{{agenda.year}}</h2>
     <p>Created on: {{agenda.creation_date}}</p>
-</div> {% endblock %}
+</div>
+<div class="contacts">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">email</th>
+                <th scope="col">etc</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+            <tr>
+                <th scope="row">{{contact.id}}</th>
+                <th scope="row">{{contact.email}}</th>
+                <td>{{contact.contact_info}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
