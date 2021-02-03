@@ -1,0 +1,24 @@
+{% extends 'header.html' %} {% block content %}
+<div class="container">
+    <h2 class="">Log In</h2>
+    <form class="site-form " action="{% url 'accounts:login'  %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.non_field_errors }} {% for input in form%}
+        <div class="form-group">
+            {{input.label_tag}} {{input}} {{input.errors}}
+        </div>
+        {% endfor %} {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{request.GET.next}}" /> {% endif %}
+        <div class="form-group">
+            <input class="form-control" type="submit" value="Entrar">
+        </div>
+    </form>
+    <script>
+        var x = document.querySelectorAll('input,select,textarea');
+        console.log("x", x)
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.add("form-control");
+        }
+    </script>
+</div>
+<!-- <script src={ % static "js/slugify.js" %}></script> -->
+{% endblock content %}
