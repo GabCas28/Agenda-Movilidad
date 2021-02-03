@@ -5,7 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from agendas.models import Agenda
 class Contact(models.Model):
     email = models.EmailField(default="")
-    contact_info = JSONField(default={})
+    contact_info = JSONField(default={}, blank=True, null=True)
     agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE)
     def __str__(self):
         return self.email     
