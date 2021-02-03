@@ -5,35 +5,37 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse row" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'agendas:home' %}"> <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            <form class="form-inline my-2 my-lg-0 col-lg-auto col-md-10 col-sm-9 col-12 px-2">
+                <input class="form-control col-lg-auto col-md-10 col-sm-9 col-12 mr-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                <button class="btn bg-white col-sm-auto col-12 my-2 my-sm-0 shadow" type="submit">Buscar</button>
             </form>
-            <ul class="navbar-nav ml-lg-2">
+            <ul class="ml-lg-2 my-3 my-sm-2 my-lg-0 col-sm-auto col-12 px-2" style="list-style-type: none;">
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="btn dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn dropdown-toggle bg-white w-100 text-left shadow" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{user}}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu mt-2 w-100  shadow" style="min-width:auto" aria-labelledby="navbarDropdownMenuLink">
                         <form class="dropdown-item p-0" action="{% url 'accounts:logout' %}" method="post">
                             {% csrf_token %}
-                            <button class="btn btn-link" type="submit">Logout</button>
+                            <button class="btn btn-link " type="submit">Logout</button>
                         </form>
                     </div>
                 </li>
                 {% else %}
 
-                <form class="form-inline my-2 my-lg-0" action="{% url 'accounts:login' %}" method="get">
-                    {% csrf_token %}
-                    <button class="btn btn-outline-primary  my-2 my-sm-0" type="submit">Log in</button>
-                </form>
+                <li class="nav-item dropdown">
+                    <form class="form-inline my-2 my-lg-0" action="{% url 'accounts:login' %}" method="get">
+                        {% csrf_token %}
+                        <button class="btn bg-white my-2 my-sm-0 shadow" type="submit">Log in</button>
+                    </form>
+                </li>
                 {% endif %}
             </ul>
         </div>
