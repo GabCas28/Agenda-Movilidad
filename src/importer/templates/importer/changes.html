@@ -1,0 +1,11 @@
+{% extends 'header.html' %} {% block content %}
+<div class="contacts">
+    {% if duplicates %} {% include "contacts/table.html" with contacts=duplicates %} {% endif %} {% if new_contacts %} {% include "contacts/table.html" with contacts=new_contacts %} {% endif %}
+    <form class="form-inline" action="{% url 'agendas:importer:accept' slug=agenda.slug identifier=changes.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <button class="btn bg-white my-2 my-sm-0 shadow">Aceptar Cambios</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
