@@ -1,26 +1,18 @@
-{% extends 'header.html' %} {% block content %}
+{% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}
+
 <div class="agenda">
-    <h2>{{agenda.title}}-{{agenda.year}}</h2>
-    <p>Created on: {{agenda.creation_date}}</p>
-</div>
-<div class="contacts">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">email</th>
-                <th scope="col">etc</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contact in contacts %}
-            <tr>
-                <th scope="row"><a href="{% url 'contacts:form' contact_id=contact.id %}">{{contact.id}}</a></th>
-                <th scope="row">{{contact.email}}</th>
-                <td>{{contact.contact_info}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endblock %}
+    <div class="agenda">
+        <h2>{{agenda.title}}-{{agenda.year}}</h2>
+        <p>Created on: {{agenda.creation_date}}</p>
+    </div>
+    <div class="contacts">
+        {% include "contacts/table.html" with contacts=contact_list headers=headers %}
+
+        <div class="form-group row">
+            {% include 'importer/form.html' %}
+            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'contacts:form' %}">
+                <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto</button>
+            </form>
+        </div>
+    </div>
+    {% endblock content %}

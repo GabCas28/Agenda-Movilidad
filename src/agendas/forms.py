@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, CharField, FileField
 from .models import Agenda
 
 class AgendaForm(ModelForm):

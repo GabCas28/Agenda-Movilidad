@@ -4,7 +4,7 @@ from contacts.models import Contact
 from . import forms
 from django.core import serializers
 import logging
-
+from importer.forms import UploadFileForm
 # Get an instance of a logger
 logger = logging.getLogger("logging.StreamHandler")
 
@@ -15,7 +15,10 @@ def agenda_list(request):
 def agenda_detail(request, slug):
     agenda = Agenda.objects.get(slug=slug)
     contacts = Contact.objects.filter(agenda=agenda)
-    return render(request, "agendas/agenda_detail.html", {"agenda":agenda, "contacts": contacts})
+    form = UploadFileForm()
+    if contacts:
+        headers= list(contacts[0].contact_info.keys())
+    return render(request, "agendas/agenda_detail.html", {"agenda":agenda, "contact_list": contacts, "form":form, "headers":headers, "len_headers":len(headers)})
 
 def agenda_form(request, agenda_id='new'):
     agenda = Agenda.objects.get(id=agenda_id) if agenda_id!="new" else None
@@ -32,3 +35,4 @@ def agenda_form(request, agenda_id='new'):
     else:
         form = forms.AgendaForm(initial=agenda.__dict__ if agenda_id!="new" else None)
     return render(request, "agendas/agenda_form.html", {"agenda":agenda,"form":form})
+

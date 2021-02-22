@@ -1,0 +1,29 @@
+<table class="text-center" data-toggle="table" data-sortable="true" data-sort-class="table-active" data-sort-order="desc" data-show-fullscreen="true" data-pagination="true" data-show-search-button="true" data-search="true" data-visible-search="true" data-show-columns-toggle-all="true"
+    data-show-columns-search="true" data-show-columns="true" data-virtual-scroll="true" data-page-list="[5, 10, 25, 50, 100, all]">
+    <thead>
+        <tr>
+            <th scope="col" rowspan="2" data-checkbox="true"></th>
+            <th scope="col" rowspan="2" data-sortable="true">Id</th>
+            <th scope="col" rowspan="2" data-sortable="true">Email</th>
+            <th scope="col" colspan="{{len_headers}}" data-sortable="true">Contact Info</th>
+        </tr>
+        <tr>
+            {% for key in headers %}
+            <th scope="col" data-sortable="true" style="width:100px;min-width:100px">{{key}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td></td>
+            <th scope="row">
+                <a href="{% url 'contacts:form' contact_id=contact.id %} ">{{contact.id}}</a>
+            </th>
+            <th scope="row ">{{contact.email}}</th>
+            {% include "contacts/contact_info.html " with contact_info=contact.contact_info %}
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

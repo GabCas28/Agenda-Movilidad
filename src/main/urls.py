@@ -22,5 +22,6 @@ urlpatterns = [
     path('accounts/', include("accounts.urls")),
     path('about/', views.about),
     path('contacts/', include("contacts.urls")),
+    path('import/', include("importer.urls")),
     path('', include("agendas.urls")),
 ]
