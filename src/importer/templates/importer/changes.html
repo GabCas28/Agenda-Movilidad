@@ -1,11 +1,36 @@
 {% extends 'header.html' %} {% block content %}
 <div class="contacts">
-    {% if duplicates %} {% include "contacts/table.html" with contacts=duplicates %} {% endif %} {% if new_contacts %} {% include "contacts/table.html" with contacts=new_contacts %} {% endif %}
-    <form class="form-inline" action="{% url 'agendas:importer:accept' slug=agenda.slug identifier=changes.id %}" method="post" enctype="multipart/form-data">
+    {% if duplicates or new_contacts %} {% if duplicates %}
+    <div class="">
+        <h4>Actualizaciones</h4>{% include "contacts/table.html" with title="Actualizaciones" contacts=duplicates headers=keys_duplicates %}
+    </div>
+    {% endif %} {% if new_contacts %}
+    <div class="">
+        <h4>Nuevos Contactos</h4> {% include "contacts/table.html" with title="Nuevos Contactos" contacts=new_contacts headers=keys_new_contacts %} {% endif %}
+    </div>
+
+    <form class="site-form my-4 my-sm-0 row" action="{% url 'agendas:importer:accept' slug=agenda.slug identifier=changes.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div>
-            <button class="btn bg-white my-2 my-sm-0 shadow">Aceptar Cambios</button>
+        <div class="form-inline">
+            <div class="form-group col-12 my-4">
+                <label>Se van a modificar {{duplicates|length}} contacto/s existente/s, y se van a introducir {{new_contacts|length}} nuevo/s contacto/s.</label>
+            </div>
+            <div class="form-group mx-auto">
+                <button class="btn btn-outline-danger my-2 my-xs-0 shadow ">Cancelar y Volver</button>
+            </div>
+            <div class="form-group mx-auto">
+                <button class="btn btn-outline-success my-2 my-xs-0 shadow ">Aceptar Acciones</button>
+            </div>
         </div>
     </form>
+    {% else %}
+    <h4> No hay cambios</h4>
+    <form class="form-inline" action="{% url 'agendas:importer:accept' slug=agenda.slug identifier=changes.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group mx-auto">
+            <button class="btn bg-white my-2 my-sm-0 shadow">Volver</button>
+        </div>
+    </form>
+    {% endif %}
 </div>
 {% endblock %}

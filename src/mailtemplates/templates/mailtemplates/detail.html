@@ -1,0 +1,23 @@
+{% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}
+
+<div class="template">
+    <div class="title">
+        <h2>{{template.title}}-{{template.year}}</h2>
+        <p>Created on: {{template.creation_date}}</p>
+    </div>
+    {% if template.description %}
+    <div class="description my-4">
+        <p>Descripción:</p>
+        {{template.content}}
+    </div>
+    {% endif %}
+    <div class="content my-4">
+        <p>Asunto: {{template.subject}}</p>
+        {{template.content}}
+    </div>
+</div>
+
+<form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'templates:form' template=template.id %}">
+    <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Editar Plantilla</button>
+</form>
+{% endblock content %}

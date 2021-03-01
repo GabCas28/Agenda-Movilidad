@@ -1,0 +1,12 @@
+{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %} {% for template in templates %}
+<div class="template">
+    <h2><a href="{% url 'templates:detail' slug=template.slug %}">{{template.title}}</a></h2>
+</div>
+{% endfor %}
+
+<div class="form-group row">
+    <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'templates:form' %}">
+        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Plantilla</button>
+    </form>
+</div>
+{% endblock %}

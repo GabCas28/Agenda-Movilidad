@@ -23,5 +23,7 @@ urlpatterns = [
     path('about/', views.about),
     path('contacts/', include("contacts.urls")),
     path('import/', include("importer.urls")),
-    path('', include("agendas.urls")),
+    path('templates/', include("mailtemplates.urls")),
+    path('agendas/', include("agendas.urls")),
+    path('sender/', include("mailsender.urls")),
 ]

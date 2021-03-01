@@ -1,0 +1,17 @@
+{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
+
+<div class="category my-2">
+    <a href="{% url 'agendas:list'  %}">Todas las categorías</a>
+</div>
+{% for category in categories %}
+<div class="category">
+    <h2><a href="{% url 'agendas:list' category=category.slug %}">{{category.name}}</a></h2>
+</div>
+{% endfor %}
+
+<div class="form-group row">
+    <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'agendas:category.form' %}">
+        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Categoría</button>
+    </form>
+</div>
+{% endblock %}

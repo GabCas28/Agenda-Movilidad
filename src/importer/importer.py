@@ -1,6 +1,12 @@
 import pandas
 from contacts.models import Contact
 
+def extractHeaders(contacts):
+    headers=[]
+    if contacts:
+        headers= list(contacts[0]['contact_info'].keys())
+    return headers
+    
 def fromDictToContact(input_dict):
     return Contact(**input_dict)
 

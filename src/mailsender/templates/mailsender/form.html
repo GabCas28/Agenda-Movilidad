@@ -1,0 +1,21 @@
+{% extends 'header.html' %} {% block content %}
+<div class="container">
+    {% if broadcast %}
+    <h2 class="">Editar broadcast</h2>
+    <form class="site-form " action="{% url 'sender:form' broadcast=broadcast.id %}" method="post" enctype="multipart/form-data">
+        {% else %}
+        <h2 class="">Crear broadcast</h2>
+        <form class="site-form " action="{% url 'sender:form' %}" method="post" enctype="multipart/form-data">
+            {% endif %} {% csrf_token %} {{ form.non_field_errors }} {% for input in form%}
+            <div class="form-group">
+                {{input.label_tag}} {{input}} {{input.errors}}
+            </div>
+            {% endfor %}
+            <div class="form-group">{% if agenda %}
+                <input class="form-control" type="submit" value="Editar broadcast"> {% else %}
+                <input class="form-control" type="submit" value="Crear broadcast"> {% endif %}
+            </div>
+        </form>
+</div>
+<!-- <script src={ % static "js/slugify.js" %}></script> -->
+{% endblock content %}

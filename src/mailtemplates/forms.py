@@ -1,9 +1,9 @@
 from django.forms import ModelForm, Form, CharField, FileField
-from .models import Agenda, Category
+from .models import Category, MailTemplate
 
-class AgendaForm(ModelForm):
+class TemplateForm(ModelForm):
      class Meta:
-         model = Agenda
+         model = MailTemplate
          fields = '__all__'
 
 class CategoryForm(ModelForm):

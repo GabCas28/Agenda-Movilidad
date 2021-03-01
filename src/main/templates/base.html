@@ -36,7 +36,7 @@
         for (var i = 0; i < x.length; i++) {
             if (x[i].type === "file") {
                 x[i].classList.add("form-control-file");
-            } else {
+            } else if (x[i].type === "checkbox") {} else {
                 x[i].classList.add("form-control");
             }
         }

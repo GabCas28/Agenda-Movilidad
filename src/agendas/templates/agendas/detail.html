@@ -6,7 +6,7 @@
         <p>Created on: {{agenda.creation_date}}</p>
     </div>
     <div class="contacts">
-        {% include "contacts/table.html" with contacts=contact_list headers=headers %}
+        {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %}
 
         <div class="form-group row">
             {% include 'importer/form.html' %}

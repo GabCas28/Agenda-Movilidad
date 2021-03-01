@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     "accounts",
     "agendas",
     "contacts",
-    "importer"
+    "importer", "mailtemplates", "mailsender"
 ]
 
 MIDDLEWARE = [
@@ -81,10 +83,10 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'agenda', 
-        'USER': 'agenda', 
+        'NAME': 'agenda',
+        'USER': 'agenda',
         'PASSWORD': 'agenda',
-        'HOST': '127.0.0.1', 
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }

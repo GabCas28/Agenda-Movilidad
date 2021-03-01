@@ -1,0 +1,22 @@
+{% extends 'header.html' %} {% block content %}
+<div class="site-form">
+    {% if template %}
+    <h2 class="">Editar Plantilla</h2>
+    <form class="site-form " action="{% url 'templates:form' template=template.id %}" method="post" enctype="multipart/form-data">
+        {% else %}
+        <h2 class="">Crear Pantilla</h2>
+        <form class="site-form " action="{% url 'templates:form' %}" method="post" enctype="multipart/form-data">
+            {% endif %} {% csrf_token %} {{ form.non_field_errors }} {% for input in form%}
+            <div class="form-group">
+                {{input.label_tag}} {{input}} {{input.errors}}
+            </div>
+            {% endfor %}
+            <div class="form-group">{% if template %}
+                <input class="form-control" type="submit" value="Editar Plantilla"> {% else %}
+                <input class="form-control" type="submit" value="Crear Plantilla"> {% endif %}
+            </div>
+        </form>
+    </form>
+</div>
+<!-- <script src={ % static "js/slugify.js" %}></script> -->
+{% endblock content %}
