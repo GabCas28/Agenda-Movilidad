@@ -1,21 +1,24 @@
+from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
 from .models import Contact
 from . import forms
 import logging
 from django.core import serializers
+from importer.importer import extractHeaders
 
 logger = logging.getLogger("logging.StreamHandler")
 
 def contact_list(request):
     contacts = Contact.objects.all()
-    return render(request, "contacts/contact_list.html", {"contacts":contacts})
+    contacts = [model_to_dict(contact) for contact in contacts]
+    return render(request, "contacts/list.html", {"contacts": contacts, "headers":extractHeaders(contacts)})
 
 def contact_detail(request, contact_id):
     contact = Contact.objects.get(id=contact_id)
-    return render(request, "contacts/contact_form.html", {"contact":contact})
+    return render(request, "contacts/form.html", {"contact":contact})
 
-def contact_form(request, contact_id='new'):
-    contact = Contact.objects.get(id=contact_id) if contact_id!='new' else None
+def contact_form(request, contact_id=''):
+    contact = Contact.objects.get(id=contact_id) if contact_id else None
     logger.info("form")
     if request.method=="POST":
         logger.info("POST form")
@@ -27,7 +30,5 @@ def contact_form(request, contact_id='new'):
             contact_instance.save()
             return redirect('contacts:list')
     else:
-        form = forms.ContactForm(initial=contact.__dict__ if contact_id!='new' else None)
-        logger.info("GET form")
-        logger.info(form)
-    return render(request, "contacts/contact_form.html", {"contact":contact,"form":form})
+        form = forms.ContactForm(instance=contact if contact_id else None)
+    return render(request, "contacts/form.html", {"contact":contact,"form":form})

@@ -1,8 +1,11 @@
 {% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}
 
-<div class="agenda">
-    <div class="agenda">
-        <h2>{{agenda.title}}-{{agenda.year}}</h2>
+<div class="container p-4 my-4 shadow rounded">
+    <div class="agenda p-3">
+        <form class="form-inline" action="{% url 'agendas:form' slug=agenda.slug %}">
+            <h2>{{agenda.title}} - {{agenda.category}} - {{agenda.year}}</h2>
+            <button class="btn bg-white shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Agenda</button>
+        </form>
         <p>Created on: {{agenda.creation_date}}</p>
     </div>
     <div class="contacts">
@@ -12,6 +15,10 @@
             {% include 'importer/form.html' %}
             <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'contacts:form' %}">
                 <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto</button>
+            </form>
+            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'sender:form' %}" method="GET">
+                <input type="hidden" name="agenda" value="{{agenda.slug}}" />
+                <button class="btn bg-white shadow col-12 ">{% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast</button>
             </form>
         </div>
     </div>

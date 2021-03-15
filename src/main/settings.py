@@ -43,7 +43,11 @@ INSTALLED_APPS = [
     "accounts",
     "agendas",
     "contacts",
-    "importer", "mailtemplates", "mailsender"
+    "importer", 
+    "mailtemplates", 
+    "mailsender",
+    "django_summernote",
+    'django_json_widget',
 ]
 
 MIDDLEWARE = [
@@ -123,12 +127,15 @@ USE_L10N = True
 
 USE_TZ = True
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -141,4 +148,30 @@ LOGGING = {
         'handlers': ['console'],
         'level': 'INFO',
     },
+}
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+
+SUMMERNOTE_THEME = 'bs4'
+
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode, default
+    'iframe': True,
+
+    # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
+    # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
+    # Use this when you're already using Bootstrap/jQuery based themes.
+    'iframe': False,
+
+    # You can put custom Summernote settings
+    'summernote': {
+        # As an example, using Summernote Air-mode
+        'airMode': False,
+
+        # Change editor size
+        'width': '100%'}
 }

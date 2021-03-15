@@ -1,0 +1,31 @@
+<div class="dropdown show col-12 col-md-4 ml-auto" id="mega-dropdown">
+    <a class="col-12 btn bg-white shadow dropdown-toggle" href="#" role="button" id="dropdownMenuLink" aria-haspopup="false" aria-expanded="false">
+      Importar Agenda/plantilla
+    </a>
+
+    <div class="dropdown-menu w-100 my-2" aria-labelledby="dropdownMenuLink">
+
+        {{ form.non_field_errors }} {% for input in form %}
+        <div class="form-group dropdown-item my-2">
+            {{input.label_tag}} {{input}} {{input.errors}}
+        </div>
+        {% endfor %}
+        <div class="dropdown-item  my-2">
+            <input type="submit" formnovalidate="formnovalidate" class="btn bg-white col-12 shadow" form="mailsender" name="import" value="Importar" />
+        </div>
+    </div>
+</div>
+<script>
+    $('#dropdownMenuLink').on('click', function(event) {
+        console.log("Hola")
+        $(this).siblings().toggleClass('show');
+    });
+    $('body').on('click', function(e) {
+        if (!$('#mega-dropdown').is(e.target) &&
+            $('#mega-dropdown').has(e.target).length === 0 &&
+            $('.show').has(e.target).length === 0
+        ) {
+            $('#mega-dropdown>.dropdown-menu').removeClass('show');
+        }
+    });
+</script>

@@ -1,0 +1,11 @@
+{% load static %}{% block form %} {% csrf_token %} {{form.media}} {{ form.non_field_errors }} {% for input in form%}
+<div class="form-group p-3">
+    {{input.label_tag}} {{input|safe}} {{input.errors}}
+</div>
+{% endfor %}
+<div class="form-inline">
+    <button class="form-control col-12 col-md-4 mr-auto" onclick="window.history.back()">Volver</button>
+    <input class="form-control col-12 col-md-4 ml-auto" type="submit" value="Aceptar">
+</div>
+<script src="{% static 'js/slugify.js' %}"></script>
+{% endblock form %}

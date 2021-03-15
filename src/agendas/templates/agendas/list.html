@@ -1,12 +1,14 @@
 {% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %} {% for agenda in agendas %}
-<div class="agenda">
+<div class="agenda form-inline">
     <h2><a href="{% url 'agendas:detail' slug=agenda.slug %}">{{agenda.title}}-{{agenda.year}}</a></h2>
+    <a class="mx-2" href="{% url 'agendas:form' slug=agenda.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
+
 </div>
 {% endfor %}
 
 <div class="form-group row">
     <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'agendas:form' %}">
-        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Agenda</button>
+        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Agenda</button>
     </form>
 </div>
 {% endblock %}

@@ -1,0 +1,33 @@
+.summernote .note-editor {
+    width: 100% !important;
+}
+
+.selector {
+    width: 100% !important;
+    display: block !important;
+}
+
+.stacked .selector-available,
+.stacked .selector-chosen {
+    width: 100%;
+}
+
+.stacked select {
+    width: 100%;
+    overflow: scroll;
+}
+
+.selector-available select,
+.selector-chosen select {
+    width: 100%;
+}
+
+.selector-available,
+.selector-chosen {
+    width: 44%;
+    min-width: 380px;
+}
+
+.selector .selector-available input {
+    width: 90%;
+}

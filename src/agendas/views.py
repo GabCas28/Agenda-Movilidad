@@ -1,10 +1,11 @@
+from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
 from .models import Agenda, Category
 from contacts.models import Contact
 from . import forms
 from django.core import serializers
 from importer.forms import UploadFileForm
-from importer.importer import *
+from importer.importer import extractHeaders
 # Get an instance of a logger
 import logging
 logger = logging.getLogger("logging.StreamHandler")
@@ -13,7 +14,8 @@ def categories(request):
     categories = Category.objects.all()
     return render(request, "agendas/categories/list.html", {"categories":categories})
 
-def agenda_list(request, category=""):
+def agenda_list(request):
+    category = request.GET.get("category") or None
     if category:
         category=Category.objects.get(slug=category)
         agendas = Agenda.objects.filter(category=category.id).order_by('year')
@@ -23,13 +25,13 @@ def agenda_list(request, category=""):
 
 def agenda_detail(request, slug):
     agenda = Agenda.objects.get(slug=slug)
-    contacts = [removeState(fromContactToDict(contact)) for contact in Contact.objects.filter(agenda=agenda)]
+    contacts = [model_to_dict(contact) for contact in Contact.objects.filter(agenda=agenda)]
     form = UploadFileForm()
     headers = extractHeaders(contacts)
     return render(request, "agendas/detail.html", {"agenda":agenda, "contact_list": contacts, "form":form, "headers":headers, "len_headers":len(headers)})
 
-def agenda_form(request, agenda_id='new'):
-    agenda = Agenda.objects.get(id=agenda_id) if agenda_id!="new" else None
+def agenda_form(request, slug=''):
+    agenda = Agenda.objects.get(slug=slug) if slug else None
     logger.info("form")
     if request.method=="POST":
         logger.info("POST form")
@@ -40,7 +42,7 @@ def agenda_form(request, agenda_id='new'):
             contact_instance.save()
             return redirect('agendas:home')
     else:
-        form = forms.AgendaForm(initial=agenda.__dict__ if agenda_id!="new" else None)
+        form = forms.AgendaForm(initial=model_to_dict(agenda) if agenda else None)
     return render(request, "agendas/form.html", {"agenda":agenda,"form":form})
 
 
@@ -56,5 +58,6 @@ def category_form(request, category=''):
             category_instance.save()
             return redirect('agendas:home')
     else:
-        form = forms.CategoryForm(initial=category.__dict__ if category else None)
+        form = forms.CategoryForm(initial=model_to_dict(category) if category else None)
+        form = forms.CategoryForm(initial=model_to_dict(category) if category else None)
     return render(request, "agendas/categories/form.html", {"category":category,"form":form})

@@ -23,7 +23,7 @@
                     <a href="{% url 'contacts:form' contact_id=contact.id %} ">{{contact.id}}</a>
                 </th>
                 <th scope="row ">{{contact.email}}</th>
-                {% include "contacts/contact_info.html " with contact_info=contact.contact_info %}
+                {% include "contacts/info.html " with contact_info=contact.contact_info %}
 
             </tr>
             {% endfor %}

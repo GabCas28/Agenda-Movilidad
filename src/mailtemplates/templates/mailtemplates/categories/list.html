@@ -4,14 +4,14 @@
     <a href="{% url 'templates:list'  %}">Todas las categorías</a>
 </div>
 {% for category in categories %}
-<div class="category">
-    <h2><a href="{% url 'templates:list' category=category.slug %}">{{category.name}}</a></h2>
+<div class="category form-inline">
+    <h2><a href="{% url 'templates:list'%}?category={{category.slug}}">{{category.title}}</a></h2>
+    <a class="mx-2" href="{% url 'templates:category.form' category=category.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
+
 </div>
 {% endfor %}
 
-<div class="form-group row">
-    <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'templates:category.form' %}">
-        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Categoría</button>
-    </form>
+<div class="category my-2">
+    <a href="{% url 'templates:category.form' %}">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}</a>
 </div>
 {% endblock %}

@@ -4,8 +4,9 @@
     <a href="{% url 'agendas:list'  %}">Todas las categorías</a>
 </div>
 {% for category in categories %}
-<div class="category">
-    <h2><a href="{% url 'agendas:list' category=category.slug %}">{{category.name}}</a></h2>
+<div class="category form-inline">
+    <h2><a href="{% url 'agendas:list'%}?category={{category.slug}}">{{category.title}}</a></h2>
+    <a class="mx-2" href="{% url 'agendas:category.form' category=category.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
 </div>
 {% endfor %}
 

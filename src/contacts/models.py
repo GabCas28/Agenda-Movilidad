@@ -1,20 +1,14 @@
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
 from agendas.models import Agenda
-
-class ContactManager(models.Manager):
-    def create_contact(self, contact_info):
-        contact = self.create(contact_info=contact_info)
-        # do something with the book
-        return contact
-
-
 class Contact(models.Model):
     email = models.EmailField(default="")
-    contact_info =  models.JSONField(default=dict, blank=True, null=True)
     agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE)
+    contact_info =  models.JSONField(default=dict, blank=True, null=True)
+
+
     def __str__(self):
-        return self.email     
+        return self.email +"-"+str(self.agenda)
     class Meta:
         unique_together = ("email", "agenda")
 

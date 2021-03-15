@@ -1,0 +1,16 @@
+{% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}
+
+<div class="container p-4 shadow rounded">
+    <div class="agenda p-3">
+        <h2>All Contacts</h2>
+    </div>
+    <div class="contacts">
+        {% include "contacts/table.html" with contacts=contacts headers=headers %}
+
+        <div class="form-group row">
+            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'contacts:form' %}">
+                <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto</button>
+            </form>
+        </div>
+    </div>
+    {% endblock content %}

@@ -4,7 +4,7 @@
     </a>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <form class="site-form" action="{% url 'agendas:importer:main' slug=agenda.slug %}" method="post" enctype="multipart/form-data">
+        <form class="site-form p-3" action="{% url 'agendas:importer:main' slug=agenda.slug %}" method="post" enctype="multipart/form-data">
 
             {% csrf_token %} {{ form.non_field_errors }} {% for input in form %}
             <div class="dropdown-item my-2">
