@@ -31,3 +31,7 @@
 .selector .selector-available input {
     width: 90%;
 }
+
+#id_contact_info {
+    width: 100% !important
+}

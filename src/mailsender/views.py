@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import MassMail
 from .forms import MassMailForm
@@ -6,6 +7,8 @@ from agendas.models import Agenda
 from mailtemplates.models import MailTemplate
 from contacts.models import Contact
 import re
+
+@login_required
 def form(request, broadcast=""):
 
     def get_or_post(param):
@@ -65,6 +68,7 @@ def success(request, broadcast=""):
     return render(request, "mailsender/success.html", {"broadcast": broadcast})
 
 
+@login_required
 def history(request):
     broadcasts = MassMail.objects.all()
     return render(request, "mailsender/history.html", {"broadcasts": broadcasts})

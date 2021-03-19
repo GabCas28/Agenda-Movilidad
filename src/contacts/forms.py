@@ -9,3 +9,8 @@ class ContactForm(ModelForm):
         widgets = {
             'contact_info':JSONEditorWidget(),
         }
+    
+    class Media:
+        css = {
+            'all': ('/static/css/styles.css'),
+        }

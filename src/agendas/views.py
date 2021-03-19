@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
 from .models import Agenda, Category
@@ -23,6 +24,7 @@ def agenda_list(request):
         agendas= Agenda.objects.all()    
     return render(request, "agendas/list.html", {"agendas":agendas})
 
+@login_required
 def agenda_detail(request, slug):
     agenda = Agenda.objects.get(slug=slug)
     contacts = [model_to_dict(contact) for contact in Contact.objects.filter(agenda=agenda)]
@@ -30,6 +32,7 @@ def agenda_detail(request, slug):
     headers = extractHeaders(contacts)
     return render(request, "agendas/detail.html", {"agenda":agenda, "contact_list": contacts, "form":form, "headers":headers, "len_headers":len(headers)})
 
+@login_required
 def agenda_form(request, slug=''):
     agenda = Agenda.objects.get(slug=slug) if slug else None
     logger.info("form")
@@ -46,6 +49,7 @@ def agenda_form(request, slug=''):
     return render(request, "agendas/form.html", {"agenda":agenda,"form":form})
 
 
+@login_required
 def category_form(request, category=''):
     category = Category.objects.get(slug=category) if category else None
     logger.info("form")

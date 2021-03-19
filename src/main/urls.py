@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
     path('about/', views.about),
-    path('contacts/', include("contacts.urls")),
     path('import/', include("importer.urls")),
     path('templates/', include("mailtemplates.urls")),
     path('agendas/', include("agendas.urls")),

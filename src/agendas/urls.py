@@ -10,5 +10,6 @@ urlpatterns = [
     path('form/', views.agenda_form, name="form"),
     path('form/<slug:slug>', views.agenda_form, name="form"),
     path('<slug:slug>', views.agenda_detail, name="detail"),
-    path('<slug:slug>/import', include(("importer.urls", "home"), namespace='importer'))
+    path('<slug:slug>/import', include(("importer.urls", "home"), namespace='importer')), 
+    path('<slug:slug>/contacts/', include("contacts.urls")),
     ]

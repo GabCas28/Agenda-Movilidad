@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import MailTemplate, Category
 from . import forms
@@ -20,10 +21,13 @@ def template_list(request):
         templates= MailTemplate.objects.all()    
     return render(request, "mailtemplates/list.html", {"templates":templates})
 
+
+@login_required
 def template_detail(request, slug):
     template = MailTemplate.objects.get(slug=slug)
     return render(request, "mailtemplates/detail.html", {"template":template})
 
+@login_required
 def template_form(request, slug=''):
     template = MailTemplate.objects.get(slug=slug) if slug else None
     if request.method=="POST":
@@ -40,6 +44,7 @@ def template_form(request, slug=''):
     return render(request, "mailtemplates/form.html", {"template":template,"form":form})
 
 
+@login_required
 def category_form(request, category=''):
     category = Category.objects.get(slug=category) if category else None
     logger.info("form")

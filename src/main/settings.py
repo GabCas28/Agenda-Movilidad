@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "mailsender",
     "django_summernote",
     'django_json_widget',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -175,3 +176,12 @@ SUMMERNOTE_CONFIG = {
         # Change editor size
         'width': '100%'}
 }
+
+# CSRF_COOKIE_SECURE=True
+# CSRF_USE_SESSIONS=True
+
+LOGIN_URL="/accounts/login"
+
+
+JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.js'
+JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.css'

@@ -1,22 +1,31 @@
 {% extends 'base.html' %} {% block header %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow  mb-4">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'agendas:home' %}">Agendas</a>
-        <a class="navbar-brand" href="{% url 'templates:home' %}">Plantillas</a>
+        <ul class="navbar-nav">
+            <li class="rounded  {% if 'agendas' in request.path %}bg-secondary{% endif %} ">
+                <a class="navbar-brand mx-3 {% if 'agendas' in request.path %}text-white {% endif %} " href="{% url 'agendas:home' %}">Agendas</a>
+            </li>
+            <li class="rounded  {% if 'templates' in request.path %}bg-secondary{% endif %} ">
+                <a class="navbar-brand mx-3 {% if 'templates' in request.path %}text-white{% endif %}" href="{% url 'templates:home' %}">Plantillas</a>
+            </li>
+            <li class="rounded  {% if 'sender' in request.path %}bg-secondary{% endif %} ">
+                <a class="navbar-brand mx-3 {% if 'sender' in request.path %}text-white{% endif %}" href="{% url 'sender:form' %}">Broadcast</a>
+            </li>
+        </ul>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse row" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'agendas:home' %}"> <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'agendas:home' %}"> <span class="sr-only">Agendas</span></a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0 col-lg-auto col-md-10 col-sm-9 col-12 px-2" action="#">
+            <!-- <form class="form-inline my-2 my-lg-0 col-lg-auto col-md-10 col-sm-9 col-12 px-2" action="#">
                 <input class="form-control col-lg-auto col-md-10 col-sm-9 col-12 mr-2" type="search" placeholder="Buscar" aria-label="Buscar">
                 <button class="btn bg-white col-sm-auto col-12 my-2 my-sm-0 shadow" type="submit">Buscar</button>
-            </form>
-            <ul class="ml-lg-2 my-3 my-sm-2 my-lg-0 col-sm-auto col-12 px-2" style="list-style-type: none;">
+            </form> -->
+            <ul class="ml-lg-2 my-3 my-sm-2 my-lg-0 col-sm-auto col-12 ml-auto px-2" style="list-style-type: none;">
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="btn dropdown-toggle bg-white w-100 text-left shadow" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

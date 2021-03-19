@@ -20,7 +20,7 @@
             <tr>
                 <td></td>
                 <th scope="row">
-                    <a href="{% url 'contacts:form' contact_id=contact.id %} ">{{contact.id}}</a>
+                    <a href="{% url 'agendas:contacts:form' slug=agenda.slug contact_id=contact.id %} ">{{contact.id}}</a>
                 </th>
                 <th scope="row ">{{contact.email}}</th>
                 {% include "contacts/info.html " with contact_info=contact.contact_info %}

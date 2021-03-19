@@ -13,7 +13,7 @@
 
         <div class="form-group row">
             {% include 'importer/form.html' %}
-            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'contacts:form' %}">
+            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'agendas:contacts:form' slug=agenda.slug %}">
                 <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto</button>
             </form>
             <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'sender:form' %}" method="GET">

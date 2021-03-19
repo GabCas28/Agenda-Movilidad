@@ -3,9 +3,9 @@
     <h2>{{contact|yesno:"Editar,Nuevo"}} Contacto</h2>
     <form class="site-form " action="
         {% if contact %}
-        {% url 'contacts:form' contact_id=contact.id %}
+        {% url 'agendas:contacts:form' slug=agenda.slug contact_id=contact.id %}
         {% else %}
-        {% url 'contacts:form' contact_id='new' %}
+        {% url 'agendas:contacts:form' slug=agenda.slug  %}
         {% endif %}" method="post" enctype="multipart/form-data">
         {% include 'base_form.html' %}
     </form>

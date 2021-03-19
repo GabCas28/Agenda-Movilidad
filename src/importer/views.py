@@ -4,9 +4,10 @@ from .importer import *
 from contacts.models import Contact
 from agendas.models import Agenda
 from .models import Changes
-import json
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def accept_changes(request, slug, identifier):
     changes = Changes.objects.get(id=identifier)
     updates = [fromDictToContact(element) for element in changes.updates]
@@ -16,24 +17,6 @@ def accept_changes(request, slug, identifier):
     Contact.objects.bulk_update(updates, ["email", "contact_info"])
     Contact.objects.bulk_create(additions)
     return redirect("agendas:detail", slug=slug)
-
-
-def upload_file(request, slug):
-    agenda = Agenda.objects.get(slug=slug)
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            email_header = form.data["email_header"]
-            contacts = getContactsFromFile(request.FILES['file'], email_header)
-            new_contacts, updates = classifyContacts(
-                agenda, email_header, contacts)
-            changes = Changes.create(
-                user=request.user, updates=updates, additions=new_contacts)
-            changes.save()
-            return render(request, 'importer/changes.html', {"new_contacts": new_contacts, "keys_new_contacts": extractHeaders(new_contacts), "duplicates": updates, "keys_duplicates": extractHeaders(updates), "agenda": agenda, "changes": changes})
-    else:
-        form = UploadFileForm()
-    return render(request, 'agendas/agenda_detail.html', {'form': form})
 
 
 def classifyContacts(agenda, email_header, contacts):
@@ -53,3 +36,22 @@ def classifyContacts(agenda, email_header, contacts):
             contact = fromContactToDict(new_contact)
             prepareAndAppend(new_contacts, contact)
     return new_contacts, updates
+
+@login_required
+def upload_file(request, slug):
+    agenda = Agenda.objects.get(slug=slug)
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            email_header = form.data["email_header"]
+            contacts = getContactsFromFile(request.FILES['file'], email_header)
+            new_contacts, updates = classifyContacts(
+                agenda, email_header, contacts)
+            changes = Changes.create(
+                user=request.user, updates=updates, additions=new_contacts)
+            changes.save()
+            return render(request, 'importer/changes.html', {"new_contacts": new_contacts, "keys_new_contacts": extractHeaders(new_contacts), "duplicates": updates, "keys_duplicates": extractHeaders(updates), "agenda": agenda, "changes": changes})
+    else:
+        form = UploadFileForm()
+    return render(request, 'agendas/agenda_detail.html', {'form': form})
+

@@ -1,24 +1,30 @@
+from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
 from .models import Contact
+from agendas.models import Agenda
 from . import forms
 import logging
 from django.core import serializers
 from importer.importer import extractHeaders
-
+import json
 logger = logging.getLogger("logging.StreamHandler")
 
+@login_required
 def contact_list(request):
     contacts = Contact.objects.all()
     contacts = [model_to_dict(contact) for contact in contacts]
     return render(request, "contacts/list.html", {"contacts": contacts, "headers":extractHeaders(contacts)})
 
+@login_required
 def contact_detail(request, contact_id):
     contact = Contact.objects.get(id=contact_id)
     return render(request, "contacts/form.html", {"contact":contact})
 
-def contact_form(request, contact_id=''):
+@login_required
+def contact_form(request, slug, contact_id=''):
     contact = Contact.objects.get(id=contact_id) if contact_id else None
+    agenda = Agenda.objects.get(slug=slug) 
     logger.info("form")
     if request.method=="POST":
         logger.info("POST form")
@@ -28,7 +34,9 @@ def contact_form(request, contact_id=''):
             logger.info("IS VALID")
             contact_instance = form.save(commit=False)
             contact_instance.save()
-            return redirect('contacts:list')
+            return redirect('agendas:detail')
     else:
-        form = forms.ContactForm(instance=contact if contact_id else None)
-    return render(request, "contacts/form.html", {"contact":contact,"form":form})
+        contacts = Contact.objects.filter(agenda=agenda)
+        headers=contacts[0].getHeaders()
+        form = forms.ContactForm({"email":"","agenda":agenda.id,"contact_info":json.dumps(dict.fromkeys(headers))})
+    return render(request, "contacts/form.html", {"contact":contact,"form":form, "agenda":agenda})
