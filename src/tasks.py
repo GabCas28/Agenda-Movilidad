@@ -22,3 +22,7 @@ def install(c, docs=False):
     c.run("python manage.py makemigrations")
     c.run("python manage.py migrate")
     c.run("python manage.py initadmin")
+    
+@task
+def connect(c, docs=False):
+    c.run("source ./wait-for-posgre.sh db:5432")
