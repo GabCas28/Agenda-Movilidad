@@ -2,12 +2,14 @@
 <div class="agenda form-inline">
     <h2><a href="{% url 'agendas:detail' slug=agenda.slug %}">{{agenda.title}}-{{agenda.year}}</a></h2>
     <a class="mx-2" href="{% url 'agendas:form' slug=agenda.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
+    <a class="mx-2" href="{% url 'agendas:delete' agenda_id=agenda.id %}">{% bs_icon 'trash' extra_classes='text-danger'%}</a>
 
 </div>
 {% endfor %}
 
 <div class="form-group row">
     <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'agendas:form' %}">
+        <input type="hidden" name="category" value="{{category.slug}}">
         <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Agenda</button>
     </form>
 </div>

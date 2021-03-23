@@ -8,4 +8,5 @@ urlpatterns = [
     path('form', views.contact_form, name="form"),
     path('form/<str:contact_id>', views.contact_form, name="form"),
     path('<str:contact_id>', views.contact_detail, name="detail"),
+    path('delete/<str:contact_id>', views.delete, name="delete")
 ]

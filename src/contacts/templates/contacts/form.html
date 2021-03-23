@@ -1,6 +1,8 @@
 {% extends 'header.html' %} {% block content %}
 <div class="container shadow my-4 p-4">
     <h2>{{contact|yesno:"Editar,Nuevo"}} Contacto</h2>
+    {% if contact %}
+    <a class="text-danger" href="{% url 'agendas:contacts:delete' slug=agenda.slug contact_id=contact.id%}">Borrar Contacto</a> {% endif %}
     <form class="site-form " action="
         {% if contact %}
         {% url 'agendas:contacts:form' slug=agenda.slug contact_id=contact.id %}

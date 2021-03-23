@@ -2,15 +2,21 @@
 version: '3.1'
 
 services:
-
   db:
     image: postgres
-    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: example
-
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   agenda:
+    build: ./src/
     image: gabcas28/mobility-agenda
-    restart: always
+    depends_on:
+      - db
+    command:  bash -c "invoke install && invoke start"    
+    volumes:
+      - ./src:/src
     ports:
-      - 8080:8080
+      - 8000:8000

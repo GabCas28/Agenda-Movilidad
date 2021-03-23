@@ -7,6 +7,7 @@
 <div class="category form-inline">
     <h2><a href="{% url 'templates:list'%}?category={{category.slug}}">{{category.title}}</a></h2>
     <a class="mx-2" href="{% url 'templates:category.form' category=category.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
+    <a class="mx-2" href="{% url 'templates:category.delete' category_id=category.id %}">{% bs_icon 'trash' extra_classes='text-danger'%}</a>
 
 </div>
 {% endfor %}

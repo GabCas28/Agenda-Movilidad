@@ -1,6 +1,6 @@
 {% extends 'header.html' %} {% block content %}
 <div class="contacts">
-    {% if duplicates or new_contacts %} {% if duplicates %}
+    {% if duplicates or new_contacts or deletions %} {% if duplicates %}
     <div class="">
         <h4>Actualizaciones</h4>{% include "contacts/table.html" with title="Actualizaciones" contacts=duplicates headers=keys_duplicates %}
     </div>
@@ -8,15 +8,19 @@
     <div class="">
         <h4>Nuevos Contactos</h4> {% include "contacts/table.html" with title="Nuevos Contactos" contacts=new_contacts headers=keys_new_contacts %} {% endif %}
     </div>
+    {% if deletions %}
+    <div class="">
+        <h4>Contactos a borrar</h4> {% include "contacts/table.html" with title="Contactos a Borrar" contacts=deletions headers=keys_deletions %} {% endif %}
+    </div>
 
     <form class="site-form my-4 my-sm-0 row" action="{% url 'agendas:importer:accept' slug=agenda.slug identifier=changes.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-inline">
             <div class="form-group col-12 my-4">
-                <label>Se van a modificar {{duplicates|length}} contacto/s existente/s, y se van a introducir {{new_contacts|length}} nuevo/s contacto/s.</label>
+                <label>Se van a borrar {{deletions|length}}, modificar {{duplicates|length}} y se van a introducir {{new_contacts|length}} contacto/s.</label>
             </div>
             <div class="form-group mx-auto">
-                <button class="btn btn-outline-danger my-2 my-xs-0 shadow ">Cancelar y Volver</button>
+                <button class="btn btn-outline-danger my-2 my-xs-0 shadow " onclick="window.history.back()" type="button">Cancelar y Volver</button>
             </div>
             <div class="form-group mx-auto">
                 <button class="btn btn-outline-success my-2 my-xs-0 shadow ">Aceptar Acciones</button>
@@ -25,10 +29,9 @@
     </form>
     {% else %}
     <h4> No hay cambios</h4>
-    <form class="form-inline" action="{% url 'agendas:importer:accept' slug=agenda.slug identifier=changes.id %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form class="form-inline" enctype="multipart/form-data">
         <div class="form-group mx-auto">
-            <button class="btn bg-white my-2 my-sm-0 shadow">Volver</button>
+            <button class="btn btn-outline-danger my-2 my-xs-0 shadow " onclick="window.history.back()" type="button">Volver</button>
         </div>
     </form>
     {% endif %}

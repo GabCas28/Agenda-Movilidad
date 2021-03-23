@@ -10,6 +10,14 @@ from importer.importer import extractHeaders
 import json
 logger = logging.getLogger("logging.StreamHandler")
 
+
+@login_required
+def delete(request, slug, contact_id):
+    contact = Contact.objects.get(id=contact_id)
+    agenda = contact.agenda
+    contact.delete()
+    return redirect('agendas:detail',agenda.slug)
+
 @login_required
 def contact_list(request):
     contacts = Contact.objects.all()
@@ -34,9 +42,12 @@ def contact_form(request, slug, contact_id=''):
             logger.info("IS VALID")
             contact_instance = form.save(commit=False)
             contact_instance.save()
-            return redirect('agendas:detail')
+            return redirect('agendas:detail',agenda.slug)
     else:
         contacts = Contact.objects.filter(agenda=agenda)
-        headers=contacts[0].getHeaders()
-        form = forms.ContactForm({"email":"","agenda":agenda.id,"contact_info":json.dumps(dict.fromkeys(headers))})
+        headers=contacts[0].getHeaders() if contacts else []
+        if contact:
+            form = forms.ContactForm(request.POST or None, instance=contact)
+        else:
+            form = forms.ContactForm({"email":"","agenda":agenda.id,"contact_info":json.dumps(dict.fromkeys(headers))})
     return render(request, "contacts/form.html", {"contact":contact,"form":form, "agenda":agenda})

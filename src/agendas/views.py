@@ -11,6 +11,19 @@ from importer.importer import extractHeaders
 import logging
 logger = logging.getLogger("logging.StreamHandler")
 
+
+@login_required
+def deleteCategory(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    return redirect('agendas:home')
+
+@login_required
+def delete(request, agenda_id):
+    agenda = Agenda.objects.get(id=agenda_id)
+    agenda.delete()
+    return redirect('agendas:list')
+
 def categories(request):
     categories = Category.objects.all()
     return render(request, "agendas/categories/list.html", {"categories":categories})
@@ -20,6 +33,8 @@ def agenda_list(request):
     if category:
         category=Category.objects.get(slug=category)
         agendas = Agenda.objects.filter(category=category.id).order_by('year')
+        
+        return render(request, "agendas/list.html", {"agendas":agendas, "category":category})
     else:
         agendas= Agenda.objects.all()    
     return render(request, "agendas/list.html", {"agendas":agendas})
@@ -34,6 +49,7 @@ def agenda_detail(request, slug):
 
 @login_required
 def agenda_form(request, slug=''):
+    category = request.GET.get("category") or None
     agenda = Agenda.objects.get(slug=slug) if slug else None
     logger.info("form")
     if request.method=="POST":
@@ -45,7 +61,12 @@ def agenda_form(request, slug=''):
             contact_instance.save()
             return redirect('agendas:home')
     else:
-        form = forms.AgendaForm(initial=model_to_dict(agenda) if agenda else None)
+        
+        if category:
+            category=Category.objects.get(slug=category)
+            form = forms.AgendaForm({'title':'','slug':'','year':'','category':category.id})
+        else:
+            form = forms.AgendaForm(initial=model_to_dict(agenda) if agenda else None)
     return render(request, "agendas/form.html", {"agenda":agenda,"form":form})
 
 
@@ -62,6 +83,5 @@ def category_form(request, category=''):
             category_instance.save()
             return redirect('agendas:home')
     else:
-        form = forms.CategoryForm(initial=model_to_dict(category) if category else None)
         form = forms.CategoryForm(initial=model_to_dict(category) if category else None)
     return render(request, "agendas/categories/form.html", {"category":category,"form":form})

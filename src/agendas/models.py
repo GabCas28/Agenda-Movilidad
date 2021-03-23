@@ -9,7 +9,6 @@ class Category(models.Model):
         return self.title
 
 
-
 class Agenda(models.Model):
     title = models.CharField(max_length=199, default="")
     slug = models.SlugField(default="", unique=True)
