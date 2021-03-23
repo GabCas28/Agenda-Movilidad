@@ -8,6 +8,18 @@ import logging
 # Get an instance of a logger
 logger = logging.getLogger("logging.StreamHandler")
 
+@login_required
+def deleteCategory(request, category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    return redirect('templates:home')
+
+@login_required
+def delete(request, template_id):
+    template = MailTemplate.objects.delete(id=template_id)
+    template.delete()
+    return redirect('templates:list')
+
 def categories(request):
     categories = Category.objects.all()
     return render(request, "mailtemplates/categories/list.html", {"categories":categories})

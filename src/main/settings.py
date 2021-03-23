@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'django_json_widget',
     'sslserver',
 ]
-
+ADMINS = (
+    ('admin', 'admin@admin.com'),
+)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -86,15 +88,26 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'agenda',
+    #     'USER': 'agenda',
+    #     'PASSWORD': 'agenda',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    # }
+    
+    
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'agenda',
-        'USER': 'agenda',
-        'PASSWORD': 'agenda',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

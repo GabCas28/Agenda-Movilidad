@@ -8,8 +8,8 @@ import logging
 logger = logging.getLogger("logging.StreamHandler")
 
 class MassMail(models.Model):
-    subject = models.CharField(max_length=100, default="", blank=True)
-    content = models.TextField(blank=True, default="")
+    subject = models.CharField(max_length=100, default="", blank=True, verbose_name="Asunto del mensaje")
+    content = models.TextField(blank=True, default="", verbose_name="Contenido del mensaje")
     recipients = models.ManyToManyField(Contact)
     creation_date = models.DateField(auto_now_add=True)
 

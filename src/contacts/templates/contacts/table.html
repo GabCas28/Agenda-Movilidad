@@ -4,7 +4,7 @@
         data-show-columns-toggle-all="true" data-show-columns-search="true" data-show-columns="true" data-virtual-scroll="true" data-page-list="[5, 10, 25, 50, 100, all]">
         <thead>
             <tr>
-                <th scope="col" rowspan="2" data-checkbox="true"></th>
+                <!-- <th scope="col" rowspan="2" data-checkbox="true"></th> -->
                 <th scope="col" rowspan="2" data-sortable="true">Id</th>
                 <th scope="col" rowspan="2" data-sortable="true">Email</th>
                 <th scope="col" colspan="{{headers|length}}" data-sortable="true">Contact Info</th>
@@ -18,12 +18,12 @@
         <tbody>
             {% for contact in contacts %}
             <tr>
-                <td></td>
+                <!-- <td></td> -->
                 <th scope="row">
                     <a href="{% url 'agendas:contacts:form' slug=agenda.slug contact_id=contact.id %} ">{{contact.id}}</a>
                 </th>
                 <th scope="row ">{{contact.email}}</th>
-                {% include "contacts/info.html " with contact_info=contact.contact_info %}
+                {% include "contacts/info.html" with contact_info=contact.contact_info %}
 
             </tr>
             {% endfor %}

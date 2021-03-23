@@ -12,10 +12,6 @@ import re
 def form(request, broadcast=""):
 
     def get_or_post(param):
-        print(param)
-        print(param)
-        print(request.GET)
-        print(request.POST)
         if request.GET.get(param):
             return request.GET.get(param)
         elif request.POST.get(param):
@@ -26,17 +22,18 @@ def form(request, broadcast=""):
     broadcast = MassMail.objects.get(id=broadcast) if broadcast else None
     agenda_slug = get_or_post("agenda")
     template_slug = get_or_post("template")
+    maintain = get_or_post("maintain")
     agenda= Agenda.objects.get(slug=agenda_slug) if agenda_slug else None
+    category = agenda.category if agenda else None
     template=MailTemplate.objects.get(slug=template_slug) if template_slug else None
-    print("agenda",agenda)
-    print("template", template)
     
     subject = template.subject if template else None
     content = template.content if template else None
-    contacts = Contact.objects.filter(agenda=agenda) if agenda else None
+    contacts = Contact.objects.filter(agenda=agenda) if agenda else []
+    headers = contacts[0].getHeaders() if contacts else []
 
     if request.method == "POST":
-        form= MassMailForm(request.POST or None, instance=broadcast)
+        form= MassMailForm(request.POST or None, instance=broadcast, category=category, headers=headers)
         if form.is_valid() and 'import' not in request.POST:
             broadcast_instance=form.save()
             user = request.POST["user"]
@@ -48,17 +45,18 @@ def form(request, broadcast=""):
                 form.cleaned_data['content'] = content
                 form.cleaned_data['template'] = None
             if agenda:
-                if 'recipients' in form.cleaned_data and 'maintain' in form.cleaned_data:
+                if 'recipients' in form.cleaned_data and maintain:
                     form.cleaned_data['recipients'] = form.cleaned_data['recipients'].union(contacts)
                     form.cleaned_data['maintain'] = None
                 else:
                     form.cleaned_data['recipients'] = contacts
-                
+
                 form.cleaned_data['agenda'] = None
-            form= MassMailForm(form.cleaned_data)
+            
+            form= MassMailForm(form.cleaned_data, category=category, headers=headers)
 
     else: 
-        form= MassMailForm({"recipients": contacts, "subject":subject, "content":content})
+        form= MassMailForm()
     return render(request, "mailsender/form.html", {"broadcast": broadcast, "form" : form, "form_list": list(form)})
 
 
