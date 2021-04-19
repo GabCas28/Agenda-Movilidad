@@ -1,19 +1,29 @@
 {% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
 
-<div class="category my-2">
-    <a href="{% url 'agendas:list'  %}">Todas las categorías</a>
-</div>
-{% for category in categories %}
-<div class="category form-inline">
-    <h2><a href="{% url 'agendas:list'%}?category={{category.slug}}">{{category.title}}</a></h2>
-    <a class="mx-2" href="{% url 'agendas:category.form' category=category.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
-    <a class="mx-2" href="{% url 'agendas:category.delete' category_id=category.id %}">{% bs_icon 'trash' extra_classes='text-danger'%}</a>
-</div>
-{% endfor %}
+<div class="container p-4 my-4 shadow rounded">
 
-<div class="form-group row">
-    <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'agendas:category.form' %}">
-        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Categoría</button>
-    </form>
+    <h4 class="my-3 display-4">Categorías de Agendas</h4>
+    <div class="category ml-3 my-2">
+        <a href="{% url 'agendas:list'  %}">Todas las categorías</a>
+    </div>
+    {% if categories %} {% for category in categories %}
+    <div class="category form-inline">
+        <div class="dropdown">
+            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
+            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdownMenuLink">
+                <li class="btn" onclick="location.href='{% url 'agendas:list'%}?category={{category.slug}}';">Ver {% bs_icon 'eye' extra_classes='text-primary mx-2'%}</li>
+                <li class="btn" onclick="location.href='{% url 'agendas:category.form' category=category.slug %}';">Editar {% bs_icon 'pencil-square' extra_classes='text-success mx-2'%}</li>
+                <li class="btn" onclick="if(confirm('¡Atención! ¿Desea borrar la categoria {{category.title}} y sus agendas y contactos asociados?'))
+                {location.href='{% url 'agendas:category.delete' category_id=category.id %}'; alert('agenda borrada');}">Borrar {% bs_icon 'trash' extra_classes='text-danger mx-2'%}</li>
+            </ul>
+        </div>
+        <h2><a href="{% url 'agendas:list'%}?category={{category.slug}}">{{category.title}}</a></h2>
+    </div>
+    {% endfor %} {% else %} No se han encontrado categorías {% endif %}
+    <div class="form-group row">
+        <form class="form-inline col-auto mx-auto mt-3" action="{% url 'agendas:category.form' %}">
+            <button class="btn bg-white shadow col-12 mx-3 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Categoría</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

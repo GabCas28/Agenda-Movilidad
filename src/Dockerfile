@@ -1,5 +1,5 @@
 FROM python:3
 WORKDIR /src
-COPY requirements.txt /src/
-RUN pip install -r requirements.txt
+COPY rrequirements1.txt /src/
+RUN pip install -r rrequirements1.txt
 COPY . /src/

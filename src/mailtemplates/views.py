@@ -31,7 +31,7 @@ def template_list(request):
         templates = MailTemplate.objects.filter(category=category.id)
     else:
         templates= MailTemplate.objects.all()    
-    return render(request, "mailtemplates/list.html", {"templates":templates})
+    return render(request, "mailtemplates/list.html", {"templates":templates, "category":category})
 
 
 @login_required
@@ -52,7 +52,6 @@ def template_form(request, slug=''):
             return redirect('templates:home')
     else:
         form = forms.TemplateForm(initial=model_to_dict(template) if template else None)
-    logger.info("form", form)
     return render(request, "mailtemplates/form.html", {"template":template,"form":form})
 
 

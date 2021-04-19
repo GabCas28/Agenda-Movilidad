@@ -1,6 +1,5 @@
 import pandas
 from contacts.models import Contact
-
 def extractHeaders(contacts):
     headers=[]
     for contact in contacts:
@@ -45,11 +44,28 @@ def findFirstEmail(contact_info):
     email = [val for key, val in contact_info.items() if isinstance(val, str) and '@' in val][0]
     return email
 def parseContactsFromFile(input, header_sample):
-    input_list = pandas.read_html(input)
+    print("input",filetype.guess(input))
+    try:
+        input_list = pandas.read_html(input)
+        print("input_list",input_list)
+    except:
+        input_list=pandas.read_excel(input)
+        print("input_list",input_list)
     return getParsedData(input_list, header_sample)
 
+
+def selectDataframe(input_list, header_sample):
+    try:
+        dataframe = findDataframe(input_list, header_sample)
+    except:
+        dataframe = input_list
+    return parseDataframe(dataframe,header_sample)
+
 def getParsedData(input_list, header_sample):
-    dataframe = findDataframe(input_list, header_sample)
+    try:
+        dataframe = findDataframe(input_list, header_sample)
+    except:
+        dataframe = input_list
     return parseDataframe(dataframe,header_sample)
         
 def findDataframe(input_list, header_sample):
@@ -85,4 +101,12 @@ def headerColumn(df, header_sample):
     for i in df:
         if df[i].isin([header_sample]).any():
             return df[i].isin([header_sample]).array
+        if header_sample == i:
+            return df[i]
     raise Exception("Header \""+header_sample+"\" Not Found in dataframe")
+
+
+class Importer(object):
+    def __init__():
+        pass
+

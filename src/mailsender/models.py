@@ -8,9 +8,9 @@ import logging
 logger = logging.getLogger("logging.StreamHandler")
 
 class MassMail(models.Model):
-    subject = models.CharField(max_length=100, default="", blank=True, verbose_name="Asunto del mensaje")
-    content = models.TextField(blank=True, default="", verbose_name="Contenido del mensaje")
-    recipients = models.ManyToManyField(Contact)
+    subject = models.CharField(max_length=100, default="", blank=True, verbose_name="Asunto")
+    content = models.TextField(blank=True, default="", verbose_name="Cuerpo")
+    recipients = models.ManyToManyField(Contact, verbose_name="Destinatarios")
     creation_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
@@ -49,7 +49,7 @@ class MassMail(models.Model):
 
             def engine(x,user, password):
                 return {'gmail':EmailBackend(host="smtp.gmail.com", port=465, use_ssl=True, username=user, password=password), 
-                'ugr':EmailBackend(host="correo.ugr.es", port=587 , use_tsl=True,use_ssl=False, username=user, password=password)}[x]
+                'ugr':EmailBackend(host="smtp.ugr.es", port=587 , use_tsl=True,use_ssl=False, username=user, password=password)}[x]
 
             backend=engine(chooseEngine(user), user, password)
             backend.open()

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,8 +47,9 @@ INSTALLED_APPS = [
     "mailsender",
     "django_summernote",
     'django_json_widget',
-    'sslserver',
+    'sslserver'
 ]
+
 ADMINS = (
     ('admin', 'admin@admin.com'),
 )
@@ -68,7 +68,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["main/templates"],
+        'DIRS': [os.path.join(BASE_DIR,"main/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,25 +87,30 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+def get_env_value(env_variable):
+    try:
+      	return os.environ[env_variable]
+    except KeyError:
+        return None
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'agenda',
-    #     'USER': 'agenda',
-    #     'PASSWORD': 'agenda',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
-    # }
-    
-    
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': get_env_value('POSTGRES_DB') or 'agenda',
+        'USER': get_env_value('POSTGRES_USER') or 'agenda',
+        'PASSWORD': get_env_value('POSTGRES_USER') or 'agenda',
+        'HOST':  get_env_value('POSTGRES_HOST') or'127.0.0.1',
+        'PORT':  get_env_value('POSTGRES_PORT') or'5432',
     }
+    
+    
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'postgres',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'postgres',
+    #     'HOST': 'db',
+    #     'PORT': 5432,
+    # }
 }
 
 
@@ -150,6 +155,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -198,3 +204,5 @@ LOGIN_URL="/accounts/login"
 
 JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.js'
 JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.css'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

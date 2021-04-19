@@ -1,16 +1,28 @@
-{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %} {% for agenda in agendas %}
-<div class="agenda form-inline">
-    <h2><a href="{% url 'agendas:detail' slug=agenda.slug %}">{{agenda.title}}-{{agenda.year}}</a></h2>
-    <a class="mx-2" href="{% url 'agendas:form' slug=agenda.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
-    <a class="mx-2" href="{% url 'agendas:delete' agenda_id=agenda.id %}">{% bs_icon 'trash' extra_classes='text-danger'%}</a>
+{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
+<div class="container p-4 my-4 shadow rounded">
 
-</div>
-{% endfor %}
+    <h2 class="my-3 display-4">Agendas en categoría: {{category.title}}</h2>
+    {% if agendas %} {% for agenda in agendas %}
 
-<div class="form-group row">
-    <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'agendas:form' %}">
-        <input type="hidden" name="category" value="{{category.slug}}">
-        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Agenda</button>
-    </form>
+    <div class="agenda row">
+
+        <div class="dropdown">
+            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
+            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdownMenuLink">
+                <li class="btn" onclick="location.href='{% url 'agendas:detail' slug=agenda.slug %}';">Ver {% bs_icon 'eye' extra_classes='text-primary mx-2'%}</li>
+                <li class="btn" onclick="location.href='{% url 'agendas:form' slug=agenda.slug %}';">Editar {% bs_icon 'pencil-square' extra_classes='text-success mx-2'%}</li>
+                <li class="btn" onclick="if(confirm('¡Atención! ¿Desea borrar la agenda {{agenda.title}} y sus contactos asociados?'))
+                {location.href='{% url 'agendas:delete' agenda_id=agenda.id %}'; alert('agenda borrada');}">Borrar {% bs_icon 'trash' extra_classes='text-danger mx-2'%}</li>
+            </ul>
+        </div>
+        <h4><a class="lead" href="{% url 'agendas:detail' slug=agenda.slug %}">{{agenda.year}} - {{agenda.title}}</a></h4>
+    </div>
+    {% endfor %} {% else %} No se han encontrado agendas {% endif %}
+    <div class="form-group row">
+        <form class="form-inline col-auto mx-auto mt-3" action="{% url 'agendas:form' %}">
+            <input type="hidden" name="category" value="{{category.slug}}">
+            <button class="btn bg-white shadow col-12 mx-3 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Agenda</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

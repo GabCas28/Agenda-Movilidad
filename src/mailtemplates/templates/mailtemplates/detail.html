@@ -3,14 +3,19 @@
 <div class="container shadow rounded p-4 my-4">
     <div class="title">
         <form class="form-inline" action="{% url 'templates:form' slug=template.slug %}">
-            <h2>{{template.title}} - {{template.category}} - {{template.year}}</h2>
+            <h2 class="display-4">{{template.title}}</h2>
             <button class="btn bg-white shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Plantilla</button>
         </form>
-        <p>Creada en: {{template.creation_date}}</p>
+        <div class="row">
+            <p class="col-auto mx-2">{{template.category}}</p>
+            <p class="col-auto mx-2">{{template.year}}</p>
+            <p class="col-auto mx-2">{{template.creation_date}}</p>
+
+        </div>
     </div>
     <div class="subject p-3 my-4">
 
-        <div class="content rounded p-3 card col-12 d-inline-block"> <strong>Asunto: </strong>{{template.subject}}</div>
+        <div class="content rounded p-3 card col-12 d-inline-block"> <a class="lead">Asunto: </a>{{template.subject}}</div>
         <div class="content rounded p-3 card">
             {{template.content|safe}}
         </div>

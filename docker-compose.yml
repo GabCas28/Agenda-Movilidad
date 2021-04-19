@@ -1,26 +1,25 @@
-# Use postgres/example user/password credentials
-version: '3.1'
+version: '3.2'
 
 services:
   db:
     image: postgres
+    restart: always
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    env_file:
+       - ./.env
   agenda:
     build: ./src/
     image: gabcas28/mobility-agenda
+    restart: always
     depends_on:
       - db
-    command:  bash -c "invoke install && invoke start"    
+    command:  bash -c "invoke connect && invoke install && invoke start"    
     volumes:
       - ./src:/src
     ports:
       - 8000:8000
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./.env

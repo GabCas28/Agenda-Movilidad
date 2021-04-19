@@ -14,19 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-
+    path('', include("agendas.urls")),
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
     path('about/', views.about),
     path('import/', include("importer.urls")),
     path('templates/', include("mailtemplates.urls")),
-    path('agendas/', include("agendas.urls")),
     path('sender/', include("mailsender.urls")),
     path('summernote/', include('django_summernote.urls')),
 ]

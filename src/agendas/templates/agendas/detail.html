@@ -3,10 +3,15 @@
 <div class="container p-4 my-4 shadow rounded">
     <div class="agenda p-3">
         <form class="form-inline" action="{% url 'agendas:form' slug=agenda.slug %}">
-            <h2>{{agenda.title}} - {{agenda.category}} - {{agenda.year}}</h2>
+            <h2 class="display-4">{{agenda.title}}</h2>
             <button class="btn bg-white shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Agenda</button>
         </form>
-        <p>Created on: {{agenda.creation_date}}</p>
+        <div class="row">
+            <p class="col-auto mx-2">{{agenda.category}}</p>
+            <p class="col-auto mx-2">{{agenda.year}}</p>
+            <p class="col-auto mx-2">{{agenda.creation_date}}</p>
+
+        </div>
     </div>
     <div class="contacts">
         {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %}

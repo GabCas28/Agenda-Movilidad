@@ -1,7 +1,7 @@
 from typing import Text
 from django import forms
 from django.forms import ModelForm, Form, ModelMultipleChoiceField
-from django.forms.fields import BooleanField, CharField, EmailField, ChoiceField
+from django.forms.fields import BooleanField, CharField, EmailField, ChoiceField, MultipleChoiceField
 from django.forms.widgets import PasswordInput
 from .models import  MassMail
 from django_summernote.widgets import SummernoteWidget
@@ -11,8 +11,8 @@ from contacts.models import Contact
 from mailtemplates.models import MailTemplate
 
 class MassMailForm(ModelForm):
-    user= CharField(required=True)
-    password = CharField(widget=PasswordInput())
+    user= CharField(required=True, label="Email del remitente")
+    password = CharField(widget=PasswordInput(), label="Contraseña del email")
     agenda = ChoiceField()
     template = ChoiceField()
     maintain = BooleanField(required=False, label="Conservar contactos existentes")

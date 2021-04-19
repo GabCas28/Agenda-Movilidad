@@ -35,3 +35,36 @@
 #id_contact_info {
     width: 100% !important
 }
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+html,
+body {
+    font-size: 1rem !important;
+}
+
+@media (min-width: 576px) {
+    /* @include media-breakpoint-up(sm) { */
+    html,
+    body {
+        font-size: 1.02rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    /* @include media-breakpoint-up(md) { */
+    html,
+    body {
+        font-size: 1.05rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    /* @include media-breakpoint-up(lg) { */
+    html,
+    body {
+        font-size: 1.1rem !important;
+    }
+}

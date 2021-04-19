@@ -1,16 +1,27 @@
-{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %} {% for template in templates %}
-<div class="template form-inline">
-    <h2><a href="{% url 'templates:detail' slug=template.slug %}">{{template.title}}</a></h2>
-    <a class="mx-2" href="{% url 'templates:form' slug=template.slug %}">{% bs_icon 'pencil-square' extra_classes='text-success'%}</a>
-    <a class="mx-2" href="{% url 'templates:delete' template_id=template.id %}">{% bs_icon 'trash' extra_classes='text-danger'%}</a>
+{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
 
-</div>
-{% endfor %}
+<div class="container p-4 my-4 shadow rounded">
 
-<div class="form-group row">
-    <form class="form-inline col-12 col-md-3 mx-auto" action="{% url 'templates:form' %}">
-        <input type="hidden" name="category" value="{{category.slug}}">
-        <button class="btn bg-white shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Plantilla</button>
-    </form>
+    <h2 class="my-3 display-4">Plantillas en categoría: {{category.title}}</h2>
+    {% if templates %} {% for template in templates %}
+    <div class="template form-inline">
+        <div class="dropdown">
+            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
+            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdownMenuLink">
+                <li class="btn" onclick="location.href='{% url 'templates:detail' slug=template.slug %}';">Ver {% bs_icon 'eye' extra_classes='text-primary mx-2'%}</li>
+                <li class="btn" onclick="location.href='{% url 'templates:form' slug=template.slug %}';">Editar {% bs_icon 'pencil-square' extra_classes='text-success mx-2'%}</li>
+                <li class="btn" onclick="if(confirm('¡Atención! ¿Desea borrar la categoria {{template.title}} y plantillas asociadas?'))
+            {location.href='{% url 'templates:delete' template_id=template.id %}'; alert('agenda borrada');}">Borrar {% bs_icon 'trash' extra_classes='text-danger mx-2'%}</li>
+            </ul>
+        </div>
+        <h2><a href="{% url 'templates:detail' slug=template.slug %}">{{template.title}}</a></h2>
+    </div>
+    {% endfor %} {% else %} No se han encontrado plantilals {% endif %}
+    <div class="form-group row">
+        <form class="form-inline col-auto mx-auto mt-3" action="{% url 'templates:form' %}">
+            <input type="hidden" name="category" value="{{category.slug}}">
+            <button class="btn bg-white shadow col-12 mx-3">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Plantilla</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
