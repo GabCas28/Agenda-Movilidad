@@ -1,8 +1,10 @@
 {% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
 <div class="container p-4 my-4 shadow rounded">
-
+    {% if category %}
     <h2 class="my-3 display-4">Agendas en categoría: {{category.title}}</h2>
-    {% if agendas %} {% for agenda in agendas %}
+    {% else %}
+    <h2 class="my-3 display-4">Todas las agendas</h2>
+    {% endif %}{% if agendas %} {% for agenda in agendas %}
 
     <div class="agenda row">
 

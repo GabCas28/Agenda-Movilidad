@@ -14,7 +14,8 @@ def clean(c, docs=False, bytecode=False, extra=''):
 
 @task
 def start(c, docs=False):
-    c.run("python manage.py runserver 0.0.0.0:8000")
+    # c.run("python manage.py runserver 0.0.0.0:8000")
+    c.run("gunicorn main.wsgi --bind 0.0.0.0:8000")
 
     
 @task
@@ -25,4 +26,4 @@ def install(c, docs=False):
     
 @task
 def connect(c, docs=False):
-    c.run("source ./wait-for-posgre.sh db:5432")
+    c.run("source ./wait-for-posgre.sh")

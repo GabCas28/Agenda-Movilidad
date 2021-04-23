@@ -48,7 +48,7 @@ class MassMail(models.Model):
                     return 'ugr'
 
             def engine(x,user, password):
-                return {'gmail':EmailBackend(host="smtp.gmail.com", port=465, use_ssl=True, username=user, password=password), 
+                return {'gmail':EmailBackend(host="smtp.gmail.com", port=587, use_tsl=True ,use_ssl=False, username=user, password=password), 
                 'ugr':EmailBackend(host="smtp.ugr.es", port=587 , use_tsl=True,use_ssl=False, username=user, password=password)}[x]
 
             backend=engine(chooseEngine(user), user, password)

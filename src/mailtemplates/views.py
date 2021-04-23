@@ -58,11 +58,8 @@ def template_form(request, slug=''):
 @login_required
 def category_form(request, category=''):
     category = Category.objects.get(slug=category) if category else None
-    logger.info("form")
     if request.method=="POST":
-        logger.info("POST form")
         form = forms.CategoryForm(request.POST or None, instance=category)
-        logger.info(form)
         if form.is_valid():
             category_instance = form.save(commit=False)
             category_instance.save()

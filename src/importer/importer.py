@@ -1,5 +1,7 @@
 import pandas
 from contacts.models import Contact
+
+## Contact helper functions
 def extractHeaders(contacts):
     headers=[]
     for contact in contacts:
@@ -29,7 +31,7 @@ def removeState(input_dict):
     del input_dict["_state"]
     return input_dict
 
-
+## Parsing file functions
 def getContactsFromFile(f, header_sample):
     return parseContactsFromFile(f, header_sample).to_dict('records')
 
@@ -43,70 +45,100 @@ def findEmail(contact_info, key_mail):
 def findFirstEmail(contact_info):
     email = [val for key, val in contact_info.items() if isinstance(val, str) and '@' in val][0]
     return email
-def parseContactsFromFile(input, header_sample):
-    print("input",filetype.guess(input))
+def parseContactsFromFile(input_file, header_sample):
     try:
-        input_list = pandas.read_html(input)
-        print("input_list",input_list)
+        input_list = pandas.read_html(input_file)
+        file = HtmlFile(input_list,header_sample)
     except:
-        input_list=pandas.read_excel(input)
-        print("input_list",input_list)
-    return getParsedData(input_list, header_sample)
+        input_list=pandas.read_excel(input_file, header=None, sheet_name=None)
+        print("INPUT", input_list)
+        file = ExcelFile(input_list,header_sample)
+    finally: 
+        return file.parseSheet()
 
-
-def selectDataframe(input_list, header_sample):
-    try:
-        dataframe = findDataframe(input_list, header_sample)
-    except:
-        dataframe = input_list
-    return parseDataframe(dataframe,header_sample)
-
-def getParsedData(input_list, header_sample):
-    try:
-        dataframe = findDataframe(input_list, header_sample)
-    except:
-        dataframe = input_list
-    return parseDataframe(dataframe,header_sample)
-        
-def findDataframe(input_list, header_sample):
-    for i in range(len(input_list)):
-        df=input_list[i]
-        if isHeaderInDataframe(df, header_sample):
-            return df
-    raise Exception("Sorry, header sample \""+header_sample+"\" not found in list")
-    
-def isHeaderInDataframe(df, header_sample):
-    return df.isin([header_sample]).any().any()
-
-def parseDataframe(df,header_sample):
-    index = getIndexOfHeader(df, header_sample)
-    result = splitDataframe(df, index)
-    return replaceNaNforNull(result)
-
-def splitDataframe(df, index):
-    return pandas.DataFrame(df.values[index+1:], columns=df.values[index])
-
-
-def replaceNaNforNull(df):
-    return df.where(df.notna(), None)
-
-def getIndexOfHeader(df, header_sample):
-    header_column = headerColumn(df,header_sample)
-    return extractIndex(header_column)
-
-def extractIndex(booleanArray):
-     return [i for i, x in enumerate(booleanArray) if x][0]
-
-def headerColumn(df, header_sample):
-    for i in df:
-        if df[i].isin([header_sample]).any():
-            return df[i].isin([header_sample]).array
-        if header_sample == i:
-            return df[i]
-    raise Exception("Header \""+header_sample+"\" Not Found in dataframe")
-
-
-class Importer(object):
+class File(object):
+    sheets = []
+    sheet = []
     def __init__():
         pass
+    
+    def selectSheet(self, header):
+        sheets=self.sheets
+        
+        def containsElementInElement(df,e):
+            return df.isin([e]).any().any()
 
+        def findSheet():
+            for i in range(self.n_sheets):
+                sheet=sheets[i]
+                if containsElementInElement(sheet, header):
+                    return sheet
+            raise Exception("Sorry, header sample \""+header+"\" not found in list")
+            
+        sheet = findSheet()
+        return sheet
+    def parseSheet(self):
+        print("PARSING SHEET")
+        header = self.header
+        sheet = self.sheet
+        
+        def containsElement(df,e):
+            return df.isin([e]).any()
+
+        def splitDataframe(df, index):
+            return pandas.DataFrame(df.values[index+1:], columns=df.values[index])
+            
+        def replaceNaNforNull(df):
+            return df.where(df.notna(), None)
+
+        def headerColumn(df, h):
+            for i in df:
+                if containsElement(df[i],h):
+                    return df[i].isin([h]).array
+                if header == i:
+                    return df[i]
+            raise Exception("Header \""+h+"\" Not Found in dataframe")
+
+        def extractIndex(booleanArray):
+            return [i for i, x in enumerate(booleanArray) if x][0]
+
+        def getIndexOfHeader(df, h):
+            header_column = headerColumn(df,h)
+            return extractIndex(header_column)
+
+        index = getIndexOfHeader(sheet, header)
+        result = replaceNaNforNull(splitDataframe(sheet, index))
+        return result
+
+class HtmlFile(File):
+    
+    def __init__(self, input_list, header):
+        self.sheets = input_list
+        self.n_sheets=len(self.sheets)
+        self.header = header
+        self.sheet = self.selectSheet(header)
+
+
+
+class ExcelFile(File):
+    
+    def __init__(self, input_list, header):
+        self.sheets = input_list
+        self.sheet = self.selectSheet(header)
+        self.n_sheets=len(self.sheets)
+        self.header = header
+        
+    def selectSheet(self, header):
+        sheets=self.sheets
+        
+        def containsElementInElement(df,e):
+            return df.isin([e]).any().any()
+
+        def findSheet():
+            for i in sheets:
+                if containsElementInElement(sheets[i], header):
+                    return sheets[i]
+            raise Exception("Sorry, header sample \""+header+"\" not found in list")
+            
+        sheet = findSheet()
+        return sheet

@@ -4,7 +4,7 @@ from django.db.models.functions import datetime
 
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name="Nombre")
-    slug = models.SlugField(verbose_name="Slug de la categoria (URL amigable)")
+    slug = models.SlugField(verbose_name="Slug de la categoria (URL amigable)", unique=True)
     def __str__(self):
         return self.title
 

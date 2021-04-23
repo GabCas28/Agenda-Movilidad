@@ -21,7 +21,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include("agendas.urls")),
     path('admin/', admin.site.urls),
     path('accounts/', include("accounts.urls")),
     path('about/', views.about),
@@ -29,6 +28,7 @@ urlpatterns = [
     path('templates/', include("mailtemplates.urls")),
     path('sender/', include("mailsender.urls")),
     path('summernote/', include('django_summernote.urls')),
+    path('', include("agendas.urls")),
 ]
 
 if settings.DEBUG:

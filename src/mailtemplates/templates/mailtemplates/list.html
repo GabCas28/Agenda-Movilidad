@@ -1,9 +1,11 @@
 {% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
 
 <div class="container p-4 my-4 shadow rounded">
-
+    {% if category %}
     <h2 class="my-3 display-4">Plantillas en categoría: {{category.title}}</h2>
-    {% if templates %} {% for template in templates %}
+    {% else %}
+    <h2 class="my-3 display-4">Todas las plantillas</h2>
+    {% endif %}{% if templates %} {% for template in templates %}
     <div class="template form-inline">
         <div class="dropdown">
             <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
