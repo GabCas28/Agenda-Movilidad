@@ -156,6 +156,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATIC_ROOT = os.path.join('/home/agenda/', 'static/')
 
 LOGGING = {
     'version': 1,
@@ -172,7 +173,7 @@ LOGGING = {
 }
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join('/home/agenda/', 'media/')
 X_FRAME_OPTIONS = 'ALLOWALL'
 
 XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']

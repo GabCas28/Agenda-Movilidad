@@ -23,6 +23,7 @@ def install(c, docs=False):
     c.run("python manage.py makemigrations")
     c.run("python manage.py migrate")
     c.run("python manage.py initadmin")
+    c.run("python manage.py collectstatic --no-input")
     
 @task
 def connect(c, docs=False):
