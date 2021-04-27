@@ -24,7 +24,7 @@ SECRET_KEY = '+(q8r#v#f^5q*ie=a)ejwc=_7_=+f)$h%=oi$2!#xzu&-r1!x$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['hadoop.ugr.es']
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
