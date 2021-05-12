@@ -27,9 +27,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['hadoop.ugr.es', '150.214.190.198']
 
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_PORT=587
+# EMAIL_USE_TLS=True
 # Application definition
 
 INSTALLED_APPS = [
