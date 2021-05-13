@@ -50,7 +50,7 @@ def parseContactsFromFile(input_file, header_sample):
         input_list = pandas.read_html(input_file)
         file = HtmlFile(input_list,header_sample)
     except:
-        input_list=pandas.read_excel(input_file, header=None, sheet_name=None)
+        input_list=pandas.read_excel(input_file, header=None, sheet_name=None, date_parser=None)
         print("INPUT", input_list)
         file = ExcelFile(input_list,header_sample)
     finally: 
