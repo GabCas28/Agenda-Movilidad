@@ -33,7 +33,7 @@ def removeState(input_dict):
 
 ## Parsing file functions
 def getContactsFromFile(f, header_sample):
-    return parseContactsFromFile(f, header_sample).to_dict('records')
+    return parseContactsFromFile(f, header_sample).to_dict('records') #Convert to dict
 
 
 def findEmail(contact_info, key_mail):
@@ -50,7 +50,7 @@ def parseContactsFromFile(input_file, header_sample):
         input_list = pandas.read_html(input_file)
         file = HtmlFile(input_list,header_sample)
     except:
-        input_list=pandas.read_excel(input_file, header=None, sheet_name=None, date_parser=None)
+        input_list=pandas.read_excel(input_file, header=None, sheet_name=None, date_parser=None) # DOnt use date_parser
         print("INPUT", input_list)
         file = ExcelFile(input_list,header_sample)
     finally: 
