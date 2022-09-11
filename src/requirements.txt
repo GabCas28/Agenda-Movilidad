@@ -17,7 +17,7 @@ invoke==1.5.0
 libsass==0.20.1
 lxml==4.9.1
 netcat==0.0.1a0
-numpy==1.20.1
+numpy==1.22.0
 openpyxl==3.0.7
 packaging==20.9
 pandas==1.2.2
