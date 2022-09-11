@@ -15,7 +15,7 @@ gunicorn==20.1.0
 html5lib==1.1
 invoke==1.5.0
 libsass==0.20.1
-lxml==4.6.3
+lxml==4.9.1
 netcat==0.0.1a0
 numpy==1.20.1
 openpyxl==3.0.7
