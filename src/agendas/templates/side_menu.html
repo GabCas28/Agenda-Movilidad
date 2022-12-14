@@ -1,0 +1,24 @@
+<!DOCTYPE html> {% if menu_items and menu_title %}
+<div class="sidenav shadow bg-light container">
+    <h3>{% if menu_type == 'agenda' %}
+        <a href="{% url 'agendas:home' %}" class="text-decoration-none">{{menu_title}}</a> {% elif menu_type == 'plantilla' %}
+        <a href="{% url 'templates:home' %}" class="text-decoration-none">{{menu_title}}</a> {% endif %}</h3>
+    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        {% for item in menu_items %}
+        <!-- <li class="nav-item"> {{ item.label.title }}</li> -->
+        <div class="nav-item">
+            <a class="nav-link ">
+                {{ item.label.title }}
+            </a>
+            <div class="">
+                {% for val in item.value %} {% if menu_type == 'agenda' %}
+                <li> <a class="dropdown-item" href="{% url 'agendas:detail' slug=val.slug %}">{{ val.year }} {{ val.title }} </a></li>
+                {% elif menu_type == 'plantilla' %}
+                <li> <a class="dropdown-item" href="{% url 'templates:detail' slug=val.slug %}">{{ val.year }} {{ val.title }} grr</a></li>
+                {% endif %} {% endfor %}
+            </div>
+        </div> {% endfor %}
+
+    </ul>
+</div>
+{% endif %}

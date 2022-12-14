@@ -68,3 +68,34 @@ body {
         font-size: 1.1rem !important;
     }
 }
+
+table td {
+    white-space: nowrap;
+}
+
+.navbar {
+    z-index: 3;
+    position: sticky;
+    top: 0;
+}
+
+.table {
+    max-height: 60vh;
+}
+
+.sidenav {
+    height: 100%;
+    width: 14%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 5%;
+    transition: 0.5s;
+}
+
+.sidenav .dropdown-item {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

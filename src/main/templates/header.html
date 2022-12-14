@@ -15,7 +15,7 @@
                 <li class="rounded nav-item {% if 'sender' in request.path %}bg-secondary{% endif %} ">
                     <a class="navbar-brand mx-3 {% if 'sender' in request.path %}text-white{% endif %}" href="{% url 'sender:form' %}">Difusión de mensajes</a>
                 </li>
-                <li class="rounded nav-item dropdown col-lg-2 ml-lg-auto">
+                <li class="rounded nav-item dropdown col-lg-2 ms-lg-auto">
                     {% if user.is_authenticated %}
                     <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {% bs_icon 'three-dots-vertical' extra_classes='mx-2'%}{{user}}

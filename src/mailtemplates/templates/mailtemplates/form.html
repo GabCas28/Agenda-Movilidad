@@ -1,6 +1,5 @@
 {% extends 'header.html' %} {% block content %}
 <div class="container shadow my-4 p-4">
-    <h2>{{template|yesno:"Editar, Crear"}} Plantilla</h2>
     <form class="site-form " action="
         {% if template %} 
         {% url 'templates:form' slug=template.slug %}

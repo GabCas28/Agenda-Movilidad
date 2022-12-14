@@ -32,7 +32,10 @@ def contact_detail(request, contact_id):
 @login_required
 def contact_form(request, slug, contact_id=''):
     contact = Contact.objects.get(id=contact_id) if contact_id else None
-    agenda = Agenda.objects.get(slug=slug) 
+    try:
+        agenda = Agenda.objects.get(id=slug)
+    except:
+        agenda = Agenda.objects.get(slug=slug)
     logger.info("form")
     if request.method=="POST":
         logger.info("POST form")

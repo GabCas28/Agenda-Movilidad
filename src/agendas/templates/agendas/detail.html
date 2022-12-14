@@ -1,21 +1,24 @@
-{% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}
+<!DOCTYPE html> {% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}{% load side_menu %} {% side_menu %}
 
 <div class="container p-4 my-4 shadow rounded">
     <div class="agenda p-3">
-        <form class="form-inline" action="{% url 'agendas:form' slug=agenda.slug %}">
-            <h2 class="display-4">{{agenda.title}}</h2>
-            <button class="btn bg-white shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Agenda</button>
-        </form>
+        {% if agenda %}
         <div class="row">
-            <p class="col-auto mx-2">{{agenda.category}}</p>
-            <p class="col-auto mx-2">{{agenda.year}}</p>
-            <p class="col-auto mx-2">{{agenda.creation_date}}</p>
+            <h3 class="col-auto mx-2">{{agenda.title}}</h3>
+            <p class="col-auto mx-2 my-auto">{{agenda.category}}</p>
+            <p class="col-auto mx-2 my-auto">{{agenda.year}}</p>
+            <p class="col-auto mx-2 my-auto"> Agenda creada el {{agenda.creation_date}}</p>
 
+            <div class="col-auto ms-auto my-auto">
+                <form class="form-inline" action="{% url 'agendas:form' slug=agenda.slug %}">
+                    <button class="btn bg-white shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Agenda</button>
+                </form>
+            </div>
         </div>
+        {% endif %}
     </div>
     <div class="contacts">
-        {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %}
-
+        {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %} {% if agenda %}
         <div class="form-group row">
             {% include 'importer/form.html' %}
             <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'agendas:contacts:form' slug=agenda.slug %}">
@@ -26,5 +29,6 @@
                 <button class="btn bg-white shadow col-12 ">{% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast</button>
             </form>
         </div>
+        {% endif %}
     </div>
     {% endblock content %}

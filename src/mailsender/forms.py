@@ -11,8 +11,6 @@ from contacts.models import Contact
 from mailtemplates.models import MailTemplate
 
 class MassMailForm(ModelForm):
-    user= CharField(required=True, label="Email del remitente")
-    password = CharField(widget=PasswordInput(), label="Contraseña del email")
     agenda = ChoiceField()
     template = ChoiceField()
     maintain = BooleanField(required=False, label="Conservar contactos existentes")
@@ -41,7 +39,7 @@ class MassMailForm(ModelForm):
 
     class Meta:
         model = MassMail
-        fields = ['subject', 'recipients', 'headers','content','user', 'password', 'agenda', 'maintain', 'template']
+        fields = ['subject', 'recipients', 'headers','content', 'agenda', 'maintain', 'template']
         widgets = {
             'content': SummernoteWidget(),
             # 'recipients': FilteredSelectMultiple("contacts", is_stacked=False),
