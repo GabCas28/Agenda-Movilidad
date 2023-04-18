@@ -11,8 +11,8 @@ django-sslserver==0.22
 django-summernote==0.8.11.6
 djangorestframework==3.14.0
 et-xmlfile==1.0.1
+future==0.18.3
 flaskwebgui==1.0.3
-future==0.18.2
 gunicorn==20.1.0
 html5lib==1.1
 invoke==1.5.0
