@@ -1,4 +1,4 @@
-{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
+{% extends 'base.html' %} {% block content %}{% load django_bootstrap_icons %}
 <div class="container p-4 my-4 shadow rounded">
     {% if category %}
     <h2 class="my-3 display-4">Agendas en categoría: {{category.title}}</h2>
@@ -9,7 +9,7 @@
     <div class="agenda row">
 
         <div class="dropdown">
-            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
+            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
             <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdownMenuLink">
                 <li class="btn" onclick="location.href='{% url 'agendas:detail' slug=agenda.slug %}';">Ver {% bs_icon 'eye' extra_classes='text-primary mx-2'%}</li>
                 <li class="btn" onclick="location.href='{% url 'agendas:form' slug=agenda.slug %}';">Editar {% bs_icon 'pencil-square' extra_classes='text-success mx-2'%}</li>
@@ -23,7 +23,7 @@
     <div class="form-group row">
         <form class="form-inline col-auto mx-auto mt-3" action="{% url 'agendas:form' %}">
             <input type="hidden" name="category" value="{{category.slug}}">
-            <button class="btn bg-white shadow col-12 mx-3 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Agenda</button>
+            <button class="btn shadow col-12 mx-3 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Nueva Agenda</button>
         </form>
     </div>
 </div>

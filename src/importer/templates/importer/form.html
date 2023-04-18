@@ -1,10 +1,12 @@
-<div class="dropdown show col-auto col-md-4 mx-auto m-4 p-4">
-    <a class="col-12 btn bg-white shadow dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="dropdown col-auto col-md-4 mx-auto">
+    <a class="col-12 btn shadow dropdown-toggle" href="#" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
       Importar Archivo
+      <i class="bi bi-caret-down"></i>
+
     </a>
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <form class="site-form p-3" action="{% url 'agendas:importer:main' slug=agenda.slug %}" method="post" enctype="multipart/form-data">
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <form class="site-form form-group p-3 shadow" action="{% url 'agendas:importer:main' slug=agenda.slug %}" method="post" enctype="multipart/form-data">
 
             {% csrf_token %} {{ form.non_field_errors }} {% for input in form %}
             <div class="dropdown-item my-2">
@@ -12,7 +14,7 @@
             </div>
             {% endfor %}
             <div class="dropdown-item  my-2">
-                <button class="btn bg-white col-12 shadow">Importar</button>
+                <button class="btn col-12 shadow-sm">Importar</button>
             </div>
         </form>
     </div>

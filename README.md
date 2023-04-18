@@ -94,3 +94,4 @@ La clase Alumno se creará más adelante pues requiere de más información.
 ## Licencia
 
 Este proyecto está bajo la licencia: [GPL-3.0 License](LICENSE.md).
+https://learn.microsoft.com/en-us/dotnet/api/microsoft.office.interop.outlook._mailitem.bodyformat?view=outlook-pia
