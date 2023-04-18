@@ -35,3 +35,4 @@ class Agenda(models.Model):
 
     def __str__(self):
         return str(self.year) + "-" + str(self.category) + "-" + self.title
+

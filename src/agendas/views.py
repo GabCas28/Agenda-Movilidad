@@ -7,6 +7,7 @@ from . import forms
 from django.core import serializers
 from importer.forms import UploadFileForm
 from importer.importer import extract_headers
+from .forms import AgendaForm, CategoryForm
 
 # Get an instance of a logger
 import logging
@@ -23,7 +24,9 @@ from rest_framework.parsers import JSONParser
 
 def categories(request):
     categories = Category.objects.all()
-    return render(request, "agendas/categories/list.html", {"categories": categories})
+    return render(
+        request, "agendas/categories/categories_list.html", {"categories": categories}
+    )
 
 
 def agenda_list(request):
@@ -33,11 +36,13 @@ def agenda_list(request):
         agendas = Agenda.objects.filter(category=category.id).order_by("year")
 
         return render(
-            request, "agendas/list.html", {"agendas": agendas, "category": category}
+            request,
+            "agendas/agendas_list.html",
+            {"agendas": agendas, "category": category},
         )
     else:
         agendas = Agenda.objects.all()
-    return render(request, "agendas/list.html", {"agendas": agendas})
+    return render(request, "agendas/agendas_list.html", {"agendas": agendas})
 
 
 def get_agendas(request):
@@ -63,7 +68,7 @@ def agenda_detail(request, slug=None):
     headers = extract_headers(contacts)
     return render(
         request,
-        "agendas/detail.html",
+        "agendas/agendas_detail.html",
         {
             "agenda": agenda,
             "contact_list": contacts,
@@ -79,27 +84,20 @@ def agenda_detail(request, slug=None):
 
 @login_required
 def agenda_form(request, slug=""):
-    category = request.GET.get("category") or None
     agenda = Agenda.objects.get(slug=slug) if slug else None
-    logger.info("form")
     if request.method == "POST":
-        logger.info("POST form")
-        form = forms.AgendaForm(request.POST or None, instance=agenda)
-        logger.info(form)
-        if form.is_valid():
-            contact_instance = form.save(commit=False)
-            contact_instance.save()
+        form = AgendaForm(request.POST or None, instance=agenda)
+        if form.is_valid() :
+            form.save()
             return redirect("agendas:home")
     else:
+        form = AgendaForm(initial=model_to_dict(agenda) if agenda else None)
 
-        if category:
-            category = Category.objects.get(slug=category)
-            form = forms.AgendaForm(
-                {"title": "", "slug": "", "year": "", "category": category.id}
-            )
-        else:
-            form = forms.AgendaForm(initial=model_to_dict(agenda) if agenda else None)
-    return render(request, "agendas/form.html", {"agenda": agenda, "form": form})
+    return render(
+        request,
+        "agendas/agendas_form.html",
+        {"agenda": agenda, "form": form},
+    )
 
 
 @login_required
@@ -117,7 +115,9 @@ def category_form(request, category=""):
     else:
         form = forms.CategoryForm(initial=model_to_dict(category) if category else None)
     return render(
-        request, "agendas/categories/form.html", {"category": category, "form": form}
+        request,
+        "agendas/categories/categories_form.html",
+        {"category": category, "form": form},
     )
 
 

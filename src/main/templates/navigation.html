@@ -66,8 +66,7 @@
         btn.checked = true
     }
     btn.addEventListener("click", function() {
-        document.cookie = theme.className === 'dark-theme' ? "dark_theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/" : "dark_theme=dark-theme;path=/";
+        document.cookie = theme.className === 'dark-theme' ? "dark_theme=;path=/" : "dark_theme=dark-theme;path=/";
         theme.className = theme.className === 'dark-theme' ? '' : 'dark-theme'
-            // btn.value = theme.className === 'dark-theme' ? '' : 'dark-theme'
     });
 </script>
