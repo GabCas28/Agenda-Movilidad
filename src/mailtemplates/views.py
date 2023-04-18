@@ -57,7 +57,7 @@ def template_detail(request, slug):
     ]
     return render(
         request,
-        "mailtemplates/detail.html",
+        "mailtemplates/agendas_detail.html",
         {
             "template": template,
             "menu_items": menu_items,

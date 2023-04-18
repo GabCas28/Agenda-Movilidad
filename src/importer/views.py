@@ -87,4 +87,4 @@ def upload_file(request, slug):
             )
     else:
         form = UploadFileForm()
-    return render(request, "agendas/detail.html", {"form": form})
+    return render(request, "agendas/agendas_detail.html", {"form": form})
