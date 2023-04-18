@@ -6,7 +6,7 @@ from django.db.models.functions import datetime
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name="Nombre")
     slug = models.SlugField(
-        verbose_name="Slug de la categoria (URL amigable)", unique=True
+        verbose_name="URL", unique=True
     )
 
     def __str__(self):
@@ -16,7 +16,7 @@ class Category(models.Model):
 class Agenda(models.Model):
     title = models.CharField(max_length=199, default="", verbose_name="Título")
     slug = models.SlugField(
-        default="", unique=True, verbose_name="Slug de la agenda (URL amigable)"
+        default="", unique=True, verbose_name="URL amigable" 
     )
     category = models.ForeignKey(
         Category,

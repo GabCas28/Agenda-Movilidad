@@ -1,14 +1,18 @@
 import pandas
 from contacts.models import Contact
 
-## Contact helper functions
-def extractHeaders(contacts):
-    headers=[]
-    for contact in contacts:
-        for key in contact['contact_info']:
-            if key not in headers:
-                headers.append(key)
-    return headers
+def extract_headers(contacts: list[dict[str, any]]) -> list[str]:
+    """
+    Extracts the unique headers from a list of contacts.
+
+    Args:
+        contacts: A list of dictionaries representing contacts.
+
+    Returns:
+        A list of unique headers from the contact dictionaries.
+    """
+    headers = {key for contact in contacts for key in contact['contact_info']}
+    return list(headers)
     
 def fromDictToContact(input_dict):
     return Contact(**input_dict)
@@ -91,7 +95,7 @@ class File(object):
         def replaceNaNforNull(df):
             return df.where(df.notna(), None)
 
-        def headerColumn(df, h):
+        def header_check(df, h):
             for i in df:
                 if containsElement(df[i],h):
                     return df[i].isin([h]).array
@@ -99,14 +103,11 @@ class File(object):
                     return df[i]
             raise Exception("Header \""+h+"\" Not Found in dataframe")
 
-        def extractIndex(booleanArray):
+        def extract_index(booleanArray):
             return [i for i, x in enumerate(booleanArray) if x][0]
 
-        def getIndexOfHeader(df, h):
-            header_column = headerColumn(df,h)
-            return extractIndex(header_column)
-
-        index = getIndexOfHeader(sheet, header)
+        header_check_list = header_check(sheet, header)
+        index = extract_index(header_check_list)
         result = replaceNaNforNull(splitDataframe(sheet, index))
         return result
 

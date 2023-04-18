@@ -1,4 +1,4 @@
-{% extends 'header.html' %} {% block content %}{% load django_bootstrap_icons %}
+{% extends 'base.html' %} {% block content %}{% load django_bootstrap_icons %}
 
 <div class="container p-4 my-4 shadow rounded">
 
@@ -9,7 +9,7 @@
     {% if categories %} {% for category in categories %}
     <div class="category form-inline">
         <div class="dropdown">
-            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
+            <a class="dropdown-toggle badge" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% bs_icon 'three-dots-vertical' extra_classes='text-primary mx-2'%}</a>
             <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdownMenuLink">
                 <li class="btn" onclick="location.href='{% url 'agendas:list'%}?category={{category.slug}}';">Ver {% bs_icon 'eye' extra_classes='text-primary mx-2'%}</li>
                 <li class="btn" onclick="location.href='{% url 'agendas:category.form' category=category.slug %}';">Editar {% bs_icon 'pencil-square' extra_classes='text-success mx-2'%}</li>
@@ -22,7 +22,7 @@
     {% endfor %} {% else %} No se han encontrado categorías {% endif %}
     <div class="form-group row">
         <form class="form-inline col-auto mx-auto mt-3" action="{% url 'agendas:category.form' %}">
-            <button class="btn bg-white shadow col-12 mx-3 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Categoría</button>
+            <button class="btn  shadow col-12 mx-3 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Categoría</button>
         </form>
     </div>
 </div>

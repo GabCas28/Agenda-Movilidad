@@ -16,7 +16,7 @@ class MailTemplate(models.Model):
     category = models.ForeignKey(
         Category, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Categoría")
     title = models.CharField(max_length=100, default="", blank=True, verbose_name="Título")
-    slug = models.SlugField(default="", unique=True, verbose_name="URL amigable")
+    slug = models.SlugField(default="", unique=True, verbose_name="URL")
     subject = models.CharField(max_length=100, default="", blank=True, verbose_name="Asunto")
     content = models.TextField(blank=True, default="", verbose_name="Cuerpo del mensaje")
     

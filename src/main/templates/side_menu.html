@@ -1,0 +1,96 @@
+{% if menu_items and menu_title %}
+<div class="sidenav shadow container side-menu expanded">
+    <div class="header row">
+        <div class="title-container col-4">
+            <h3 class="title">
+                {% if menu_type == 'agenda' %}
+                <a href="{% url 'agendas:home' %}" class="text-decoration-none">{{menu_title}}</a> {% elif menu_type == 'plantilla' %}
+                <a href="{% url 'templates:home' %}" class="text-decoration-none">{{menu_title}}</a> {% endif %}
+            </h3>
+        </div>
+
+        <div class="btn-container ms-auto col-4">
+
+            {% if menu_type == 'agenda' %}
+            <form class="form-inline" action="{% url 'agendas:form' %}">
+                <button class="btn shadow btn-sm btn-circle"><i class="bi bi-plus"></i></button>
+            </form>
+            {% elif menu_type == 'plantilla' %}
+            <form class="form-inline" action="{% url 'templates:form' %}">
+                <button class="btn shadow btn-sm btn-circle"><i class="bi bi-plus"></i></button>
+            </form>
+            {% endif %}
+            <div class="form-inline">
+                <button class="btn shadow btn-sm btn-circle" id="menu-collapse"><i class="bi bi-caret-left"></i></button>
+                <button class="btn shadow btn-sm btn-circle" id="menu-expand"><i class="bi bi-caret-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <ul class="navbar-nav row">
+        {% for item in menu_items %}
+        <!-- <li class="nav-item"> {{ item.label.title }}</li> -->
+        <div class="nav-item">
+            <a class="nav-link"> {{ item.label.title }} </a>
+            <div class="">
+                {% for val in item.value %} {% if menu_type == 'agenda' %}
+                <li>
+                    <a class="dropdown-item" href="{% url 'agendas:detail' slug=val.slug %}">{{ val.year }} {{ val.title }}
+          </a>
+                </li>
+                {% elif menu_type == 'plantilla' %}
+                <li>
+                    <a class="dropdown-item" href="{% url 'templates:detail' slug=val.slug %}">{{ val.year }} {{ val.title }} grr</a
+          >
+        </li>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<script>
+    function getCookie(cname) {
+    let name = cname +"=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return"";
+}
+
+  const btn_collapse = document.querySelector("#menu-collapse");
+  const btn_expand = document.querySelector("#menu-expand");
+  const side_menu = document.querySelector(".side-menu");
+
+  function collapse() {
+      side_menu.classList.remove("expanded");
+      document.cookie ="navigaton_collapsed=true;path=/";
+      btn_collapse.classList.add("d-none")
+      btn_expand.classList.remove("d-none")
+  }
+  function expand() {
+      document.cookie ="navigaton_collapsed=; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+      side_menu.classList.add("expanded");
+      btn_expand.classList.add("d-none")
+      btn_collapse.classList.remove("d-none")
+      
+  }
+  if (side_menu) {
+    if( getCookie("navigaton_collapsed") ==="true") {
+        collapse();
+    } else{
+        expand();
+    }
+    btn_collapse.addEventListener("click", collapse);
+    btn_expand.addEventListener("click", expand);
+}
+</script>

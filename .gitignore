@@ -118,3 +118,7 @@ media/
 *.xls
 data
 src/sample
+src/main/static/*
+static/*
+src/main/static_files/*
+static_files/*

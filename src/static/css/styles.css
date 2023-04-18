@@ -42,7 +42,93 @@
 
 html,
 body {
-    font-size: 1rem !important;
+    /* font-size: 1rem !important; */
+    color: var(--text-color);
+    background: transparent;
+}
+
+
+/* 
+a {
+    color: #0033cc;
+} */
+
+:root {
+    --text-color: #rgb(0, 0, 0);
+    --bkg-color: #fde1e1;
+    --anchor-color: #000000;
+    --shadow-color: rgba(0, 0, 0, 0.192);
+}
+
+:root.dark-theme {
+    --text-color: rgb(209, 208, 208);
+    --bkg-color: #202020;
+    --anchor-color: #809fff;
+    color-scheme: dark;
+    --shadow-color: #000000;
+}
+
+.note-editable,
+.note-editor {
+    background-color: rgb(151 59 59 / 42%);
+}
+
+.selector-available h2 {
+    color: var(--text-color)!important;
+    background: rgba(129, 240, 129, 0.534)!important;
+}
+
+.navbar,
+.sidenav,
+.card,
+.form-control,
+.form-control:focus,
+.dropdown-menu,
+.page-item,
+.page-link,
+.filtered,
+.selector-filter,
+.ace-jsoneditor .ace_scroller,
+.ace-jsoneditor .ace_variable,
+.ace-jsoneditor .ace_gutter,
+.dropdown-item.active,
+.dropdown-item:active,
+.dropdown-item.active,
+.dropdown-item:hover tr,
+td,
+th {
+    color: var(--text-color)!important;
+    background: var(--bkg-color)!important;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>*,
+.table-hover>tbody>tr:hover>* {
+    color: var(--text-color)!important;
+}
+
+a,
+button,
+.dropdown-item,
+.btn,
+.page-link,
+.ace-jsoneditor .ace_text-layer,
+.btn:hover {
+    color: var(--anchor-color)!important;
+    /* background-color: var(--anchor-color); */
+}
+
+
+/* .btn {
+    border: 1px solid;
+    border-color: var(--anchor-color);
+} */
+
+.shadow {
+    box-shadow: 0 .5rem 1rem var(--shadow-color)!important
+}
+
+.ace-jsoneditor .ace_text-layer {
+    background-color: var(--bkg-color);
 }
 
 @media (min-width: 576px) {
@@ -81,21 +167,55 @@ table td {
 
 .table {
     max-height: 60vh;
+    border-color: var(--anchor-color)!important;
 }
 
 .sidenav {
     height: 100%;
-    width: 14%;
+    width: 18%;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    overflow-x: hidden;
+    overflow-x: visible;
     padding-top: 5%;
     transition: 0.5s;
+    margin-left: -15%;
+}
+
+.sidenav.expanded {
+    margin-left: 0;
 }
 
 .sidenav .dropdown-item {
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.btn-circle {
+    border-radius: 50%
+}
+
+.form-group.slug {
+    display: none;
+}
+
+.sidenav .title {
+    display: flex!important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidenav .header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidenav .btn-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidenav .btn-container .btn {
+    background-color: var(--bkg-color);
 }

@@ -1,4 +1,4 @@
-{% extends 'header.html' %}{% load django_bootstrap_icons %} {% block content %}
+{% extends 'base.html' %}{% load django_bootstrap_icons %} {% block content %}
 
 <div class="container shadow rounded p-4 my-4">
     <div class="row">
@@ -9,7 +9,7 @@
 
         <div class="col-auto ms-auto my-auto">
             <form class="form-inline" action="{% url 'templates:form' slug=template.slug %}">
-                <button class="btn bg-white shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Modelo</button>
+                <button class="btn  shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Modelo</button>
             </form>
         </div>
     </div>
@@ -23,7 +23,7 @@
 
     <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'sender:form' %}" method="GET">
         <input type="hidden" name="template" value="{{template.slug}}" />
-        <button class="btn bg-white shadow col-12 ">{% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast</button>
+        <button class="btn  shadow col-12 ">{% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast</button>
     </form>
 
 

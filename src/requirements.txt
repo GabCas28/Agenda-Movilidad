@@ -35,4 +35,5 @@ soupsieve==2.2.1
 sqlparse==0.4.1
 webencodings==0.5.1
 xlrd==2.0.1
+waitress
 

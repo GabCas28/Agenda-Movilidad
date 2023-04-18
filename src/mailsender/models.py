@@ -15,7 +15,7 @@ class MassMail(models.Model):
     creation_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.creation_date) + "_" + str(self.subject)
+        return f"{str(self.creation_date)}_{str(self.subject)}"
 
     def create_emails(self):
         template = Template(self.content)
@@ -26,6 +26,8 @@ class MassMail(models.Model):
         for contact in contacts:
             mail_subject = subject.render(Context(contact.contact_info))
             mail_content = template.render(Context(contact.contact_info))
-            mails.append(([contact.email, mail_subject, mail_content]))
+            mails.append(
+                {"email": contact.email, "subject": mail_subject, "body": mail_content}
+            )
 
         return mails

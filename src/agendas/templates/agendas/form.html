@@ -1,6 +1,6 @@
-{% extends 'header.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container shadow my-4 p-4">
-    <h2>{{agenda|yesno:"Editar,Crear"}} Agenda</h2>
+    <h2>{{agenda|yesno:"Editar,Crear"}} agenda</h2>
     <form class="site-form " action=" {% if agenda %}{% url 'agendas:form' slug=agenda.slug %} {% else %} {% url 'agendas:form'  %} {% endif %}" method="post" enctype="multipart/form-data">
         {% include "base_form.html" %}
     </form>

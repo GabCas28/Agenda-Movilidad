@@ -6,7 +6,7 @@ from contacts.models import Contact
 from . import forms
 from django.core import serializers
 from importer.forms import UploadFileForm
-from importer.importer import extractHeaders
+from importer.importer import extract_headers
 
 # Get an instance of a logger
 import logging
@@ -60,7 +60,7 @@ def agenda_detail(request, slug=None):
         for cat in Category.objects.all()
     ]
     form = UploadFileForm()
-    headers = extractHeaders(contacts)
+    headers = extract_headers(contacts)
     return render(
         request,
         "agendas/detail.html",
@@ -71,8 +71,8 @@ def agenda_detail(request, slug=None):
             "headers": headers,
             "len_headers": len(headers),
             "menu_items": menu_items,
-            "menu_title": 'Agendas',
-            "menu_type": 'agenda',
+            "menu_title": "Agendas",
+            "menu_type": "agenda",
         },
     )
 
