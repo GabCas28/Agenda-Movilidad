@@ -13,7 +13,7 @@ def accept_changes(request, slug, identifier):
     updates = [fromDictToContact(element) for element in changes.updates]
     additions = [fromDictToContact(element) for element in changes.additions]
     deletions = [fromDictToContact(element) for element in changes.deletions]
-    
+
     for contact in deletions:
         Contact.objects.get(id=contact.id).delete()
     Contact.objects.bulk_update(updates, ["email", "contact_info"])
@@ -24,7 +24,7 @@ def accept_changes(request, slug, identifier):
 def classifyContacts(agenda, email_header, contacts, deletions):
     new_contacts = []
     updates = []
-    new_deletions=[]
+    new_deletions = []
     for i in range(len(contacts)):
         contact_info = contacts[i]
         email = findEmail(contact_info, email_header)
@@ -41,35 +41,50 @@ def classifyContacts(agenda, email_header, contacts, deletions):
         except:
             contact = fromContactToDict(new_contact)
             prepareAndAppend(new_contacts, contact)
-    
+
     new_deletions = []
     for delete in deletions:
         delete = fromContactToDict(delete)
         prepareAndAppend(new_deletions, delete)
     return new_contacts, updates, new_deletions
 
+
 @login_required
 def upload_file(request, slug):
     agenda = Agenda.objects.get(slug=slug)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             email_header = form.data["email_header"]
-            reset = form.data["reset"] if 'reset' in form.data else False
+            reset = form.data["reset"] if "reset" in form.data else False
             deletions = Contact.objects.filter(agenda=agenda) if reset else []
-            
-            contacts = getContactsFromFile(request.FILES['file'], email_header)
+
+            contacts = getContactsFromFile(request.FILES["file"], email_header)
             new_contacts, updates, deletions = classifyContacts(
-                agenda, email_header, contacts, deletions)
+                agenda, email_header, contacts, deletions
+            )
 
             changes = Changes.create(
-                user=request.user, updates=updates, additions=new_contacts, deletions=deletions)
+                user=request.user,
+                updates=updates,
+                additions=new_contacts,
+                deletions=deletions,
+            )
             changes.save()
-            return render(request, 'importer/changes.html', {"new_contacts": new_contacts,
-             "keys_new_contacts": extractHeaders(new_contacts), 
-             "duplicates": updates, "keys_duplicates": extractHeaders(updates),
-             "deletions": deletions, "keys_deletions": extractHeaders(deletions), "agenda": agenda, "changes": changes})
+            return render(
+                request,
+                "importer/changes.html",
+                {
+                    "new_contacts": new_contacts,
+                    "keys_new_contacts": extract_headers(new_contacts),
+                    "duplicates": updates,
+                    "keys_duplicates": extract_headers(updates),
+                    "deletions": deletions,
+                    "keys_deletions": extract_headers(deletions),
+                    "agenda": agenda,
+                    "changes": changes,
+                },
+            )
     else:
         form = UploadFileForm()
-    return render(request, 'agendas/detail.html', {'form': form})
-
+    return render(request, "agendas/detail.html", {"form": form})
