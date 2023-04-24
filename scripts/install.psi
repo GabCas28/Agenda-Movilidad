@@ -3,7 +3,7 @@ $venvPath = ".\env"
 $scriptPath = ".\src"
 $cfg_directory = ".\cfg"
 $log_directory = ".\logs\install"
-$logFile = ".$log_directory\install_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+$logFile = "$log_directory\install_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 
 
 if (-not (Test-Path $log_directory -PathType Container)) {
