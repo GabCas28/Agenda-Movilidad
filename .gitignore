@@ -122,3 +122,5 @@ src/main/static/*
 static/*
 src/main/static_files/*
 static_files/*
+logs/*
+pst_path.txt
