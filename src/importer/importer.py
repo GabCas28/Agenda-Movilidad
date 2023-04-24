@@ -11,8 +11,12 @@ def extract_headers(contacts: list[dict[str, any]]) -> list[str]:
     Returns:
         A list of unique headers from the contact dictionaries.
     """
-    headers = {key for contact in contacts for key in contact['contact_info']}
-    return list(headers)
+    headers=[]
+    for contact in contacts:
+        for key in contact['contact_info']:
+            if key not in headers:
+                headers.append(key)
+    return headers
     
 def fromDictToContact(input_dict):
     return Contact(**input_dict)

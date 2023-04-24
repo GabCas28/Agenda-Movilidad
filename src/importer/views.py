@@ -5,7 +5,13 @@ from contacts.models import Contact
 from agendas.models import Agenda
 from .models import Changes
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
 
+def snake_case(string):
+    """
+    Convert a string to snake case using Django's slugify function.
+    """
+    return slugify(string).replace('-', '_')
 
 @login_required
 def accept_changes(request, slug, identifier):
@@ -59,9 +65,19 @@ def upload_file(request, slug):
             reset = form.data["reset"] if "reset" in form.data else False
             deletions = Contact.objects.filter(agenda=agenda) if reset else []
 
-            contacts = getContactsFromFile(request.FILES["file"], email_header)
+            parsed_contacts = getContactsFromFile(request.FILES["file"], email_header)
+
+            contacts = [] 
+            for contact in parsed_contacts:
+                record  = {}
+                for col, val in contact.items():
+                    print(col, val)
+                    record[snake_case(col)] = val
+                contacts.append(record)
+
+
             new_contacts, updates, deletions = classifyContacts(
-                agenda, email_header, contacts, deletions
+                agenda, snake_case(email_header), contacts, deletions
             )
 
             changes = Changes.create(

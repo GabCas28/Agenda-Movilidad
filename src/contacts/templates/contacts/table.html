@@ -16,14 +16,14 @@
             {% for contact in contacts %}
             <tr>
                 <!-- <td></td> -->
-                <th scope="row">
-                    <a href="{% url 'agendas:contacts:form' slug=contact.agenda contact_id=contact.id %} ">{{contact.id}}</a>
+                <th scope="row">{% if contact.id != None and contact.agenda != None%}
+                    <a href="{% url 'agendas:contacts:form' slug=contact.agenda contact_id=contact.id %} ">{{contact.id}}</a> {% else %}
+                    <a>-</a> {% endif %}
                 </th>
                 <th scope="row ">{{contact.email}}</th>
                 {% include "contacts/info.html" with contact_info=contact.contact_info %}
 
-            </tr>
-            {% endfor %}
+            </tr> {% endfor %}
         </tbody>
     </table>
 </div>

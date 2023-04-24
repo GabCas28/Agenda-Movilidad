@@ -20,8 +20,24 @@ class AgendaForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        title = cleaned_data.get("title")
         category = cleaned_data.get("category")
         new_category_title = cleaned_data.get("new_category_title")
+
+        # If a new category title is provided, create a new category and use it for the agenda
+        if title:
+            if Agenda.objects.filter(title=title).exists():
+                self.add_error(
+                    "title", "Ya existe una agenda con este nombre."
+                )
+            elif Agenda.objects.filter(slug=slugify(title)).exists():
+                self.add_error(
+                    "title",
+                    "Ya existe una agenda con el slug generado a partir de este nombre.",
+                )
+            else:
+                slug = slugify(title)
+                cleaned_data["slug"] = slug
 
         # If a new category title is provided, create a new category and use it for the agenda
         if new_category_title and not category:
@@ -31,7 +47,7 @@ class AgendaForm(forms.ModelForm):
                 )
             elif Category.objects.filter(slug=slugify(new_category_title)).exists():
                 self.add_error(
-                    "slug",
+                    "new_category_title",
                     "Ya existe una categoria con el slug generado a partir de este nombre.",
                 )
             else:

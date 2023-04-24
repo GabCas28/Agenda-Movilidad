@@ -95,32 +95,38 @@ WSGI_APPLICATION = "main.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-def get_env_value(env_variable):
-    try:
-        return os.environ[env_variable]
-    except KeyError:
-        return None
+# def get_env_value(env_variable):
+#     try:
+#         return os.environ[env_variable]
+#     except KeyError:
+#         return None
 
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": get_env_value("POSTGRES_DB") or "agenda",
+#         "USER": get_env_value("POSTGRES_USER") or "agenda",
+#         "PASSWORD": get_env_value("POSTGRES_USER") or "agenda",
+#         "HOST": get_env_value("POSTGRES_HOST") or "127.0.0.1",
+#         "PORT": get_env_value("POSTGRES_PORT") or "5432",
+#     }
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.postgresql',
+#     #     'NAME': 'postgres',
+#     #     'USER': 'postgres',
+#     #     'PASSWORD': 'postgres',
+#     #     'HOST': 'db',
+#     #     'PORT': 5432,
+#     # }
+# }
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": get_env_value("POSTGRES_DB") or "agenda",
-        "USER": get_env_value("POSTGRES_USER") or "agenda",
-        "PASSWORD": get_env_value("POSTGRES_USER") or "agenda",
-        "HOST": get_env_value("POSTGRES_HOST") or "127.0.0.1",
-        "PORT": get_env_value("POSTGRES_PORT") or "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'postgres',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'postgres',
-    #     'HOST': 'db',
-    #     'PORT': 5432,
-    # }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -194,9 +200,9 @@ SUMMERNOTE_THEME = "bs5"
 
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode, default
-#     # "iframe": True,
-#     # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
-#     # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
+    #     # "iframe": True,
+    #     # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
+    #     # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
     # Use this when you're already using Bootstrap/jQuery based themes.
     "iframe": False,
     # You can put custom Summernote settings
@@ -204,9 +210,9 @@ SUMMERNOTE_CONFIG = {
         # Change editor size
         "width": "100%",
     },
-        'css': (
-            "/static/css/styles.css",
-        ),
+    'css': (
+        "/static/css/styles.css",
+    ),
 }
 
 # CSRF_COOKIE_SECURE=True
