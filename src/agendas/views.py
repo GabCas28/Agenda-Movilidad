@@ -4,23 +4,14 @@ from django.shortcuts import render, redirect
 from .models import Agenda, Category
 from contacts.models import Contact
 from . import forms
-from django.core import serializers
 from importer.forms import UploadFileForm
 from importer.importer import extract_headers
-from .forms import AgendaForm, CategoryForm
+from .forms import AgendaForm
 
 # Get an instance of a logger
 import logging
 
 logger = logging.getLogger("logging.StreamHandler")
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from agendas.serializers import AgendaSerializer
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-
 
 def categories(request):
     categories = Category.objects.all()
@@ -44,12 +35,11 @@ def agenda_list(request):
         agendas = Agenda.objects.all()
     return render(request, "agendas/agendas_list.html", {"agendas": agendas})
 
-
 def get_agendas(request):
     agendas = Agenda.objects.all()
-    serializer = AgendaSerializer(agendas, many=True)
-    return JsonResponse(serializer.data, safe=False)
-    # return render(request, "agendas/list.html", {"agendas":agendas})
+    # serializer = AgendaSerializer(agendas, many=True)
+    # return JsonResponse(serializer.data, safe=False)
+    return render(request, "agendas/list.html", {"agendas":agendas})
 
 
 @login_required

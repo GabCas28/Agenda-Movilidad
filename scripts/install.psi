@@ -166,7 +166,7 @@ catch {
 # Make migrations
 try {
     Log "Creating app migrations..."
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" makemigrations | Out-File -FilePath $logFile -Append
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" makemigrations 2>&1 | Out-File -FilePath $logFile -Append
     Log "Migrations created."
 }
 catch {
@@ -179,11 +179,25 @@ catch {
 # Run migrations
 try {
     Log "Running app migrations..."
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" migrate | Out-File -FilePath $logFile -Append
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" migrate 2>&1 | Out-File -FilePath $logFile -Append
     Log "Migrations completed."
 }
 catch {
     Log "Failed to run migrations. $_"
+    Write-Host "Press enter to close this window."
+    pause
+    Exit 1
+}
+
+# Create superuser
+try {
+    Log "Creating superuser..."
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" createsuperuser 2>&1 | Out-File -FilePath $logFile -Append
+    & echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')" "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" shell 2>&1 | Out-File -FilePath $logFile -Append
+    Log "Superuser created."
+}
+catch {
+    Log "Failed to create super user. $_"
     Write-Host "Press enter to close this window."
     pause
     Exit 1
