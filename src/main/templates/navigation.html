@@ -93,6 +93,7 @@
         window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
         theme.className = "dark-theme";
+        btn.checked = true;
     }
     btn.addEventListener("click", function() {
         document.cookie =
