@@ -10,18 +10,11 @@ import pythoncom
 import os
 import gzip
 
-# PST_FILEPATH = os.path.abspath(
-#     os.path.join(os.path.expandvars("%APPDATA%"), "scratch.pst")
-# )
-PST_FILEPATH = os.environ.get("MAIN_PST_PATH")
+PST_FILEPATH = os.path.abspath(os.environ.get("MAIN_PST_FILE"))
 
 
 @login_required
 def form(request, broadcast=""):
-    # application = win32com.client.gencache.EnsureDispatch('Outlook.Application', pythoncom.CoInitialize())
-    # application.Visible = True
-    # application = win32com.client.Dispatch("Outlook.Application", pythoncom.CoInitialize())
-
     def get_application():
         try:
             ol = client.gencache.EnsureDispatch(
@@ -106,18 +99,8 @@ def form(request, broadcast=""):
         if form.is_valid() and "import" not in request.POST:
             broadcast_instance = form.save()
             emails = broadcast_instance.create_emails()
-            # response = HttpResponse(
-            #     content_type='file',
-            #     # headers={'Content-Disposition': 'attachment; filename="somefilename.csv"'},
-            # )
-            # response['Content-Disposition'] = 'attachment; filename="somefilename.pst"'
-
             pst_folder = get_pst_folder(PST_FILEPATH)
 
-            # writer = csv.writer(response, delimiter=',', doublequote=True)
-            # file_header = ["For","Subject","Body"]
-            # writer.writerow(file_header)
-            print("emails\n", emails)
             for email in emails:
                 # writer.writerow(email)
                 pst_message = pst_folder.Items.Add()
@@ -130,19 +113,7 @@ def form(request, broadcast=""):
                 # pst_message.Move(pst_folder)
                 pst_message.Save()
                 pst_message.Close(0)
-            print("pst_message", dir(pst_message))
-            print("pst_folder", dir(pst_folder))
-            # print(pst_folder.GetTable('Archive'))
             data = gzip.GzipFile(PST_FILEPATH, "r")
-            print("application", dir(application))
-            print("outlook", dir(outlook))
-            # outlook.Application.Quit()
-            print(data)
-            # response = HttpResponse('',
-            #     content_type='application/zip')
-            # response['Content-Disposition'] = 'attachment; filename="somefilename.gzip"'
-
-            # return response
 
         elif "import" in request.POST:
             if template:

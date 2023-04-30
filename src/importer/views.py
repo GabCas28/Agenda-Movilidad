@@ -71,7 +71,6 @@ def upload_file(request, slug):
             for contact in parsed_contacts:
                 record  = {}
                 for col, val in contact.items():
-                    print(col, val)
                     record[snake_case(col)] = val
                 contacts.append(record)
 

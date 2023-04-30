@@ -142,15 +142,13 @@ catch {
 }
 
 # Get PST file path
-
-
 try {
     Log "Looking for PST file..."
     $namespace = $outlook.GetNameSpace("MAPI")
     $pst_path = $namespace.stores | ?{$_.ExchangeStoreType -eq 0} | select -First 1 | %{$_.FilePath}
     Log "PST file path: $pst_path"
-    $env:MAIN_PST_PATH = $pst_path
-    Log "PST file path saved in MAIN_PST_PATH config variable"
+    [Environment]::SetEnvironmentVariable("MAIN_PST_FILE", $pst_path, "User")
+    Log "PST file path saved in $cfg_directory\pst_path.cfg"
 }
 catch {
     Log "Failed to get PST file path. $_"
