@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Contact
 from django.db.models import JSONField
-from jsoneditor.forms import JSONEditor
 from django_json_widget.widgets import JSONEditorWidget
 
 class MyAdmin(admin.ModelAdmin):

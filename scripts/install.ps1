@@ -153,6 +153,7 @@ try {
     $namespace = $outlook.GetNameSpace("MAPI")
     $pst_path = $namespace.stores | ?{$_.ExchangeStoreType -eq 0} | select -First 1 | %{$_.FilePath}
     Log "PST file path: $pst_path"
+    $env:MAIN_PST_PATH = $pst_path
     $pst_path | Out-File -Encoding utf8 -FilePath "$cfg_directory\pst_path.cfg"
     Log "PST file path saved in $cfg_directory\pst_path.cfg"
 }
@@ -166,7 +167,7 @@ catch {
 # Make migrations
 try {
     Log "Creating app migrations..."
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" makemigrations | Out-File -FilePath $logFile -Append
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" makemigrations 2>&1 | Out-File -FilePath $logFile -Append
     Log "Migrations created."
 }
 catch {
@@ -179,13 +180,42 @@ catch {
 # Run migrations
 try {
     Log "Running app migrations..."
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" migrate | Out-File -FilePath $logFile -Append
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" migrate 2>&1 | Out-File -FilePath $logFile -Append
     Log "Migrations completed."
 }
 catch {
     Log "Failed to run migrations. $_"
     Write-Host "Press enter to close this window."
     pause
+    Exit 1
+}
+
+# Create superuser
+
+# Prompt the user for the necessary information to create a superuser
+if(($superuser_username = Read-Host "Introduce un nombre de usuario. Este nombre se utilizará para iniciar sesión. Por defecto 'admin'") -eq ''){$superuser_username ="admin"}
+
+# Ask for username and check if it already exists
+do {
+    if($username_taken -eq 'True'){if(($superuser_username = Read-Host "El nombre de usuario introducido ya existe. Por favor, prueba con otro distinto. (Por defecto 'admin')") -eq ''){$superuser_username ="admin"}}
+    $username_taken = & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" shell -c "from django.contrib.auth.models import User; print(User.objects.filter(username='$superuser_username').exists())"
+} while ($username_taken -eq 'True')
+
+# Ask for password
+if(($superuser_password = Read-Host "Enter una contraseñe. Default 'MySecurePassword123'") -eq ''){$superuser_password = "MySecurePassword123"}
+
+# dont ask for email
+$superuser_email = "admin@admin.com"
+
+try {
+    # Execute the python command to create the superuser
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" createsuperuser --noinput --username $superuser_username  --email $superuser_email
+
+    #  Execute the python command to retrieve the superuser and update their password
+    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); user = User.objects.get(username='$superuser_username'); user.set_password('$superuser_password'); user.save()"
+}
+catch {
+    Log "Failed to create superuser. $_"
     Exit 1
 }
 

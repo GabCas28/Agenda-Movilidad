@@ -1,21 +1,19 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import MassMail
 from .forms import MassMailForm
-from django.core.exceptions import ValidationError
 from agendas.models import Agenda
 from mailtemplates.models import MailTemplate
 from contacts.models import Contact
-from django.http import HttpResponse
-import csv
 from win32com import client
 import pythoncom
-import os, sys
+import os
 import gzip
 
-PST_FILEPATH = os.path.abspath(
-    os.path.join(os.path.expandvars("%APPDATA%"), "scratch.pst")
-)
+# PST_FILEPATH = os.path.abspath(
+#     os.path.join(os.path.expandvars("%APPDATA%"), "scratch.pst")
+# )
+PST_FILEPATH = os.environ.get("MAIN_PST_PATH")
 
 
 @login_required

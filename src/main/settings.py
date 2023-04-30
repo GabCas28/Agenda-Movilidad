@@ -171,7 +171,7 @@ SITE_ROOT = os.path.dirname("/home/agenda/")
 STATICFILES_DIRS = (
     # os.path.join(SITE_ROOT, 'static_files/'),
     os.path.join(BASE_DIR, "static"),
-    "/var/www/static/",
+    # "/var/www/static/",
 )
 STATIC_ROOT = os.path.join(SITE_ROOT, "static/")
 # STATIC_ROOT = os.path.join('/home/agenda/', 'static/')

@@ -23,7 +23,7 @@ function Log($message) {
 # Install ps2exe module if not already installed
 if (-not (Get-Module -Name ps2exe -ListAvailable)) {
     try {
-        Install-Module -Name ps2exe -Scope CurrentUser -Force | Out-File -FilePath $log_file -Append
+        Install-Module -Name ps2exe -Scope CurrentUser -Force 2>&1 | Out-File -FilePath $log_file -Append
     } 
     catch {
         Log "Failed to install ps2exe module."
@@ -31,10 +31,21 @@ if (-not (Get-Module -Name ps2exe -ListAvailable)) {
     }
 }
 
+# Generate the EXE file for generate.psi
+try {
+    Invoke-ps2exe -InputFile $scripts_directory\generate.ps1 -OutputFile .\generate(1).exe -Version "1.0.0.0" -Verbose  2>&1 | Out-File -FilePath $log_file -Append
+    Log "EXE file generated successfully: ./generate.exe"
+}
+catch {
+    Log "Failed to generate EXE file for install.psi. $_"
+    Write-Host "Press enter to close this window."
+    pause
+    Exit 1
+}
 
 # Generate the EXE file for install.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\install.psi -OutputFile $output_directory\install.exe -Version "1.0.0.0" -Verbose 
+    Invoke-ps2exe -InputFile $scripts_directory\install.ps1 -OutputFile $output_directory\install.exe -Version "1.0.0.0" -Verbose  2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./install.exe"
 }
 catch {
@@ -46,7 +57,7 @@ catch {
 
 # Generate the EXE file for debug.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\debug.psi -OutputFile $output_directory\debug.exe -Version "1.0.0.0" -Verbose
+    Invoke-ps2exe -InputFile $scripts_directory\debug.ps1 -OutputFile $output_directory\debug.exe -Version "1.0.0.0" -Verbose 2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./debug.exe"
 }
 catch {
@@ -58,7 +69,7 @@ catch {
 
 # Generate the EXE file for run.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\run.psi -OutputFile $output_directory\run.exe -Version "1.0.0.0" -Verbose
+    Invoke-ps2exe -InputFile $scripts_directory\run.ps1 -OutputFile $output_directory\run.exe -Version "1.0.0.0" -Verbose 2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./run.exe"
 }
 catch {
@@ -67,3 +78,7 @@ catch {
     pause
     Exit 1
 }
+
+# Success message
+Write-Host "Generation completed successfully. Press enter to close this window."
+pause
