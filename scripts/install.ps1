@@ -1,7 +1,6 @@
 # Initialize log file
 $venvPath = ".\env"
 $scriptPath = ".\src"
-$cfg_directory = ".\cfg"
 $log_directory = ".\logs\install"
 $logFile = "$log_directory\install_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 
@@ -144,9 +143,6 @@ catch {
 
 # Get PST file path
 
-if (-not (Test-Path $cfg_directory -PathType Container)) {
-    New-Item -ItemType Directory -Force -Path $cfg_directory
-}
 
 try {
     Log "Looking for PST file..."
@@ -154,8 +150,7 @@ try {
     $pst_path = $namespace.stores | ?{$_.ExchangeStoreType -eq 0} | select -First 1 | %{$_.FilePath}
     Log "PST file path: $pst_path"
     $env:MAIN_PST_PATH = $pst_path
-    $pst_path | Out-File -Encoding utf8 -FilePath "$cfg_directory\pst_path.cfg"
-    Log "PST file path saved in $cfg_directory\pst_path.cfg"
+    Log "PST file path saved in MAIN_PST_PATH config variable"
 }
 catch {
     Log "Failed to get PST file path. $_"
