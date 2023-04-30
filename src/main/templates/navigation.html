@@ -1,32 +1,57 @@
 {% load django_bootstrap_icons %}
-<nav class="navbar navbar-expand-lg shadow  mb-4">
+<nav class="navbar navbar-expand-lg shadow mb-4">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
-        </button>
+      <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
+    </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav w-100">
-                <li class="rounded nav-item {% if not 'templates' in request.path and  not 'sender' in request.path %}bg-secondary{% endif %}">
-                    <a class="navbar-brand mx-3 {% if not 'templates' in request.path and  not 'sender' in request.path %}text-white {% endif %}" href="{% url 'agendas:home' %}">Agendas</a>
-                </li>
-                <li class="rounded  nav-item {% if 'templates' in request.path %}bg-secondary{% endif %}">
-                    <a class="navbar-brand mx-3 {% if 'templates' in request.path %}text-white{% endif %}" href="{% url 'templates:home' %}">Modelos</a>
-                </li>
-                <li class="rounded nav-item {% if 'sender' in request.path %}bg-secondary{% endif %}">
-                    <a class="navbar-brand mx-3 {% if 'sender' in request.path %}text-white{% endif %}" href="{% url 'sender:form' %}">Crear mensaje</a>
-                </li>
-                <li class="form-check form-switch d-flex  ms-lg-auto">
-                    <i class="bi bi-sun"></i>
-                    <input class="mx-2 form-check-input my-auto" type="checkbox" role="switch" id="theme-selector">
-                    <i class="bi bi-moon"></i>
-                </li>
-                <li class="rounded nav-item dropdown text-lg-center col-lg-2">
-                    {% if request.user.is_authenticated %}
-                    <a class="navbar-brand dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{request.user}}
-                    </a>
-                    <div class="dropdown-menu mt-2 w-100 shadow text-lg-center" style="min-width:auto" aria-labelledby="navbarDropdownMenuLink">
+                <li class="rounded nav-item {% if not 'templates' in request.path and not 'sender' in request.path %}bg-secondary{% endif %}">
+                    <a class="navbar-brand mx-3 {% if not 'templates' in request.path and not 'sender' in request.path %}text-white {% endif %}" href="{% url 'agendas:home' %}">Agendas</a
+          >
+        </li>
+        <li
+          class="rounded nav-item {% if 'templates' in request.path %}bg-secondary{% endif %}"
+        >
+          <a
+            class="navbar-brand mx-3 {% if 'templates' in request.path %}text-white{% endif %}"
+            href="{% url 'templates:home' %}"
+            >Modelos</a
+          >
+        </li>
+        <li
+          class="rounded nav-item {% if 'sender' in request.path %}bg-secondary{% endif %}"
+        >
+          <a
+            class="navbar-brand mx-3 {% if 'sender' in request.path %}text-white{% endif %}"
+            href="{% url 'sender:form' %}"
+            >Crear mensaje</a
+          >
+        </li>
+        <li class="form-check form-switch d-flex ms-lg-auto">
+          <i class="bi bi-sun"></i>
+          <input
+            class="mx-2 form-check-input my-auto"
+            type="checkbox"
+            role="switch"
+            id="theme-selector"
+          />
+          <i class="bi bi-moon"></i>
+        </li>
+        <li class="rounded nav-item dropdown text-lg-center col-lg-2">
+          {% if request.user.is_authenticated %}
+          <a
+            class="navbar-brand dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLink"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{request.user}}
+          </a>
+                    <div class="dropdown-menu mt-2 w-100 shadow text-lg-center" style="min-width: auto" aria-labelledby="navbarDropdownMenuLink">
                         <form class="dropdown-item p-0" action="{% url 'accounts:logout' %}" method="post">
                             {% csrf_token %}
                             <input class="btn" type="submit" value="Desconectar" />
@@ -39,7 +64,6 @@
                     </form>
                     {% endif %}
                 </li>
-
             </div>
         </div>
     </div>
@@ -48,10 +72,10 @@
     function getCookie(cname) {
         let name = cname + "=";
         let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
+        let ca = decodedCookie.split(";");
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) == " ") {
                 c = c.substring(1);
             }
             if (c.indexOf(name) == 0) {
@@ -63,10 +87,19 @@
     const btn = document.querySelector("#theme-selector");
     const theme = document.querySelector("html");
     if (getCookie("dark_theme") === "dark-theme") {
-        btn.checked = true
+        btn.checked = true;
+    } else if (
+        getCookie("dark_theme") !== "light-theme" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+        theme.className = "dark-theme";
     }
     btn.addEventListener("click", function() {
-        document.cookie = theme.className === 'dark-theme' ? "dark_theme=;path=/" : "dark_theme=dark-theme;path=/";
-        theme.className = theme.className === 'dark-theme' ? '' : 'dark-theme'
+        document.cookie =
+            theme.className === "dark-theme" ?
+            "dark_theme=;path=/" :
+            "dark_theme=dark-theme;path=/";
+        theme.className =
+            theme.className === "dark-theme" ? "light-theme" : "dark-theme";
     });
 </script>

@@ -40,5 +40,5 @@ catch {
 }
 
 # Success message
-Write-Host "Django app started successfully. Press enter to close this window."
+Write-Host "Django app started successfully. Press enter to exit."
 pause
