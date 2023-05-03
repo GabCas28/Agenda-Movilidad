@@ -4,7 +4,6 @@ $scriptPath = ".\src"
 $log_directory = ".\logs\install"
 $logFile = "$log_directory\install_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 
-
 if (-not (Test-Path $log_directory -PathType Container)) {
     New-Item -ItemType Directory -Force -Path $log_directory
 }
@@ -31,6 +30,14 @@ if (-not (Get-Command python.exe -ErrorAction SilentlyContinue)) {
     # Install Python
     try {
         & .\python-3.10.0-amd64.exe /quiet InstallAllUsers=1 PrependPath=1
+
+        do {
+            Write-Host "Press enter when python python installation is completed."
+            pause
+            $python_installed ="False"
+            if(-not (Get-Command python.exe -ErrorAction SilentlyContinue)){$python_installed ="True"}
+        } while ($python_installed -eq 'True')
+
         Log "Python installed successfully."
         Write-Host "Python installed successfully."
     } catch {
@@ -38,8 +45,15 @@ if (-not (Get-Command python.exe -ErrorAction SilentlyContinue)) {
         Log "Failed to install Python: $errorMessage"
         Write-Error "Failed to install Python: $errorMessage"
     }
+
     # Remove installer
-    Remove-Item $pythonInstaller
+    try {
+        Log "Removing installer..."
+        & rm --force $pythonInstaller
+    }
+    catch{
+        Log "Failed to remove installer. $_"
+    }
 } else {
     Log "Python is already installed."
     Write-Host "Python is already installed."
@@ -65,31 +79,6 @@ if (-not (Get-Command pip.exe -ErrorAction SilentlyContinue)) {
 } else {
     Log "Pip is already installed."
 }
-
-
-# Check if SQLite is installed
-try {
-    if (-not (Get-Command sqlite3.exe -ErrorAction SilentlyContinue)) {
-        Log "SQLite is not installed. Installing SQLite..."
-        # Download SQLite binaries
-        $sqliteUrl = "https://www.sqlite.org/2022/sqlite-tools-win32-x86-3571650.zip"
-        $sqliteZip = "sqlite-tools-win32-x86-3571650.zip"
-        Invoke-WebRequest -Uri $sqliteUrl -OutFile $sqliteZip
-        # Extract SQLite binaries
-        Expand-Archive -Path $sqliteZip -DestinationPath .
-        # Move SQLite binaries to system32
-        Move-Item .\sqlite-tools-win32-x86-3571650\sqlite3.exe "$env:SystemRoot\System32\"
-        # Remove extracted files and zip
-        Remove-Item -Recurse .\sqlite-tools-win32-x86-3571650
-        Remove-Item $sqliteZip
-        Log "SQLite installed successfully."
-    } else {
-        Log "SQLite is already installed."
-    }
-} catch {
-    Log "Error: $_"
-}
-
 
 
 # Create and activate virtual environment
@@ -160,7 +149,7 @@ catch {
 # Make migrations
 try {
     Log "Creating app migrations..."
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" makemigrations 2>&1 | Out-File -FilePath $logFile -Append
+    & "python.exe" "$scriptPath\manage.py" makemigrations 2>&1 | Out-File -FilePath $logFile -Append
     Log "Migrations created."
 }
 catch {
@@ -173,7 +162,7 @@ catch {
 # Run migrations
 try {
     Log "Running app migrations..."
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" migrate 2>&1 | Out-File -FilePath $logFile -Append
+    & "python.exe" "$scriptPath\manage.py" migrate 2>&1 | Out-File -FilePath $logFile -Append
     Log "Migrations completed."
 }
 catch {
@@ -191,7 +180,7 @@ if(($superuser_username = Read-Host "Introduce un nombre de usuario. Este nombre
 # Ask for username and check if it already exists
 do {
     if($username_taken -eq 'True'){if(($superuser_username = Read-Host "El nombre de usuario introducido ya existe. Por favor, prueba con otro distinto. (Por defecto 'admin')") -eq ''){$superuser_username ="admin"}}
-    $username_taken = & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" shell -c "from django.contrib.auth.models import User; print(User.objects.filter(username='$superuser_username').exists())"
+    $username_taken = & "python.exe" "$scriptPath\manage.py" shell -c "from django.contrib.auth.models import User; print(User.objects.filter(username='$superuser_username').exists())"
 } while ($username_taken -eq 'True')
 
 # Ask for password
@@ -202,15 +191,18 @@ $superuser_email = "admin@admin.com"
 
 try {
     # Execute the python command to create the superuser
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" createsuperuser --noinput --username $superuser_username  --email $superuser_email
+    & "python.exe" "$scriptPath\manage.py" createsuperuser --noinput --username $superuser_username  --email $superuser_email
 
     #  Execute the python command to retrieve the superuser and update their password
-    & "$venvPath\Scripts\python.exe" "$scriptPath\manage.py" shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); user = User.objects.get(username='$superuser_username'); user.set_password('$superuser_password'); user.save()"
+    & "python.exe" "$scriptPath\manage.py" shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); user = User.objects.get(username='$superuser_username'); user.set_password('$superuser_password'); user.save()"
 }
 catch {
     Log "Failed to create superuser. $_"
+    Write-Host "Press enter to close this window."
+    pause
     Exit 1
 }
+
 
 # Success message
 Write-Host "Installation completed successfully. Press enter to close this window."
