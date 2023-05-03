@@ -45,12 +45,11 @@
                 <div class="">
                     {% for val in item.value %} {% if menu_type == 'agenda' %}
                     <li>
-                        <a class="dropdown-item" href="{% url 'agendas:detail' slug=val.slug %}">{{ val.year }} {{ val.title }}
-          </a>
+                        <a class="dropdown-item" href="{% url 'agendas:detail' slug=val.slug %}">{{ val.year }} {{ val.title }}</a>
                     </li>
                     {% elif menu_type == 'plantilla' %}
                     <li>
-                        <a class="dropdown-item" href="{% url 'templates:detail' slug=val.slug %}">{{ val.year }} {{ val.title }} grr</a
+                        <a class="dropdown-item" href="{% url 'templates:detail' slug=val.slug %}">{{ val.year }} {{ val.title }} </a
           >
         </li>
         {% endif %} {% endfor %}
