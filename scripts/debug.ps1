@@ -29,7 +29,3 @@ catch {
     Write-Error "Failed to start Django app. $_"
     Exit 1
 }
-
-# Success message
-Write-Host "Django app started successfully. Press enter to close this window."
-pause
