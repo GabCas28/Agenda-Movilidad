@@ -33,11 +33,11 @@ if (-not (Get-Module -Name ps2exe -ListAvailable)) {
 
 # Generate the EXE file for generate.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\generate.ps1 -OutputFile .\generate(1).exe -Version "1.0.0.0" -Verbose  2>&1 | Out-File -FilePath $log_file -Append
+    Invoke-ps2exe -InputFile $scripts_directory\generator.ps1 -OutputFile .\generate.exe -Version "1.0.0.0" -Verbose  2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./generate.exe"
 }
 catch {
-    Log "Failed to generate EXE file for install.psi. $_"
+    Log "Failed to generate EXE file for generate.ps1. $_"
     Write-Host "Press enter to close this window."
     pause
     Exit 1
@@ -45,11 +45,11 @@ catch {
 
 # Generate the EXE file for install.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\install.ps1 -OutputFile $output_directory\install.exe -Version "1.0.0.0" -Verbose  2>&1 | Out-File -FilePath $log_file -Append
+    Invoke-ps2exe -InputFile $scripts_directory\installer.ps1 -OutputFile $output_directory\install.exe -Version "1.0.0.0" -Verbose  2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./install.exe"
 }
 catch {
-    Log "Failed to generate EXE file for install.psi. $_"
+    Log "Failed to generate EXE file for install.ps1. $_"
     Write-Host "Press enter to close this window."
     pause
     Exit 1
@@ -57,11 +57,11 @@ catch {
 
 # Generate the EXE file for debug.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\debug.ps1 -OutputFile $output_directory\debug.exe -Version "1.0.0.0" -Verbose 2>&1 | Out-File -FilePath $log_file -Append
+    Invoke-ps2exe -InputFile $scripts_directory\debugger.ps1 -OutputFile $output_directory\debug.exe -Version "1.0.0.0" -Verbose 2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./debug.exe"
 }
 catch {
-    Log "Failed to generate EXE file for install.psi. $_"
+    Log "Failed to generate EXE file for debug.ps1. $_"
     Write-Host "Press enter to close this window."
     pause
     Exit 1
@@ -69,11 +69,11 @@ catch {
 
 # Generate the EXE file for run.psi
 try {
-    Invoke-ps2exe -InputFile $scripts_directory\run.ps1 -OutputFile $output_directory\run.exe -Version "1.0.0.0" -Verbose 2>&1 | Out-File -FilePath $log_file -Append
+    Invoke-ps2exe -InputFile $scripts_directory\runner.ps1 -OutputFile $output_directory\run.exe -Version "1.0.0.0" -Verbose 2>&1 | Out-File -FilePath $log_file -Append
     Log "EXE file generated successfully: ./run.exe"
 }
 catch {
-    Log "Failed to generate EXE file for install.psi. $_"
+    Log "Failed to generate EXE file for run.ps1. $_"
     Write-Host "Press enter to close this window."
     pause
     Exit 1
