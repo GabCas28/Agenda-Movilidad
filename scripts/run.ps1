@@ -39,6 +39,3 @@ catch {
     Exit 1
 }
 
-# Success message
-Write-Host "Django app started successfully. Press enter to exit."
-pause

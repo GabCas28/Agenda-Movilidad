@@ -1,6 +1,5 @@
 from django import forms
 from .models import Agenda, Category
-from django.forms import inlineformset_factory
 from django.utils.text import slugify
 
 

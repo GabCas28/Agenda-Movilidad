@@ -56,6 +56,8 @@
                             {% csrf_token %}
                             <input class="btn" type="submit" value="Desconectar" />
                         </form>
+                        <div class="dropdown-item p-0" >
+                          <a href="{% url 'admin:index' %}">Admin</div>
                     </div>
                     {% else %}
                     <form class="form-inline my-2 my-lg-0" action="{% url 'accounts:login' %}" method="get">
