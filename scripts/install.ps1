@@ -4,7 +4,6 @@ $scriptPath = ".\src"
 $log_directory = ".\logs\install"
 $logFile = "$log_directory\install_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 
-
 if (-not (Test-Path $log_directory -PathType Container)) {
     New-Item -ItemType Directory -Force -Path $log_directory
 }
@@ -31,6 +30,8 @@ if (-not (Get-Command python.exe -ErrorAction SilentlyContinue)) {
     # Install Python
     try {
         & .\python-3.10.0-amd64.exe /quiet InstallAllUsers=1 PrependPath=1
+        Write-Host "Press enter when python python installation is completed."
+        pause
         Log "Python installed successfully."
         Write-Host "Python installed successfully."
     } catch {
