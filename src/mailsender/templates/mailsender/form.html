@@ -1,9 +1,5 @@
 {% extends 'base.html' %} {% block content %}{{form.media}}
 <div class="container p-4 my-4 shadow rounded">
-    <div class="d-flex">
-        <h2 class="display-4 my-3">{{broadcast|yesno:'Editar,Nueva'}} difusión</h2>
-
-    </div>
     <form id="mailsender" class="site-form" {% if broadcast %} action="{% url 'sender:form' broadcast=broadcast.id %}" {% else %} action="{% url 'sender:form' %}" {% endif %} method="post" enctype="multipart/form-data">
         <div>
             {% include 'mailsender/import_form.html' with form=form_list|slice:"-3:" %}

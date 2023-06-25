@@ -4,7 +4,7 @@ from . import views
 app_name="templates"
 urlpatterns = [
     path('', views.template_form, name="home"),
-    path('categories/', views.categories, name="categories"),
+    # path('categories/', views.categories, name="categories"),
     path('categories/form/', views.category_form, name="category.form"),
     path('categories/form/<slug:category>', views.category_form, name="category.form"),
     path('categories/delete/<str:category_id>', views.deleteCategory, name="category.delete"),

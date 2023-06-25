@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
@@ -13,6 +14,7 @@ logger = logging.getLogger("logging.StreamHandler")
 
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def delete(request, slug, contact_id):
     contact = Contact.objects.get(id=contact_id)
     agenda = contact.agenda
@@ -21,23 +23,7 @@ def delete(request, slug, contact_id):
 
 
 @login_required
-def contact_list(request):
-    contacts = Contact.objects.all()
-    contacts = [model_to_dict(contact) for contact in contacts]
-    return render(
-        request,
-        "contacts/list.html",
-        {"contacts": contacts, "headers": extract_headers(contacts)},
-    )
-
-
-@login_required
-def contact_detail(request, contact_id):
-    contact = Contact.objects.get(id=contact_id)
-    return render(request, "contacts/form.html", {"contact": contact})
-
-
-@login_required
+@staff_member_required(login_url="accounts:staff_only")
 def contact_form(request, slug, contact_id=""):
     contact = Contact.objects.get(id=contact_id) if contact_id else None
     try:

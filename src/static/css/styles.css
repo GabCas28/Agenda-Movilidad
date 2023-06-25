@@ -1,52 +1,51 @@
 .summernote .note-editor {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .selector {
-    width: 100% !important;
-    display: block !important;
+  width: 100% !important;
+  display: block !important;
 }
 
 .stacked .selector-available,
 .stacked .selector-chosen {
-    width: 100%;
+  width: 100%;
 }
 
 .stacked select {
-    width: 100%;
-    overflow: scroll;
+  width: 100%;
+  overflow: scroll;
 }
 
 .selector-available select,
 .selector-chosen select {
-    width: 100%;
+  width: 100%;
 }
 
 .selector-available,
 .selector-chosen {
-    width: 44%;
-    min-width: 380px;
+  width: 44%;
+  min-width: 380px;
 }
 
 .selector .selector-available input {
-    width: 90%;
+  width: 90%;
 }
 
 #id_contact_info {
-    width: 100% !important
+  width: 100% !important;
 }
 
 .dropdown-toggle::after {
-    display: none;
+  display: none;
 }
 
 html,
 body {
-    /* font-size: 1rem !important; */
-    color: var(--text-color);
-    background: transparent;
+  /* font-size: 1rem !important; */
+  color: var(--bs-gray-900);
+  background: transparent;
 }
-
 
 /* 
 a {
@@ -54,28 +53,56 @@ a {
 } */
 
 :root {
-    --text-color: #rgb(0, 0, 0);
-    --bkg-color: #fde1e1;
-    --anchor-color: #000000;
-    --shadow-color: rgba(0, 0, 0, 0.192);
+  --anchor-color: #000000;
+  --shadow-color: rgba(0, 0, 0, 0.192);
 }
 
 :root.dark-theme {
-    --text-color: rgb(209, 208, 208);
-    --bkg-color: #202020;
-    --anchor-color: #809fff;
-    color-scheme: dark;
-    --shadow-color: #000000;
+  color-scheme: dark;
+  --anchor-color: #809fff;
+  --shadow-color: #000000;
+
+  /* --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40; */
+  --bs-gray-900: #f8f9fa;
+  --bs-gray-800: #e9ecef;
+  --bs-gray-900: #dee2e6;
+  --bs-gray-700: #dee2e6;
+  --bs-gray-600: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-400: #6c757d;
+  --bs-gray-300: #495057;
+  --bs-gray-200: #343a40;
+  --bs-gray-100: #212529;
+  /* --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-dark: #f8f9fa;
+  --bs-light: #212529; */
 }
 
 .note-editable,
 .note-editor {
-    background-color: rgb(151 59 59 / 42%);
+  background-color: #ced4da;
 }
 
 .selector-available h2 {
-    color: var(--text-color)!important;
-    background: rgba(129, 240, 129, 0.534)!important;
+  color: var(--bs-gray-900) !important;
+  background: rgba(129, 240, 129, 0.534) !important;
 }
 
 .navbar,
@@ -97,13 +124,13 @@ a {
 .dropdown-item:hover tr,
 td,
 th {
-    color: var(--text-color)!important;
-    background: var(--bkg-color)!important;
+  color: var(--bs-gray-900) !important;
+  background: var(--bs-gray-100) !important;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd)>*,
-.table-hover>tbody>tr:hover>* {
-    color: var(--text-color)!important;
+.table-striped > tbody > tr:nth-of-type(odd) > *,
+.table-hover > tbody > tr:hover > * {
+  color: var(--bs-gray-900) !important;
 }
 
 a,
@@ -113,10 +140,9 @@ button,
 .page-link,
 .ace-jsoneditor .ace_text-layer,
 .btn:hover {
-    color: var(--anchor-color)!important;
-    /* background-color: var(--anchor-color); */
+  color: var(--anchor-color) !important;
+  /* background-color: var(--anchor-color); */
 }
-
 
 /* .btn {
     border: 1px solid;
@@ -124,98 +150,98 @@ button,
 } */
 
 .shadow {
-    box-shadow: 0 .5rem 1rem var(--shadow-color)!important
+  box-shadow: 0 0.5rem 1rem var(--shadow-color) !important;
 }
 
 .ace-jsoneditor .ace_text-layer {
-    background-color: var(--bkg-color);
+  background-color: var(--bs-gray-100);
 }
 
 @media (min-width: 576px) {
-    /* @include media-breakpoint-up(sm) { */
-    html,
-    body {
-        font-size: 1.02rem !important;
-    }
+  /* @include media-breakpoint-up(sm) { */
+  html,
+  body {
+    font-size: 1.02rem !important;
+  }
 }
 
 @media (min-width: 768px) {
-    /* @include media-breakpoint-up(md) { */
-    html,
-    body {
-        font-size: 1.05rem !important;
-    }
+  /* @include media-breakpoint-up(md) { */
+  html,
+  body {
+    font-size: 1.05rem !important;
+  }
 }
 
 @media (min-width: 768px) {
-    /* @include media-breakpoint-up(lg) { */
-    html,
-    body {
-        font-size: 1.1rem !important;
-    }
+  /* @include media-breakpoint-up(lg) { */
+  html,
+  body {
+    font-size: 1.1rem !important;
+  }
 }
 
 table td {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .navbar {
-    z-index: 3;
-    position: sticky;
-    top: 0;
+  z-index: 3;
+  position: sticky;
+  top: 0;
 }
 
 .table {
-    max-height: 60vh;
-    border-color: var(--anchor-color)!important;
+  max-height: 60vh;
+  border-color: var(--anchor-color) !important;
 }
 
 .sidenav {
-    height: 100%;
-    width: 18%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    overflow-x: visible;
-    padding-top: 5%;
-    transition: 0.5s;
-    margin-left: -15%;
+  height: 100%;
+  width: 18%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: visible;
+  padding-top: 5%;
+  transition: 0.5s;
+  margin-left: -15%;
 }
 
 .sidenav.expanded {
-    margin-left: 0;
+  margin-left: 0;
 }
 
 .sidenav .dropdown-item {
-    text-overflow: ellipsis;
-    overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .btn-circle {
-    border-radius: 50%
+  border-radius: 50%;
 }
 
 .form-group.slug {
-    display: none;
+  display: none;
 }
 
 .sidenav .title {
-    display: flex!important;
-    justify-content: space-between;
-    align-items: center;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .sidenav .header {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sidenav .btn-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sidenav .btn-container .btn {
-    background-color: var(--bkg-color);
+  background-color: var(--bs-gray-100);
 }

@@ -17,3 +17,4 @@ waitress
 whitenoise
 xlrd
 django-bootstrap-icons==0.2.5
+django-recaptcha

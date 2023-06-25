@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from .models import MailTemplate, Category
 from . import forms
@@ -10,25 +10,25 @@ import logging
 logger = logging.getLogger("logging.StreamHandler")
 
 
-@login_required
+@staff_member_required(login_url="accounts:staff_only")
 def deleteCategory(request, category_id):
     category = Category.objects.get(id=category_id)
     category.delete()
     return redirect("templates:home")
 
 
-@login_required
+@staff_member_required(login_url="accounts:staff_only")
 def delete(request, template_id):
     template = MailTemplate.objects.delete(id=template_id)
     template.delete()
     return redirect("templates:list")
 
 
-def categories(request):
-    categories = Category.objects.all()
-    return render(
-        request, "mailtemplates/categories/list.html", {"categories": categories}
-    )
+# def categories(request):
+#     categories = Category.objects.all()
+#     return render(
+#         request, "mailtemplates/categories/list.html", {"categories": categories}
+#     )
 
 
 def template_list(request):
@@ -45,7 +45,7 @@ def template_list(request):
     )
 
 
-@login_required
+@staff_member_required(login_url="accounts:staff_only")
 def template_detail(request, slug):
     template = MailTemplate.objects.get(slug=slug)
     menu_items = [
@@ -62,12 +62,12 @@ def template_detail(request, slug):
             "template": template,
             "menu_items": menu_items,
             "menu_title": "Modelos",
-            "menu_type": "plantilla"
+            "menu_type": "plantilla",
         },
     )
 
 
-@login_required
+@staff_member_required(login_url="accounts:staff_only")
 def template_form(request, slug=""):
     template = MailTemplate.objects.get(slug=slug) if slug else None
     menu_items = [
@@ -100,7 +100,7 @@ def template_form(request, slug=""):
     )
 
 
-@login_required
+@staff_member_required(login_url="accounts:staff_only")
 def category_form(request, category=""):
     category = Category.objects.get(slug=category) if category else None
     if request.method == "POST":

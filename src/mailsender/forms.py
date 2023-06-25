@@ -1,12 +1,10 @@
-from typing import Text
-from django import forms
-from django.forms import ModelForm, Form, ModelMultipleChoiceField
+from django.forms import ModelForm, ModelMultipleChoiceField
 from django.forms.fields import (
     BooleanField,
     CharField,
-    EmailField,
     ChoiceField,
-    MultipleChoiceField,
+    IntegerField,
+    URLField,
 )
 from django.forms.widgets import PasswordInput
 from .models import MassMail
@@ -22,6 +20,15 @@ class MassMailForm(ModelForm):
     template = ChoiceField()
     maintain = BooleanField(required=False, label="Conservar contactos existentes")
     headers = ChoiceField()
+    sender_email = CharField(required=True, label="Email del remitente")
+    sender_user = CharField(required=True, label="Usuario (sin @ugr.es)")
+    sender_password = CharField(widget=PasswordInput(), label="Contraseña")
+    smtp_server = CharField(
+        max_length=200, required=False, label="Servidor", initial="correo.ugr.es"
+    )
+    smtp_port = IntegerField(
+        min_value=0, max_value=9999, required=False, label="Puerto", initial=587
+    )
 
     def __init__(self, *args, **kwargs):
         category = kwargs.pop("category") if "category" in kwargs else None
@@ -54,7 +61,7 @@ class MassMailForm(ModelForm):
             choices=headers, required=False, label="Variables de la agenda"
         )
         self.fields["recipients"] = ModelMultipleChoiceField(
-            label="Destinatarios del mensaje", 
+            label="Destinatarios del mensaje",
             required=False,
             queryset=queryset,
             widget=FilteredSelectMultiple("contacts", is_stacked=True),
@@ -63,10 +70,15 @@ class MassMailForm(ModelForm):
     class Meta:
         model = MassMail
         fields = [
+            "sender_email",
             "recipients",
             "subject",
             "headers",
             "content",
+            "sender_user",
+            "sender_password",
+            "smtp_server",
+            "smtp_port",
             "agenda",
             "maintain",
             "template",
