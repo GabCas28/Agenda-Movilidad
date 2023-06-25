@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+
+def get_env_value(env_variable):
+    try:
+        return os.environ[env_variable]
+    except KeyError:
+        return None
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -19,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "+(q8r#v#f^5q*ie=a)ejwc=_7_=+f)$h%=oi$2!#xzu&-r1!x$"
+SECRET_KEY = get_env_value("SECRET_KEY") or "test_key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -32,11 +40,7 @@ ALLOWED_HOSTS = [
     "localhost",
 ]
 
-# EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST='smtp.gmail.com'
-# EMAIL_PORT=587
-# EMAIL_USE_TLS=True
-# Application definition
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -56,6 +60,7 @@ INSTALLED_APPS = [
     "django_summernote",
     "django_json_widget",
     "sslserver",
+    "captcha",
 ]
 
 ADMINS = (("admin", "admin@admin.com"),)
@@ -95,13 +100,6 @@ WSGI_APPLICATION = "main.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-# def get_env_value(env_variable):
-#     try:
-#         return os.environ[env_variable]
-#     except KeyError:
-#         return None
-
-
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
@@ -122,9 +120,9 @@ WSGI_APPLICATION = "main.wsgi.application"
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -199,24 +197,15 @@ XS_SHARING_ALLOWED_METHODS = ["POST", "GET", "OPTIONS", "PUT", "DELETE"]
 SUMMERNOTE_THEME = "bs5"
 
 SUMMERNOTE_CONFIG = {
-    # Using SummernoteWidget - iframe mode, default
-    #     # "iframe": True,
-    #     # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
-    #     # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
-    # Use this when you're already using Bootstrap/jQuery based themes.
     "iframe": False,
-    # You can put custom Summernote settings
     "summernote": {
-        # Change editor size
         "width": "100%",
     },
-    'css': (
-        "/static/css/styles.css",
-    ),
+    "css": ("/static/css/styles.css",),
 }
 
-# CSRF_COOKIE_SECURE=True
-# CSRF_USE_SESSIONS=True
+CSRF_COOKIE_SECURE=True
+CSRF_USE_SESSIONS=True
 
 LOGIN_URL = "/accounts/login"
 
@@ -227,3 +216,7 @@ JSON_EDITOR_CSS = (
 )
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+RECAPTCHA_SITE_KEY = get_env_value("RECAPTCHA_SITE_KEY") or "test_recaptcha_site_key"
+RECAPTCHA_SECRET_KEY = get_env_value("RECAPTCHA_SECRET_KEY") or "test_recaptcha_secret_key"
+SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]

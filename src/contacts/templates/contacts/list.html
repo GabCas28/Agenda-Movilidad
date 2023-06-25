@@ -7,7 +7,7 @@
         {% include "contacts/table.html" with contacts=contacts headers=headers %}
 
         <div class="form-group row">
-            <form class="form-inline col-auto mx-auto" action="{% url 'contacts:form' %}">
+            <form class="form-inline col-auto mx-auto" >
                 <button class="btn shadow col-12 mx-3">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto</button>
             </form>
         </div>

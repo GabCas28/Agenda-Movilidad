@@ -5,15 +5,11 @@ from contacts.models import Contact
 from agendas.models import Agenda
 from .models import Changes
 from django.contrib.auth.decorators import login_required
-from django.utils.text import slugify
+from django.contrib.admin.views.decorators import staff_member_required
 
-def snake_case(string):
-    """
-    Convert a string to snake case using Django's slugify function.
-    """
-    return slugify(string).replace('-', '_')
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def accept_changes(request, slug, identifier):
     changes = Changes.objects.get(id=identifier)
     updates = [fromDictToContact(element) for element in changes.updates]
@@ -27,35 +23,8 @@ def accept_changes(request, slug, identifier):
     return redirect("agendas:detail", slug=slug)
 
 
-def classifyContacts(agenda, email_header, contacts, deletions):
-    new_contacts = []
-    updates = []
-    new_deletions = []
-    for i in range(len(contacts)):
-        contact_info = contacts[i]
-        email = findEmail(contact_info, email_header)
-        new_contact = Contact.create(contact_info, agenda, email)
-        try:
-            contact = Contact.objects.get(agenda=agenda, email=email)
-            if contact.contact_info != new_contact.contact_info:
-                contact.contact_info = new_contact.contact_info
-                contact = fromContactToDict(contact)
-                prepareAndAppend(updates, contact)
-            elif contact in deletions:
-                contact = fromContactToDict(contact)
-                prepareAndAppend(new_contacts, contact)
-        except:
-            contact = fromContactToDict(new_contact)
-            prepareAndAppend(new_contacts, contact)
-
-    new_deletions = []
-    for delete in deletions:
-        delete = fromContactToDict(delete)
-        prepareAndAppend(new_deletions, delete)
-    return new_contacts, updates, new_deletions
-
-
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def upload_file(request, slug):
     agenda = Agenda.objects.get(slug=slug)
     if request.method == "POST":
@@ -67,13 +36,12 @@ def upload_file(request, slug):
 
             parsed_contacts = getContactsFromFile(request.FILES["file"], email_header)
 
-            contacts = [] 
+            contacts = []
             for contact in parsed_contacts:
-                record  = {}
+                record = {}
                 for col, val in contact.items():
                     record[snake_case(col)] = val
                 contacts.append(record)
-
 
             new_contacts, updates, deletions = classifyContacts(
                 agenda, snake_case(email_header), contacts, deletions

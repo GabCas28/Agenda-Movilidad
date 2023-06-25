@@ -18,7 +18,7 @@
         </div>
         <h2><a href="{% url 'templates:detail' slug=template.slug %}">{{template.title}}</a></h2>
     </div>
-    {% endfor %} {% else %} No se han encontrado plantilals {% endif %}
+    {% endfor %} {% else %} No se han encontrado plantillas {% endif %}
     <div class="form-group row">
         <form class="form-inline col-auto mx-auto mt-3" action="{% url 'templates:form' %}">
             <input type="hidden" name="category" value="{{category.slug}}">

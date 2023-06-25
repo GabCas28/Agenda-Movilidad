@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.shortcuts import render, redirect
@@ -13,6 +14,7 @@ import logging
 
 logger = logging.getLogger("logging.StreamHandler")
 
+
 def categories(request):
     categories = Category.objects.all()
     return render(
@@ -20,29 +22,30 @@ def categories(request):
     )
 
 
-def agenda_list(request):
-    category = request.GET.get("category") or None
-    if category:
-        category = Category.objects.get(slug=category)
-        agendas = Agenda.objects.filter(category=category.id).order_by("year")
+# def agenda_list(request):
+#     category = request.GET.get("category") or None
+#     if category:
+#         category = Category.objects.get(slug=category)
+#         agendas = Agenda.objects.filter(category=category.id).order_by("year")
 
-        return render(
-            request,
-            "agendas/agendas_list.html",
-            {"agendas": agendas, "category": category},
-        )
-    else:
-        agendas = Agenda.objects.all()
-    return render(request, "agendas/agendas_list.html", {"agendas": agendas})
+#         return render(
+#             request,
+#             "agendas/agendas_list.html",
+#             {"agendas": agendas, "category": category},
+#         )
+#     else:
+#         agendas = Agenda.objects.all()
+#     return render(request, "agendas/agendas_list.html", {"agendas": agendas})
 
-def get_agendas(request):
-    agendas = Agenda.objects.all()
-    # serializer = AgendaSerializer(agendas, many=True)
-    # return JsonResponse(serializer.data, safe=False)
-    return render(request, "agendas/list.html", {"agendas":agendas})
+# def get_agendas(request):
+#     agendas = Agenda.objects.all()
+#     # serializer = AgendaSerializer(agendas, many=True)
+#     # return JsonResponse(serializer.data, safe=False)
+#     return render(request, "agendas/agendas_list.html", {"agendas":agendas})
 
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def agenda_detail(request, slug=None):
     agenda = Agenda.objects.get(slug=slug) if slug else None
     contacts = (
@@ -73,11 +76,12 @@ def agenda_detail(request, slug=None):
 
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def agenda_form(request, slug=""):
     agenda = Agenda.objects.get(slug=slug) if slug else None
     if request.method == "POST":
         form = AgendaForm(request.POST or None, instance=agenda)
-        if form.is_valid() :
+        if form.is_valid():
             form.save()
             return redirect("agendas:home")
     else:
@@ -91,6 +95,7 @@ def agenda_form(request, slug=""):
 
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def category_form(request, category=""):
     category = Category.objects.get(slug=category) if category else None
     logger.info("form")
@@ -112,6 +117,7 @@ def category_form(request, category=""):
 
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def deleteCategory(request, category_id):
     category = Category.objects.get(id=category_id)
     category.delete()
@@ -119,6 +125,7 @@ def deleteCategory(request, category_id):
 
 
 @login_required
+@staff_member_required(login_url="accounts:staff_only")
 def delete(request, agenda_id):
     agenda = Agenda.objects.get(id=agenda_id)
     agenda.delete()
