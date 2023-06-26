@@ -1,34 +1,57 @@
-<!DOCTYPE html> {% extends 'base.html' %}{% load django_bootstrap_icons %} {% block content %}
+<!DOCTYPE html> 
+{% extends 'base.html' %}
+{% load django_bootstrap_icons %}
+{% block content %}
 
 <div class="container p-4 my-4 shadow rounded">
-    <div class="agenda p-3">
-        {% if agenda %}
-        <div class="row">
-            <h3 class="col-auto mx-2">{{agenda.title}}</h3>
-            <p class="col-auto mx-2 my-auto">{{agenda.category}}</p>
-            <p class="col-auto mx-2 my-auto">{{agenda.year}}</p>
-            <p class="col-auto mx-2 my-auto"> Agenda creada el {{agenda.creation_date}}</p>
+  <div class="agenda p-3">
+    {% if agenda %}
+    <div class="row">
+      <h3 class="col-auto mx-2">{{agenda.title}}</h3>
+      <p class="col-auto mx-2 my-auto">{{agenda.category}}</p>
+      <p class="col-auto mx-2 my-auto">{{agenda.year}}</p>
+      <p class="col-auto mx-2 my-auto">
+        Agenda creada el {{agenda.creation_date}}
+      </p>
 
-            <div class="col-auto ms-auto my-auto">
-                <form class="form-inline" action="{% url 'agendas:form' slug=agenda.slug %}">
-                    <button class="btn shadow ml-auto">{% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Agenda</button>
-                </form>
-            </div>
-        </div>
-        {% endif %}
+      <div class="col-auto ms-auto my-auto">
+        <form
+          class="form-inline"
+          action="{% url 'agendas:form' slug=agenda.slug %}"
+        >
+          <button class="btn shadow ml-auto">
+            {% bs_icon 'pencil-square' extra_classes='text-success'%}
+            &nbsp;&nbsp;Editar Agenda
+          </button>
+        </form>
+      </div>
     </div>
-    <div class="contacts">
-        {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %} {% if agenda %}
-        <div class="form-group row">
-            {% include 'importer/form.html' %}
-            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'agendas:contacts:form' slug=agenda.slug %}">
-                <button class="btn shadow col-12 ">{% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto</button>
-            </form>
-            <form class="form-inline col-12 col-md-4 mx-auto" action="{% url 'sender:form' %}" method="GET">
-                <input type="hidden" name="agenda" value="{{agenda.slug}}" />
-                <button class="btn shadow col-12 ">{% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast</button>
-            </form>
-        </div>
-        {% endif %}
+    {% endif %}
+  </div>
+  <div class="contacts">
+    {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %} {% if agenda %}
+    <div class="form-group row">
+      {% include 'importer/form.html' %}
+      <form
+        class="form-inline col-12 col-md-4 mx-auto mb-4 mb-lg-0"
+        action="{% url 'agendas:contacts:form' slug=agenda.slug %}"
+      >
+        <button class="btn shadow col-12">
+          {% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto
+        </button>
+      </form>
+      <form
+        class="form-inline col-12 col-md-4 mx-auto mb-4 mb-lg-0"
+        action="{% url 'sender:form' %}"
+        method="GET"
+      >
+        <input type="hidden" name="agenda" value="{{agenda.slug}}" />
+        <button class="btn shadow col-12">
+          {% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast
+        </button>
+      </form>
     </div>
-    {% endblock content %}
+    {% endif %}
+  </div>
+  {% endblock content %}
+</div>

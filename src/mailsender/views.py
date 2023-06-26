@@ -6,9 +6,15 @@ from .forms import MassMailForm
 from agendas.models import Agenda
 from mailtemplates.models import MailTemplate
 from contacts.models import Contact
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
-@staff_member_required(login_url="accounts:staff_only")
+def is_superuser(user):
+    return user.is_superuser
+
+
+@login_required
+@user_passes_test(is_superuser, login_url="accounts:staff_only")
 def form(request, broadcast=""):
     def get_or_post(param):
         if request.GET.get(param):

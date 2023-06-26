@@ -1,11 +1,20 @@
-{% load static %}{% block form %} {% csrf_token %} {{form.media}} {{ form.non_field_errors }} {% for input in form%}
+{% load static %}{% block form %} {% csrf_token %} {{form.media}} {{form.non_field_errors }} {% for input in form%}
 <div class="form-group p-3 {{input.name}}">
-    {{input.label_tag}} {{input|safe}} {{input.errors}}
+  {{input.label_tag}} {{input|safe}} {{input.errors}}
 </div>
 {% endfor %}
 <div class="form-group row">
-    <input class="col-12 col-md-4 mx-auto" type="submit" onclick="window.history.back()" value="Volver">
-    <input class="col-12 col-md-4 mx-auto" type="submit" value="Guardar">
+  <input
+    class="col-12 col-md-4 mx-auto mb-4 mb-lg-0"
+    type="submit"
+    onclick="window.history.back()"
+    value="Volver"
+  />
+  <input
+    class="col-12 col-md-4 mx-auto mb-4 mb-lg-0"
+    type="submit"
+    value="Guardar"
+  />
 </div>
 <script src="{% static 'js/slugify.js' %}"></script>
 {% endblock form %}
