@@ -1,14 +1,15 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
-  <h2>ENVIADO!</h2>
-
   {% if result|length >= 1 %}
   <div class="">
-    <p>Errors:</p>
+    <h2>Lo sentimos, ha habido problemas en el envío</h2>
+    <p>Errores:</p>
     {% for res in result %}
     <p>{{res}}</p>
     {% endfor %}
   </div>
+  {% else %}
+  <h2>Mensajes enviados correctamente</h2>
   {% endif %}
 </div>
 {% endblock content %}
