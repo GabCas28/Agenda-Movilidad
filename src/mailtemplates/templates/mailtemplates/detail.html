@@ -1,43 +1,35 @@
 {% extends 'base.html' %}{% load django_bootstrap_icons %} {% block content %}
 
 <div class="container shadow rounded p-4 my-4">
-  <div class="row">
-    <h3 class="col-auto mx-2">{{template.title}}</h3>
-    <p class="col-auto mx-2 my-auto">{{template.category}}</p>
-    <p class="col-auto mx-2 my-auto">{{template.year}}</p>
-    <p class="col-auto mx-2 my-auto">
-      Modelo creado el {{template.creation_date}}
-    </p>
+    <div class="row">
+        <h3 class="col-auto mx-2">{{template.title}}</h3>
+        <p class="col-auto mx-2 my-auto">{{template.category}}</p>
+        <p class="col-auto mx-2 my-auto">{{template.year}}</p>
+        <p class="col-auto mx-2 my-auto">
+            Modelo creado el {{template.creation_date}}
+        </p>
 
-    <div class="col-auto ms-auto my-auto">
-      <form
-        class="form-inline"
-        action="{% url 'templates:form' slug=template.slug %}"
-      >
-        <button class="btn shadow ml-auto">
-          {% bs_icon 'pencil-square'
-          extra_classes='text-success'%}&nbsp;&nbsp;Editar Modelo
+        <div class="col-auto ms-auto my-auto">
+            <form class="form-inline" action="{% url 'templates:form' slug=template.slug %}">
+                <button class="btn shadow ml-auto">
+          {% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Modelo
         </button>
-      </form>
+            </form>
+        </div>
     </div>
-  </div>
-  <div class="subject p-3 my-4">
-    <div class="content rounded p-3 card col-12 d-inline-block">
-      <a class="strong text-decoration-none">Asunto: </a>{{template.subject}}
+    <div class="subject p-3 my-4">
+        <div class="content rounded p-3 card col-12 d-inline-block">
+            <a class="strong text-decoration-none">Asunto: </a>{{template.subject}}
+        </div>
+        <div class="content rounded p-3 card">{{template.content|safe}}</div>
     </div>
-    <div class="content rounded p-3 card">{{template.content|safe}}</div>
-  </div>
 
-  <form
-    class="form-inline col-12 col-lg-4 mx-auto mb-4 mb-lg-0"
-    action="{% url 'sender:form' %}"
-    method="GET"
-  >
-    <input type="hidden" name="template" value="{{template.slug}}" />
-    <button class="btn shadow col-12">
+    <form class="form-inline col-12 col-lg-4 mx-auto mb-4 mb-lg-0" action="{% url 'sender:form' %}" method="GET">
+        <input type="hidden" name="template" value="{{template.slug}}" />
+        <button class="btn shadow col-12">
       {% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast
     </button>
-  </form>
+    </form>
 
-  {% endblock content %}
+    {% endblock content %}
 </div>
