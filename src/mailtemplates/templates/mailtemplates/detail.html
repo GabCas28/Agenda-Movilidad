@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load django_bootstrap_icons %} {% block content %}
+{% extends 'base.html' %}{% block content %}
 
 <div class="container shadow rounded p-4 my-4">
     <div class="row">
@@ -9,10 +9,14 @@
             Modelo creado el {{template.creation_date}}
         </p>
 
-        <div class="col-auto ms-auto my-auto">
-            <form class="form-inline" action="{% url 'templates:form' slug=template.slug %}">
-                <button class="btn shadow ml-auto">
-          {% bs_icon 'pencil-square' extra_classes='text-success'%}&nbsp;&nbsp;Editar Modelo
+    <div class="col-auto ms-auto my-auto">
+      <form
+        class="form-inline"
+        action="{% url 'templates:form' slug=template.slug %}"
+      >
+        <button class="btn shadow ml-auto">
+          <i class="bi bi-pencil-square text-success"></i>&nbsp;&nbsp;Editar
+          Modelo
         </button>
             </form>
         </div>
@@ -24,10 +28,16 @@
         <div class="content rounded p-3 card">{{template.content|safe}}</div>
     </div>
 
-    <form class="form-inline col-12 col-lg-4 mx-auto mb-4 mb-lg-0" action="{% url 'sender:form' %}" method="GET">
-        <input type="hidden" name="template" value="{{template.slug}}" />
-        <button class="btn shadow col-12">
-      {% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast
+  <form
+    class="form-inline col-12 col-lg-4 mx-auto mb-2 mb-lg-0"
+    action="{% url 'sender:form' %}"
+    method="POST"
+  >
+    {% csrf_token %}
+    <input type="hidden" name="imported" value="Importar" />
+    <input type="hidden" name="template" value="{{template.slug}}" />
+    <button class="btn shadow col-12">
+      <i class="bi bi-envelope text-success"></i>&nbsp;&nbsp;Broadcast
     </button>
     </form>
 

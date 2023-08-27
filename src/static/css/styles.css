@@ -230,3 +230,7 @@ table td {
 .sidenav .btn-container .btn {
   background-color: var(--bs-gray-100);
 }
+
+#mailsender-import-dropdown * {
+  white-space: normal !important;
+}

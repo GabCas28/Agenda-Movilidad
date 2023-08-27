@@ -4,7 +4,6 @@ from django.forms.fields import (
     CharField,
     ChoiceField,
     IntegerField,
-    URLField,
 )
 from django.forms.widgets import PasswordInput
 from .models import MassMail
@@ -14,20 +13,28 @@ from agendas.models import Agenda
 from contacts.models import Contact
 from mailtemplates.models import MailTemplate
 
+SMTP_SERVER_INITIAL = "correo.ugr.es"
+SMTP_PORT_INITIAL = 587
+
 
 class MassMailForm(ModelForm):
     agenda = ChoiceField()
     template = ChoiceField()
     maintain = BooleanField(required=False, label="Conservar contactos existentes")
     headers = ChoiceField()
+    sender_name = CharField(required=True, label="Nombre del remitente")
     sender_email = CharField(required=True, label="Email del remitente")
     sender_user = CharField(required=True, label="Usuario (sin @ugr.es)")
     sender_password = CharField(widget=PasswordInput(), label="Contraseña")
     smtp_server = CharField(
-        max_length=200, required=False, label="Servidor", initial="correo.ugr.es"
+        max_length=200, required=False, label="Servidor", initial=SMTP_SERVER_INITIAL
     )
     smtp_port = IntegerField(
-        min_value=0, max_value=9999, required=False, label="Puerto", initial=587
+        min_value=0,
+        max_value=9999,
+        required=False,
+        label="Puerto",
+        initial=SMTP_PORT_INITIAL,
     )
 
     def __init__(self, *args, **kwargs):
@@ -43,10 +50,12 @@ class MassMailForm(ModelForm):
         headers.insert(0, (None, "---"))
         agendas.insert(0, (None, "---"))
         templates.insert(0, (None, "---"))
-        queryset = (
+        queryset = Contact.objects.all()
+
+        initial_queryset = (
             Contact.objects.filter(agenda__category__slug=category.slug)
             if category
-            else Contact.objects.all()
+            else []
         )
         super(MassMailForm, self).__init__(*args, **kwargs)
         self.fields["agenda"] = ChoiceField(
@@ -64,12 +73,17 @@ class MassMailForm(ModelForm):
             label="Destinatarios del mensaje",
             required=False,
             queryset=queryset,
+            initial=initial_queryset,
             widget=FilteredSelectMultiple("contacts", is_stacked=True),
+        )
+        self.fields["smtp_server"] = CharField(
+            max_length=200, required=False, label="Servidor", initial="correo.ugr.es"
         )
 
     class Meta:
         model = MassMail
         fields = [
+            "sender_name",
             "sender_email",
             "recipients",
             "subject",

@@ -83,7 +83,7 @@ def agenda_form(request, slug=""):
         form = AgendaForm(request.POST or None, instance=agenda)
         if form.is_valid():
             form.save()
-            return redirect("agendas:home")
+            return redirect("agendas:detail", slug=form.instance.slug)
     else:
         form = AgendaForm(initial=model_to_dict(agenda) if agenda else None)
 
@@ -129,4 +129,4 @@ def deleteCategory(request, category_id):
 def delete(request, agenda_id):
     agenda = Agenda.objects.get(id=agenda_id)
     agenda.delete()
-    return redirect("agendas:list")
+    return redirect("agendas:home")

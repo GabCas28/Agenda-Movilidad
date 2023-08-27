@@ -41,3 +41,6 @@ def register(request):
 
 def staff_only(request):
     return render(request, "accounts/staff_only.html")
+
+def password_updated(request):
+    return render(request, "accounts/password_updated.html")

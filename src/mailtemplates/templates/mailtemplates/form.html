@@ -1,13 +1,28 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container shadow my-4 p-4">
-    <h2>{{template|yesno:"Editar,Crear"}} modelo</h2>
-    <form class="site-form " action="
+  {%if template %}
+  <h2>Editar modelo</h2>
+  <a
+    href="#"
+    onclick="if(confirm('¡Atención! ¿Desea borrar el modelo {{template.title}}?'))
+{location.href='{% url 'templates:delete' template_id=template.id %}'}"
+    >Borrar modelo</a
+  >
+  {% else %}
+  <h2>Crear modelo</h2>
+  {% endif %}
+  <form
+    class="site-form"
+    action="
         {% if template %} 
         {% url 'templates:form' slug=template.slug %}
         {% else %}{% url 'templates:form' %}
-        {% endif %}" method="post" enctype="multipart/form-data">
-        {% include 'base_form.html' %} {{ form1.content }}
-    </form>
+        {% endif %}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% include 'base_form.html' %} {{ form1.content }}
+  </form>
 </div>
 <!-- <script src={ % static "js/slugify.js" %}></script> -->
 {% endblock content %}

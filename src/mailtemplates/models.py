@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.functions import datetime
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 
 class Category(models.Model):
@@ -11,7 +10,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class MailTemplate(models.Model):
     year = models.year = models.IntegerField(
@@ -30,9 +28,7 @@ class MailTemplate(models.Model):
         max_length=100, default="", blank=True, verbose_name="Título"
     )
     slug = models.SlugField(default="", unique=True, verbose_name="URL")
-    subject = models.CharField(
-        max_length=100, default="", blank=True, verbose_name="Asunto"
-    )
+    subject = models.TextField(default="", blank=True, verbose_name="Asunto")
     content = models.TextField(
         blank=True, default="", verbose_name="Cuerpo del mensaje"
     )

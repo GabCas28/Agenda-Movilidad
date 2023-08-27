@@ -2,6 +2,8 @@ from django.db import models
 from contacts.models import Contact
 from django.template import Template
 from .helpers import send_mass_html_mail, createMails
+from email.header import Header
+import html
 
 
 class ResultadoDifusion(models.Model):
@@ -12,9 +14,7 @@ class ResultadoDifusion(models.Model):
 
 
 class MassMail(models.Model):
-    subject = models.CharField(
-        max_length=100, default="", blank=True, verbose_name="Asunto"
-    )
+    subject = models.TextField(default="", blank=True, verbose_name="Asunto")
     content = models.TextField(blank=True, default="", verbose_name="Cuerpo")
     recipients = models.ManyToManyField(Contact, verbose_name="Destinatarios")
     creation_date = models.DateField(auto_now_add=True)
@@ -30,18 +30,19 @@ class MassMail(models.Model):
 
     def send(
         self,
+        sender_name,
         sender_email,
         sender_user,
         sender_password,
         smtp_server="correo.ugr.es",
         smtp_port=587,
     ):
-        template = Template(self.content)
-        subject = Template(self.subject)
+        template = Template(html.unescape(self.content))
+        subject = Template(html.unescape(self.subject))
         contacts = self.recipients.all()
-
+        sender = Header(f"{sender_name} <{sender_email}>")
         return send_mass_html_mail(
-            createMails(template, subject, contacts, sender_user),
+            createMails(template, subject, contacts, sender),
             sender_email,
             sender_user,
             sender_password,

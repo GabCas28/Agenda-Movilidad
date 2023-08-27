@@ -5,13 +5,13 @@ import smtplib
 import time
 
 
-def createMails(template, subject, contacts, sender_email):
+def createMails(template, subject, contacts, sender):
     mails = []
     for contact in contacts:
         mail_subject = subject.render(Context(contact.contact_info))
         mail_content = template.render(Context(contact.contact_info))
         msg = MIMEMultipart()
-        msg["From"] = "gabrielcastrom@correo.ugr.es"  # sender_email
+        msg["From"] = sender
         msg["To"] = contact.email
         msg["Subject"] = mail_subject
         msg.attach(MIMEText(mail_content, "html"))
