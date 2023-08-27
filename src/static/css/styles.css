@@ -128,6 +128,7 @@ th,
 .offcanvas-toggle {
   color: var(--bs-gray-900) !important;
   background: var(--bs-gray-100) !important;
+  border-color: var(--bs-gray-200) !important;
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) > *,
