@@ -38,7 +38,10 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "127.0.0.1",
     "localhost",
+    "62.72.36.189"
 ]
+
+CSRF_TRUSTED_ORIGINS=["http://62.72.36.189", "https://62.72.36.189"]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
