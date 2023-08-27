@@ -1,9 +1,24 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container shadow my-4 p-4">
-    <h2>{{agenda|yesno:"Editar,Crear"}} agenda</h2>
-    <form class="site-form " action=" {% if agenda %}{% url 'agendas:form' slug=agenda.slug %} {% else %} {% url 'agendas:form'  %} {% endif %}" method="post" enctype="multipart/form-data">
-        {% include "base_form.html" %}
-    </form>
+  {%if agenda %}
+  <h2>Editar agenda</h2>
+  <a
+    href="#"
+    onclick="if(confirm('¡Atención! ¿Desea borrar la agenda {{agenda.title}} y sus contactos asociados?'))
+{location.href='{% url 'agendas:delete' agenda_id=agenda.id %}'}"
+    >Borrar agenda</a
+  >
+  {% else %}
+  <h2>Crear agenda</h2>
+  {% endif %}
+  <form
+    class="site-form"
+    action=" {% if agenda %}{% url 'agendas:form' slug=agenda.slug %} {% else %} {% url 'agendas:form'  %} {% endif %}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% include "base_form.html" %}
+  </form>
 </div>
 <!-- <script src={ % static "js/slugify.js" %}></script> -->
 {% endblock content %}

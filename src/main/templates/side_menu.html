@@ -1,6 +1,6 @@
 {% if menu_title %}
 <button
-  class="btn offcanvas-toggle"
+  class="btn offcanvas-toggle shadow"
   type="button"
   data-bs-toggle="offcanvas"
   data-bs-target="#sidebar"
@@ -43,7 +43,22 @@
     <ul class="navbar-nav row">
       {% for item in menu_items %}
       <div class="nav-item">
-        <a class="nav-link"> {{ item.label.title }} </a>
+        {% if menu_type == 'agenda' %}
+        <a
+          class="nav-link"
+          href="{% url 'agendas:category.form' category=item.label.slug %}"
+        >
+          {{ item.label.title }}
+        </a>
+        {% elif menu_type == 'plantilla' %}
+        <a
+          class="nav-link"
+          href="{% url 'templates:category.form' category=item.label.slug %}"
+        >
+          {{ item.label.title }}
+        </a>
+
+        {% endif %}
         <div class="">
           {% for val in item.value %} {% if menu_type == 'agenda' %}
           <li>

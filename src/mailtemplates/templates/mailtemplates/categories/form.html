@@ -1,14 +1,29 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container p-4 my-4 shadow rounded">
-    <h2>{{category|yesno:"Editar,Crear"}} Categoría</h2>
-    <form class="site-form " action="
+  {%if category %}
+  <h2>Editar categoría</h2>
+  <a
+    href="#"
+    onclick="if(confirm('¡Atención! ¿Desea borrar la categoria {{category.title}} y sus modelos de correo asociados?'))
+  {location.href='{% url 'templates:category.delete' category_id=category.id %}'}"
+    >Borrar categoría</a
+  >
+  {% else %}
+  <h2>Crear categoría</h2>
+  {% endif %}
+  <form
+    class="site-form"
+    action="
         {% if category %}
         {% url 'templates:category.form' category=category.slug %}
         {% else %}
         {% url 'templates:category.form' %}
-        {% endif %}" method="post" enctype="multipart/form-data">
-        {% include 'base_form.html' %}
-    </form>
+        {% endif %}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% include 'base_form.html' %}
+  </form>
 </div>
 <!-- <script src={ % static "js/slugify.js" %}></script> -->
 {% endblock content %}

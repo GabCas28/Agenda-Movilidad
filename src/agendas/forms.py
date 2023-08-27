@@ -22,6 +22,7 @@ class AgendaForm(forms.ModelForm):
         title = cleaned_data.get("title")
         category = cleaned_data.get("category")
         new_category_title = cleaned_data.get("new_category_title")
+        year = cleaned_data.get("year")
 
         # If a new category title is provided, create a new category and use it for the agenda
         if title:
@@ -35,7 +36,7 @@ class AgendaForm(forms.ModelForm):
                     "Ya existe una agenda con el slug generado a partir de este nombre.",
                 )
             else:
-                slug = slugify(title)
+                slug = slugify(f'{category}-{year}-{title}')
                 cleaned_data["slug"] = slug
 
         # If a new category title is provided, create a new category and use it for the agenda

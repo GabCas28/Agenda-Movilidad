@@ -38,7 +38,7 @@ def classifyContacts(agenda, email_header, contacts, deletions):
     return new_contacts, updates, new_deletions
 
 
-def extract_headers(contacts: list[dict[str, any]]) -> list[str]:
+def extract_headers(contacts):
     """
     Extracts the unique headers from a list of contacts.
 

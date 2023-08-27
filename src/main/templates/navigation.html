@@ -1,5 +1,5 @@
 {% load django_bootstrap_icons %}
-<nav class="navbar navbar-expand-lg shadow mb-4">
+<nav class="navbar navbar-expand-lg shadow mb-2">
   <div class="container">
     <button
       class="navbar-toggler"
@@ -69,6 +69,17 @@
             style="min-width: auto"
             aria-labelledby="navbarDropdownMenuLink"
           >
+            <div class="dropdown-item p-0 text-wrap">
+              <a class="btn" href="{% url 'password_change' %}">
+                Cambiar contraseña
+              </a>
+            </div>
+
+            {% if request.user.is_superuser %}
+            <div class="dropdown-item p-0">
+              <a class="btn" href="{% url 'admin:index' %}">Administrar</a>
+            </div>
+            {% endif %}
             <form
               class="dropdown-item p-0"
               action="{% url 'accounts:logout' %}"
@@ -77,13 +88,9 @@
               {% csrf_token %}
               <input class="btn" type="submit" value="Desconectar" />
             </form>
-            {% if request.user.is_superuser %}
-            <div class="dropdown-item p-0">
-              <a class="btn" href="{% url 'admin:index' %}">Administrar</a>
-            </div>
-            {% endif %}
           </div>
           {% else %}
+
           <div class="d-flex">
             <form
               class="form-inline my-2 my-lg-0"

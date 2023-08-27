@@ -1,17 +1,29 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
-    <h2 class="">Log In</h2>
-    <form class="site-form " action="{% url 'accounts:login'  %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {{ form.non_field_errors }} {% for input in form%}
-        <div class="form-group">
-            {{input.label_tag}} {{input}} {{input.errors}}
-        </div>
-        {% endfor %} {% if request.GET.next %}
-        <input type="hidden" name="next" value="{{request.GET.next}}" /> {% endif %}
-        <div class="form-group mt-4">
-            <input class="form-control" type="submit" value="Entrar">
-        </div>
-    </form>
+  <h2 class="">Log In</h2>
+  <form
+    class="site-form"
+    action="{% url 'accounts:login'  %}"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %} {{ form.non_field_errors }} {% for input in form%}
+    <div class="form-group">{{input.label_tag}} {{input}} {{input.errors}}</div>
+    {% endfor %} {% if request.GET.next %}
+    <input type="hidden" name="next" value="{{request.GET.next}}" /> {% endif %}
+    <div class="form-group mt-4">
+      <input class="form-control" type="submit" value="Entrar" />
+    </div>
+  </form>
+  <p>
+    <a class="" href="{% url 'password_reset' %}"
+      >¿Has olvidado tu contraseña?</a
+    >
+  </p>
+  <p>
+    Si aún no tienes cuenta,
+    <a class="" href="{% url 'accounts:register' %}">haz click aquí</a>
+  </p>
+  <!-- <script src={ % static "js/slugify.js" %}></script> -->
+  {% endblock content %}
 </div>
-<!-- <script src={ % static "js/slugify.js" %}></script> -->
-{% endblock content %}

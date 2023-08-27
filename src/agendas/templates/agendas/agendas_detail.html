@@ -1,7 +1,5 @@
-<!DOCTYPE html> 
-{% extends 'base.html' %}
-{% load django_bootstrap_icons %}
-{% block content %}
+<!DOCTYPE html>
+{% extends 'base.html' %} {% block content %}
 
 <div class="container p-4 my-4 shadow rounded">
   <div class="agenda p-3">
@@ -20,7 +18,7 @@
           action="{% url 'agendas:form' slug=agenda.slug %}"
         >
           <button class="btn shadow ml-auto">
-            {% bs_icon 'pencil-square' extra_classes='text-success'%}
+            <i class="bi bi-pencil-square text-success"></i>
             &nbsp;&nbsp;Editar Agenda
           </button>
         </form>
@@ -29,25 +27,29 @@
     {% endif %}
   </div>
   <div class="contacts">
-    {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %} {% if agenda %}
+    {% include "contacts/table.html" with title="Contactos" contacts=contact_list headers=headers %} 
+    {% if agenda %}
     <div class="form-group row">
       {% include 'importer/form.html' %}
       <form
-        class="form-inline col-12 col-md-4 mx-auto mb-4 mb-lg-0"
+        class="form-inline col-12 col-md-4 mx-auto mb-2 mb-lg-0"
         action="{% url 'agendas:contacts:form' slug=agenda.slug %}"
       >
         <button class="btn shadow col-12">
-          {% bs_icon 'plus-circle-fill' extra_classes='text-success'%}&nbsp;&nbsp;Añadir Contacto
+          <i class="bi bi-plus-circle-fill text-success"></i>&nbsp;&nbsp;Añadir
+          Contacto
         </button>
       </form>
       <form
-        class="form-inline col-12 col-md-4 mx-auto mb-4 mb-lg-0"
+        class="form-inline col-12 col-md-4 mx-auto mb-2 mb-lg-0"
         action="{% url 'sender:form' %}"
-        method="GET"
+        method="POST"
       >
+        {% csrf_token %}
         <input type="hidden" name="agenda" value="{{agenda.slug}}" />
+        <input type="hidden" name="imported" value="Importar" />
         <button class="btn shadow col-12">
-          {% bs_icon 'envelope' extra_classes='text-success'%}&nbsp;&nbsp;Broadcast
+          <i class="bi bi-envelope text-success"></i>&nbsp;&nbsp;Broadcast
         </button>
       </form>
     </div>

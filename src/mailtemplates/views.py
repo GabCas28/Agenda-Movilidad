@@ -19,9 +19,9 @@ def deleteCategory(request, category_id):
 
 @staff_member_required(login_url="accounts:staff_only")
 def delete(request, template_id):
-    template = MailTemplate.objects.delete(id=template_id)
+    template = MailTemplate.objects.get(id=template_id)
     template.delete()
-    return redirect("templates:list")
+    return redirect("templates:home")
 
 
 # def categories(request):
@@ -84,7 +84,7 @@ def template_form(request, slug=""):
         if form.is_valid():
             template_instance = form.save(commit=False)
             template_instance.save()
-            return redirect("templates:home")
+            return redirect("templates:detail", slug=template_instance.slug)
     else:
         form = forms.TemplateForm(initial=model_to_dict(template) if template else None)
     return render(
