@@ -128,9 +128,14 @@ th,
 .offcanvas-toggle {
   color: var(--bs-gray-900) !important;
   background: var(--bs-gray-100) !important;
+}
+.form-control,
+.form-control:focus{
   border-color: var(--bs-gray-400) !important;
 }
-
+.dropdown-item:focus, .dropdown-item:hover{
+  background-color: var(--bs-gray-200) !important;
+}
 .table-striped > tbody > tr:nth-of-type(odd) > *,
 .table-hover > tbody > tr:hover > * {
   color: var(--bs-gray-900) !important;
