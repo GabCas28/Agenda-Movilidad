@@ -1,19 +1,19 @@
 version: '3.2'
 
 services:
-  # db:
-  #   image: postgres
-  #   restart: always
-  #   volumes:
-  #     - postgres:/var/lib/postgresql/data
-  #   env_file:
-  #      - ./.env
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    env_file:
+       - ./.env
   agenda:
     build: ./src/
     image: gabcas28/mobility-agenda
     restart: always
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
     command:  bash -c " invoke install && invoke start"    
     volumes:
       - ./src:/src
@@ -34,6 +34,6 @@ services:
       - static_volume:/home/agenda/static
       - media_volume:/home/agenda/media
 volumes:
-  # postgres:
+  postgres:
   static_volume:
   media_volume:
