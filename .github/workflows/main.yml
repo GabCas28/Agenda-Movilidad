@@ -5,7 +5,7 @@ on:
     - release/*
 jobs:
   test:
-    runs-on: python-latest
+    runs-on: self-hosted
     steps:
     - name: Django Test CI        
       uses: UKnowWhoIm/django-test-action@v0.6.1
