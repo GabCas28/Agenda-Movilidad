@@ -38,10 +38,19 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "127.0.0.1",
     "localhost",
-    "62.72.36.189"
+    "62.72.36.189",
+    "srv414685.hstgr.cloud",
+    "agendamovilidad.es"
 ]
 
-CSRF_TRUSTED_ORIGINS=["http://62.72.36.189", "https://62.72.36.189"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://62.72.36.189", 
+    "https://62.72.36.189", 
+    "http://srv414685.hstgr.cloud", 
+    "https://srv414685.hstgr.cloud"
+    "http://agendamovilidad.es", 
+    "https://agendamovilidad.es"
+    ]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
@@ -66,7 +75,12 @@ INSTALLED_APPS = [
     "captcha",
 ]
 
-ADMINS = (("admin", "admin@admin.com"),)
+ADMINS = ((
+    get_env_value("ADMIN_USERNAME") or "admin", 
+    get_env_value("ADMIN_EMAIL") or "admin@admin.com", 
+    get_env_value("ADMIN_PASSWORD") or "admin"
+    ))
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -103,24 +117,16 @@ WSGI_APPLICATION = "main.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": get_env_value("POSTGRES_DB") or "agenda",
-#         "USER": get_env_value("POSTGRES_USER") or "agenda",
-#         "PASSWORD": get_env_value("POSTGRES_USER") or "agenda",
-#         "HOST": get_env_value("POSTGRES_HOST") or "127.0.0.1",
-#         "PORT": get_env_value("POSTGRES_PORT") or "5432",
-#     }
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.postgresql',
-#     #     'NAME': 'postgres',
-#     #     'USER': 'postgres',
-#     #     'PASSWORD': 'postgres',
-#     #     'HOST': 'db',
-#     #     'PORT': 5432,
-#     # }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": get_env_value("POSTGRES_DB") or "agenda",
+        "USER": get_env_value("POSTGRES_USER") or "postgres",
+        "PASSWORD": get_env_value("POSTGRES_PASSWORD") or "postgres",
+        "HOST": get_env_value("POSTGRES_HOST") or "127.0.0.1",
+        "PORT": get_env_value("POSTGRES_PORT") or "5432",
+    }
+}
 
 DATABASES = {
     "default": {
