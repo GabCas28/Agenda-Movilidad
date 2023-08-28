@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+    - main
+    - release/*
+jobs:
+  test:
+    runs-on: python-latest
+    steps:
+    - name: Django Test CI        
+      uses: UKnowWhoIm/django-test-action@v0.6.1
+      with:
+        # The path of the directory containing the settings file(Without `./`)
+        settings-dir-path: src/main/settings.py
+        # Run tests in parallel
+        # parallel-tests: # optional
+        # The path of dependancy file, typically requirements.txt
+        requirements-file: src/requirements.txt
+        # The path of an env file, if you require environment variables
+        # env-file: # optional, default is 
