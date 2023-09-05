@@ -40,17 +40,16 @@ ALLOWED_HOSTS = [
     "localhost",
     "62.72.36.189",
     "srv414685.hstgr.cloud",
-    "agendamovilidad.es"
+    "agendamovilidad.es",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://62.72.36.189", 
-    "https://62.72.36.189", 
-    "http://srv414685.hstgr.cloud", 
-    "https://srv414685.hstgr.cloud"
-    "http://agendamovilidad.es", 
-    "https://agendamovilidad.es"
-    ]
+    "http://62.72.36.189",
+    "https://62.72.36.189",
+    "http://srv414685.hstgr.cloud",
+    "https://srv414685.hstgr.cloud" "http://agendamovilidad.es",
+    "https://agendamovilidad.es",
+]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
@@ -73,13 +72,14 @@ INSTALLED_APPS = [
     "django_json_widget",
     "sslserver",
     "captcha",
+    "django_extensions",
 ]
 
-ADMINS = ((
-    get_env_value("ADMIN_USERNAME") or "admin", 
-    get_env_value("ADMIN_EMAIL") or "admin@admin.com", 
-    get_env_value("ADMIN_PASSWORD") or "admin"
-    ))
+ADMINS = (
+    get_env_value("ADMIN_USERNAME") or "admin",
+    get_env_value("ADMIN_EMAIL") or "admin@admin.com",
+    get_env_value("ADMIN_PASSWORD") or "admin",
+)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -213,8 +213,8 @@ SUMMERNOTE_CONFIG = {
     "css": ("/static/css/styles.css",),
 }
 
-CSRF_COOKIE_SECURE=True
-CSRF_USE_SESSIONS=True
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = True
 
 LOGIN_URL = "/accounts/login"
 
@@ -227,5 +227,7 @@ JSON_EDITOR_CSS = (
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 RECAPTCHA_SITE_KEY = get_env_value("RECAPTCHA_SITE_KEY") or "test_recaptcha_site_key"
-RECAPTCHA_SECRET_KEY = get_env_value("RECAPTCHA_SECRET_KEY") or "test_recaptcha_secret_key"
+RECAPTCHA_SECRET_KEY = (
+    get_env_value("RECAPTCHA_SECRET_KEY") or "test_recaptcha_secret_key"
+)
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
