@@ -1,1 +1,0 @@
-PowerShell -ExecutionPolicy Bypass -File '.\scripts\install.ps1'

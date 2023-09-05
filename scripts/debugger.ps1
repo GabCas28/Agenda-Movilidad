@@ -1,1 +1,0 @@
-PowerShell -ExecutionPolicy Bypass -File '.\scripts\debug.ps1'
