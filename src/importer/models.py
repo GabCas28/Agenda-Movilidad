@@ -1,5 +1,3 @@
-import json
-from json.encoder import JSONEncoder
 from django.db import models
 from django.contrib.auth.models import User
 
