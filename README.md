@@ -1,14 +1,13 @@
-# Agenda de estudiantes en programas de movilidad de la ETSIIT de la Universidad de Granada
+# Gestor de Comunicaciones con los Estudiantes de la ETSIIT en movilidad académica
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Para instalar, lanzar el programa:
 
-`install.exe`
+Para desplegar la aplicación Web, utilizar el comando:
 
-Para ejecutar,
+`docker-compose up`
 
-`run.exe`
+Nota: se necesita [Docker](https://docs.docker.com/engine/install/) para poder lanzar la aplicación.
 
 ## Licencia
 
